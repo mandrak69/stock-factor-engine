@@ -9,6 +9,7 @@ from stock_factor_engine.storage.financials import financial_facts_as_of
 from stock_factor_engine.storage.time import timestamp
 from .ttm import coverage, ttm_metrics
 from .balance import Result, balance_metrics
+from .company import company_profile
 
 
 def result_payload(result):
@@ -26,10 +27,14 @@ def main():
     parser.add_argument('--company-id', default='sec:0000789019')
     parser.add_argument('--as-of', required=True, help='Timezone-aware ISO timestamp, e.g. 2026-10-02T00:00:00Z')
     parser.add_argument('--period-end', type=date.fromisoformat)
-    parser.add_argument('--balance', action='store_true', help='Report balance, debt, ROIC proxy and interest coverage')
+    modes = parser.add_mutually_exclusive_group()
+    modes.add_argument('--balance', action='store_true', help='Report balance, debt, ROIC proxy and interest coverage')
+    modes.add_argument('--company-profile', action='store_true', help='Report shares, growth, margins and debt coverage')
     parser.add_argument('--assume-zero-short-term-debt', action='store_true',
                         help='Explicitly assume missing short-term borrowings are zero; recorded in output')
     args = parser.parse_args()
+    if args.assume_zero_short_term_debt and not args.balance:
+        parser.error('--assume-zero-short-term-debt applies only to --balance')
     try:
         as_of = datetime.fromisoformat(args.as_of)
         timestamp(as_of)
@@ -39,6 +44,13 @@ def main():
     connection.row_factory = sqlite3.Row
     try:
         facts = financial_facts_as_of(connection, company_id=args.company_id, as_of=as_of)
+        if args.company_profile:
+            end, results = company_profile(facts, company_id=args.company_id, as_of=as_of, period_end=args.period_end)
+            print(json.dumps({'company_id': args.company_id, 'as_of': timestamp(as_of),
+                              'period_end': end, 'metrics': {name: result_payload(result)
+                                                           for name, result in results.items()}},
+                             default=str, indent=2))
+            return
         if args.balance:
             end, results = balance_metrics(facts, company_id=args.company_id, as_of=as_of,
                                           period_end=args.period_end,

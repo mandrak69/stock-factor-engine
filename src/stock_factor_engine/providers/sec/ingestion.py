@@ -14,7 +14,7 @@ from stock_factor_engine.storage.time import timestamp
 from .client import BASE_URL, SecClient, decode_json, normalize_cik
 
 
-PARSER_VERSION = 'sec-v0.2.0'
+PARSER_VERSION = 'sec-v0.3.0'
 # Explicit, deliberately small mapping. Aliases remain separate observations.
 CONCEPTS = {
     'RevenueFromContractWithCustomerExcludingAssessedTax': 'revenue',
@@ -37,10 +37,22 @@ CONCEPTS = {
     'IncomeTaxExpenseBenefit': 'income_tax_expense',
     'IncomeLossFromContinuingOperationsBeforeIncomeTaxesExtraordinaryItemsNoncontrollingInterest': 'pretax_income',
     'IncomeLossFromContinuingOperationsBeforeIncomeTaxesMinorityInterestAndIncomeLossFromEquityMethodInvestments': 'pretax_income_before_equity_method',
+    'CommonStockSharesOutstanding': 'reported_shares_outstanding',
+    'WeightedAverageNumberOfSharesOutstandingBasic': 'weighted_average_shares_basic',
+    'WeightedAverageNumberOfDilutedSharesOutstanding': 'weighted_average_shares_diluted',
+    'EarningsPerShareDiluted': 'eps_diluted',
+    'PaymentsForRepurchaseOfCommonStock': 'common_stock_repurchases',
+    'PaymentsOfDividendsCommonStock': 'common_stock_dividends_paid',
 }
+NAMESPACE_CONCEPTS = {'us-gaap': CONCEPTS, 'dei': {
+    'EntityCommonStockSharesOutstanding': 'cover_shares_outstanding',
+}}
+SHARE_CONCEPTS = {'reported_shares_outstanding', 'cover_shares_outstanding',
+                  'weighted_average_shares_basic', 'weighted_average_shares_diluted'}
 INSTANT_CONCEPTS = {'cash', 'total_assets', 'shareholders_equity', 'total_debt',
                     'long_term_debt_total', 'long_term_debt_current', 'long_term_debt_noncurrent',
-                    'short_term_borrowings', 'commercial_paper', 'short_term_investments'}
+                    'short_term_borrowings', 'commercial_paper', 'short_term_investments',
+                    'reported_shares_outstanding', 'cover_shares_outstanding'}
 FORMS = {'10-K', '10-Q', '10-K/A', '10-Q/A'}
 
 
@@ -69,8 +81,13 @@ def parse_filings(columns: dict, company_id: str) -> tuple[list[Filing], list[di
 
 def parse_facts(payload: dict, company_id: str, filings: dict[str, Filing]):
     parsed, rejected = [], []
-    for source_concept, details in payload.get('facts', {}).get('us-gaap', {}).items():
-        if source_concept not in CONCEPTS:
+    for taxonomy, source_concept, details in (
+        (taxonomy, source_concept, details)
+        for taxonomy in NAMESPACE_CONCEPTS
+        for source_concept, details in payload.get('facts', {}).get(taxonomy, {}).items()
+    ):
+        canonical = NAMESPACE_CONCEPTS[taxonomy].get(source_concept)
+        if canonical is None:
             continue
         for unit, observations in details.get('units', {}).items():
             for observation in observations:
@@ -83,21 +100,26 @@ def parse_facts(payload: dict, company_id: str, filings: dict[str, Filing]):
                         raise ValueError('No filing with a justified availability timestamp')
                     if observation['form'] != filing.form_type or observation['filed'] != filing.filed_date.isoformat():
                         raise ValueError('Fact filing metadata disagrees with submissions')
-                    if unit != 'USD':
-                        raise ValueError('Mapped financial concept requires USD units')
+                    expected_unit = 'shares' if canonical in SHARE_CONCEPTS else 'USD/shares' if canonical == 'eps_diluted' else 'USD'
+                    if unit != expected_unit:
+                        raise ValueError(f'Mapped concept requires {expected_unit} units')
                     amount = Decimal(str(observation['val']))
                     if not amount.is_finite():
                         raise ValueError('Non-finite amount')
-                    fact = FinancialFact(company_id, accession, CONCEPTS[source_concept], amount,
+                    if canonical in SHARE_CONCEPTS and amount <= 0:
+                        raise ValueError('Share count must be positive')
+                    fact = FinancialFact(company_id, accession, canonical, amount,
                                          unit, date.fromisoformat(observation['end']), filing.available_at,
                                          date.fromisoformat(observation['start']) if 'start' in observation else None,
-                                         'us-gaap')
-                    duration = CONCEPTS[source_concept] not in INSTANT_CONCEPTS
+                                         taxonomy)
+                    duration = canonical not in INSTANT_CONCEPTS
                     if duration == fact.is_instant:
                         raise ValueError('Unexpected instant/duration shape')
+                    if canonical in SHARE_CONCEPTS and fact.period_end > filing.available_at.date():
+                        raise ValueError('Share observation date is after filing availability')
                     parsed.append((fact, source_concept))
                 except (ValueError, TypeError, KeyError, ArithmeticError) as error:
-                    rejected.append({'kind': 'fact', 'accession': accession, 'concept': source_concept,
+                    rejected.append({'kind': 'fact', 'accession': accession, 'concept': source_concept, 'taxonomy': taxonomy,
                                      'observation': observation, 'reason': str(error)})
     return parsed, rejected
 

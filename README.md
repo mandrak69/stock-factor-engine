@@ -94,3 +94,13 @@ Imports Microsoft daily history with dividends and splits using the initial
 Yahoo research adapter. Install updated dependencies with `python -m pip install
 -e '.[dev]'`. See `docs/market-data.md` for snapshot reports, replay and the
 distinction between provider-adjusted and verified as-traded prices.
+
+## Shares and company growth
+
+```powershell
+python -m stock_factor_engine.fundamentals --as-of 2026-10-02T00:00:00Z --company-profile
+```
+
+Shows separate share-count definitions, annual EPS/average shares, TTM growth,
+margins, cash repurchases/dividends and debt coverage. See `docs/company-profile.md`.
+Replaying SEC responses with parser v0.3 imports the new units and DEI concepts.
