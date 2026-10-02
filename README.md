@@ -42,3 +42,23 @@ pytest
 ```
 
 See `docs/system-design-and-product-specification.md` and `docs/architecture.md`.
+
+## Local database
+
+```bash
+python -m stock_factor_engine.storage --database data/engine.sqlite
+```
+
+SQLite schema migrations run automatically on initialization. Source JSON will
+live under `data/raw/`; local data is excluded from Git. See
+`docs/storage-design.md` for the schema, provenance and time contracts.
+
+## SEC ingestion
+
+```powershell
+$env:SEC_USER_AGENT = 'stock-factor-engine/0.1 your-contact@example.com'
+python -m stock_factor_engine.providers.sec --cik 0000789019
+```
+
+Use your actual contact address. See `docs/sec-ingestion.md` for supported
+concepts, archived replay, quarantine and historical-data limitations.

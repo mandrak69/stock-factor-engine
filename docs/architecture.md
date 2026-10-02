@@ -123,6 +123,10 @@ When multiple facts are available, later `available_at` wins; ties are rejected 
 
 ## 9. Testing strategy
 
+Persistence uses SQLite plus immutable source JSON files. The implemented schema,
+migration workflow and ingestion contracts are described in
+[`storage-design.md`](storage-design.md).
+
 The earliest tests target the most dangerous failure modes:
 
 - future filing leakage;
