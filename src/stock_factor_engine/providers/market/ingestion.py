@@ -7,6 +7,7 @@ from uuid import uuid4
 
 from stock_factor_engine.storage.time import timestamp
 from .yahoo import PRICE_BASIS, SOURCE, fetch, parse
+from .identities import IDENTITIES
 
 
 def digest(value):
@@ -14,18 +15,19 @@ def digest(value):
 
 
 def ingest_market(db, data_dir: Path, *, symbol='MSFT', response=None):
-    """Initial supported identity is Microsoft common stock; evidence is immutable."""
-    if symbol != 'MSFT':
-        raise ValueError('v0.1 supports Microsoft only; other issuers need explicit identity configuration')
+    """Import an explicitly configured instrument; preserve immutable evidence."""
+    identity = IDENTITIES.get(symbol)
+    if identity is None:
+        raise ValueError('Other instruments need explicit identity configuration')
     if db.in_transaction:
         raise ValueError('Ingestion requires no active transaction')
-    company_id, security_id = 'sec:0000789019', 'sec:0000789019:common'
-    if not db.execute('SELECT 1 FROM companies WHERE id=?', (company_id,)).fetchone():
+    company_id, security_id = identity['company_id'], identity['security_id']
+    if identity['requires_sec'] and not db.execute('SELECT 1 FROM companies WHERE id=?', (company_id,)).fetchone():
         raise ValueError('Import Microsoft SEC data before prices')
     run_id, raw_id = uuid4().hex, uuid4().hex
     root = Path(data_dir).resolve()
     db.execute('INSERT INTO ingestion_runs VALUES (?, ?, ?, ?, NULL, ?, NULL)',
-               (run_id, SOURCE, 'yahoo-v0.1.0', timestamp(datetime.now(UTC)), 'running'))
+               (run_id, SOURCE, 'yahoo-v0.2.0', timestamp(datetime.now(UTC)), 'running'))
     db.commit()
     raw_record = None
     try:
@@ -45,13 +47,19 @@ def ingest_market(db, data_dir: Path, *, symbol='MSFT', response=None):
         new_bars = new_actions = 0
         with db:
             db.execute('INSERT INTO raw_documents VALUES (?, ?, ?, ?, ?, ?, ?, ?)', raw_record)
-            existing = db.execute('SELECT company_id, currency FROM securities WHERE id=?', (security_id,)).fetchone()
+            company = db.execute('SELECT cik FROM companies WHERE id=?', (company_id,)).fetchone()
+            if company is None:
+                db.execute('INSERT INTO companies (id, legal_name, cik) VALUES (?, ?, ?)',
+                           (company_id, identity['legal_name'], identity['cik']))
+            elif company[0] != identity['cik']:
+                raise ValueError('Company identity conflict')
+            existing = db.execute('SELECT company_id, currency, security_type, exchange FROM securities WHERE id=?', (security_id,)).fetchone()
             if existing is None:
                 db.execute('INSERT INTO securities VALUES (?, ?, ?, ?, ?, ?, NULL)',
-                           (security_id, company_id, 'NASDAQ', 'USD', 'common_stock', bars[0].trading_date.isoformat()))
+                           (security_id, company_id, identity['exchange'], 'USD', identity['security_type'], bars[0].trading_date.isoformat()))
                 db.execute('INSERT INTO ticker_assignments (security_id, symbol, valid_from) VALUES (?, ?, ?)',
                            (security_id, symbol, bars[0].trading_date.isoformat()))
-            elif tuple(existing) != (company_id, 'USD'):
+            elif tuple(existing) != (company_id, 'USD', identity['security_type'], identity['exchange']):
                 raise ValueError('Security identity conflict')
             db.execute('INSERT INTO market_snapshots VALUES (?, ?, ?, ?, ?, ?)',
                        (snapshot_id, security_id, raw_id, SOURCE, timestamp(retrieved_at), PRICE_BASIS))

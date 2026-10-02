@@ -104,3 +104,15 @@ python -m stock_factor_engine.fundamentals --as-of 2026-10-02T00:00:00Z --compan
 Shows separate share-count definitions, annual EPS/average shares, TTM growth,
 margins, cash repurchases/dividends and debt coverage. See `docs/company-profile.md`.
 Replaying SEC responses with parser v0.3 imports the new units and DEI concepts.
+
+## Price factors and SPY benchmark
+
+```powershell
+python -m stock_factor_engine.providers.market --symbol SPY
+python -m stock_factor_engine.factors --as-of (Get-Date).ToUniversalTime().ToString('o')
+```
+
+Reports Microsoft and SPY 12-1 momentum, annualized daily volatility, maximum
+drawdown and 252-session return, plus aligned return differences. Each result
+includes its formula, dates, observation count and availability. See
+`docs/price-factors.md` for conventions and snapshot limitations.

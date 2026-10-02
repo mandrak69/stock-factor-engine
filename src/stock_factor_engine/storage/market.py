@@ -5,7 +5,7 @@ from zoneinfo import ZoneInfo
 from stock_factor_engine.models.market import DailyPrice, total_return
 
 
-def market_report(connection, *, snapshot_id: str, as_of: datetime):
+def snapshot_prices_as_of(connection, *, snapshot_id: str, as_of: datetime):
     if as_of.tzinfo is None or as_of.utcoffset() is None:
         raise ValueError('as_of must be timezone-aware')
     snapshot = connection.execute('SELECT * FROM market_snapshots WHERE id=?', (snapshot_id,)).fetchone()
@@ -17,6 +17,12 @@ def market_report(connection, *, snapshot_id: str, as_of: datetime):
     bars = [DailyPrice(date.fromisoformat(row['trading_date']),
                       *(Decimal(row[key]) for key in ('open_decimal', 'high_decimal', 'low_decimal', 'close_decimal', 'adjusted_close_decimal')),
                       row['volume']) for row in rows]
+    return snapshot, bars
+
+
+def market_report(connection, *, snapshot_id: str, as_of: datetime):
+    snapshot, bars = snapshot_prices_as_of(connection, snapshot_id=snapshot_id, as_of=as_of)
+    cutoff = as_of.astimezone(ZoneInfo('America/New_York')).date().isoformat()
     if len(bars) < 2:
         raise ValueError('At least two completed-session prices are needed')
     actions = connection.execute('''SELECT a.* FROM corporate_actions a JOIN snapshot_actions s ON s.action_id=a.id

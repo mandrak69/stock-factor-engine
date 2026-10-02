@@ -7,10 +7,12 @@ from pathlib import Path
 from stock_factor_engine.storage import connect_database
 from stock_factor_engine.storage.market import market_report
 from .ingestion import ingest_market, replay_response
+from .identities import IDENTITIES
 
 
 def main():
-    parser = argparse.ArgumentParser(description='Import or inspect Microsoft daily prices and corporate actions.')
+    parser = argparse.ArgumentParser(description='Import or inspect configured daily prices and corporate actions.')
+    parser.add_argument('--symbol', choices=IDENTITIES, default='MSFT')
     parser.add_argument('--data-dir', type=Path, default=Path('data'))
     parser.add_argument('--replay-snapshot')
     parser.add_argument('--report-snapshot')
@@ -30,7 +32,7 @@ def main():
             result = market_report(connection, snapshot_id=args.report_snapshot, as_of=args.as_of)
         else:
             response = replay_response(connection, args.data_dir, args.replay_snapshot) if args.replay_snapshot else None
-            result = ingest_market(connection, args.data_dir, response=response)
+            result = ingest_market(connection, args.data_dir, symbol=args.symbol, response=response)
         print(json.dumps(result, indent=2))
     finally:
         connection.close()

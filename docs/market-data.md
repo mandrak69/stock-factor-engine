@@ -1,8 +1,9 @@
-# Daily market data v0.1
+# Daily market data v0.2
 
 ## Scope and provider
 
-The initial importer supports Microsoft common stock (USD, NASDAQ) using Yahoo
+The importer supports Microsoft common stock (USD, NASDAQ) and SPY ETF shares
+(USD, NYSE Arca) using Yahoo
 Finance's chart JSON endpoint. It needs no API key and no dataframe dependency.
 This is an unofficial research adapter, not an exchange feed or a guaranteed
 historical point-in-time service. Other symbols require explicit issuer/security
@@ -10,6 +11,7 @@ identity configuration before support is expanded.
 
 ```powershell
 .\.venv\Scripts\python.exe -m stock_factor_engine.providers.market
+.\.venv\Scripts\python.exe -m stock_factor_engine.providers.market --symbol SPY
 ```
 
 This downloads the full available daily history, including splits and dividends.
@@ -21,7 +23,7 @@ returns partial intraday data. US dates are converted with America/New_York usin
 ## Original versus adjusted data
 
 The exact original provider JSON bytes are stored under
-`data/raw/market/yahoo_chart/MSFT/` with source URL, retrieval timestamp and
+`data/raw/market/yahoo_chart/<symbol>/` with source URL, retrieval timestamp and
 SHA-256. Provider OHLC and volume are preserved as supplied. **Yahoo historical
 OHLC already reflects split adjustments; these columns are not verified
 as-traded prices.** The provider adjusted close additionally reflects dividend
@@ -43,7 +45,8 @@ The raw JSON retains numerator/denominator and original event timestamps.
 Prices stay Decimal representations of provider values, including its floating
 point artifacts. No speculative repairs are applied. Invalid OHLC, missing or
 nonpositive prices, and invalid volume are quarantined. An action without a valid
-bar fails the run. Source metadata must match MSFT, USD equity and the supported
+bar fails the run. Source metadata must match the configured symbol, USD,
+instrument type (EQUITY or ETF) and the supported
 exchange timezone. A failed run retains raw evidence and its error.
 
 ## Schema v2 and immutable snapshots
@@ -60,7 +63,10 @@ normalized observations are reused. A changed historical adjusted close creates
 a new version; it never overwrites the older series. Queries use one explicit
 snapshot, so old and new adjustment vintages cannot be mixed accidentally.
 All five tables are append-only. Migration v2 preserves the existing financial
-schema/data. Import requires the Microsoft company to exist from SEC ingestion.
+schema/data. Microsoft requires its company to exist from SEC ingestion.
+SPY creates the explicitly configured fund identity, CIK 0000884394, without
+importing fund filings. Schema v2 already supports its ETF security type.
+When replaying a SPY snapshot, include `--symbol SPY` in the replay command.
 The initial security/ticker validity starts at the first observed Yahoo date;
 this is observed-history metadata, not a validated historical universe record.
 

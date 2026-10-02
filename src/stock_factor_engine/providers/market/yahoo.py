@@ -7,6 +7,7 @@ from urllib.request import Request, urlopen
 from zoneinfo import ZoneInfo
 
 from stock_factor_engine.models.market import CorporateAction, DailyPrice
+from .identities import IDENTITIES
 
 
 SOURCE = 'yahoo_chart'
@@ -34,8 +35,9 @@ def parse(content: bytes, symbol: str, retrieved_at: datetime):
         raise ValueError('Yahoo did not return one valid price series')
     result = chart['result'][0]
     meta = result['meta']
-    if meta.get('symbol') != symbol or meta.get('currency') != 'USD' or meta.get('instrumentType') != 'EQUITY':
-        raise ValueError('Only matching USD equities are supported')
+    identity = IDENTITIES.get(symbol)
+    if identity is None or meta.get('symbol') != symbol or meta.get('currency') != 'USD' or meta.get('instrumentType') != identity['instrument_type']:
+        raise ValueError('Only explicitly configured matching USD instruments are supported')
     if meta.get('exchangeTimezoneName') != 'America/New_York':
         raise ValueError('Only US Eastern exchange dates are supported in v0.1')
     timezone = ZoneInfo('America/New_York')
