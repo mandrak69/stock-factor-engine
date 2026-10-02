@@ -116,3 +116,14 @@ Reports Microsoft and SPY 12-1 momentum, annualized daily volatility, maximum
 drawdown and 252-session return, plus aligned return differences. Each result
 includes its formula, dates, observation count and availability. See
 `docs/price-factors.md` for conventions and snapshot limitations.
+
+## Research valuation
+
+```powershell
+python -m stock_factor_engine.fundamentals --valuation --as-of (Get-Date).ToUniversalTime().ToString('o')
+```
+
+Reports market-cap estimate, P/S, FCF yield and P/E using matching direct annual
+diluted EPS. Source share dates, price dates, fiscal periods, assumptions and
+unavailable inputs are explicit. See `docs/valuation.md` for split and freshness
+policies. This mode reads the existing financial and market tables.

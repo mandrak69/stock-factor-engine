@@ -141,5 +141,24 @@ def test_spy_import_identity_and_replay(tmp_path, monkeypatch, capsys):
         main()
         report = json.loads(capsys.readouterr().out)
         assert not any(snapshot['known_at_as_of'] for snapshot in report['snapshots'].values())
+        from stock_factor_engine.fundamentals.__main__ import main as fundamentals_main
+        valuation_args = ['fundamentals', '--database', str(tmp_path / 'engine.sqlite'),
+                          '--valuation', '--as-of', AS_OF.isoformat()]
+        monkeypatch.setattr(sys, 'argv', valuation_args)
+        fundamentals_main()
+        report = json.loads(capsys.readouterr().out)
+        assert report['snapshot']['known_at_as_of']
+        assert report['metrics']['market_cap_estimate']['status'] == 'unavailable'
+        monkeypatch.setattr(sys, 'argv', valuation_args + ['--market-snapshot', first['snapshot_id']])
+        with pytest.raises(SystemExit) as error:
+            fundamentals_main()
+        assert error.value.code == 2
+        monkeypatch.setattr(sys, 'argv', valuation_args[:-1] + ['2025-10-01T18:00:00+00:00'])
+        with pytest.raises(SystemExit):
+            fundamentals_main()
+        monkeypatch.setattr(sys, 'argv', valuation_args[:-1] + ['2025-10-01T18:00:00+00:00',
+                                                              '--market-snapshot', microsoft['snapshot_id']])
+        fundamentals_main()
+        assert not json.loads(capsys.readouterr().out)['snapshot']['known_at_as_of']
     finally:
         connection.close()
