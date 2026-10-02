@@ -40,7 +40,7 @@ def test_reopen_preserves_data_and_version(tmp_path):
     db = connect_database(path)
     try:
         assert db.execute('SELECT COUNT(*) FROM companies').fetchone()[0] == 1
-        assert db.execute('SELECT COUNT(*) FROM schema_migrations').fetchone()[0] == 1
+        assert db.execute('SELECT COUNT(*) FROM schema_migrations').fetchone()[0] == len(database.MIGRATIONS)
         assert db.execute('PRAGMA foreign_keys').fetchone()[0] == 1
     finally:
         db.close()
@@ -83,13 +83,14 @@ def test_evidence_is_append_only(db, table, action):
 
 def test_failed_migration_rolls_back(tmp_path, monkeypatch):
     db = connect_database(tmp_path / 'engine.sqlite')
-    monkeypatch.setattr(database, 'MIGRATIONS', database.MIGRATIONS + ((2, (
+    original_version = database.MIGRATIONS[-1][0]
+    monkeypatch.setattr(database, 'MIGRATIONS', database.MIGRATIONS + ((original_version + 1, (
         'CREATE TABLE temporary_table (id INTEGER)', 'INVALID SQL',
     )),))
     with pytest.raises(sqlite3.OperationalError):
         migrate(db)
     assert db.execute("SELECT name FROM sqlite_master WHERE name = 'temporary_table'").fetchone() is None
-    assert db.execute('SELECT MAX(version) FROM schema_migrations').fetchone()[0] == 1
+    assert db.execute('SELECT MAX(version) FROM schema_migrations').fetchone()[0] == original_version
     db.close()
 
 

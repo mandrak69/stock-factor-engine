@@ -83,3 +83,14 @@ Reports debt, cash, invested capital, effective tax rate, ROIC proxy and interes
 coverage with independent availability statuses. See `docs/balance-metrics.md`
 for formulas and missing-data policies. Replaying an archived SEC run imports
 the newly mapped concepts without another download.
+
+## Daily prices and corporate actions
+
+```powershell
+python -m stock_factor_engine.providers.market
+```
+
+Imports Microsoft daily history with dividends and splits using the initial
+Yahoo research adapter. Install updated dependencies with `python -m pip install
+-e '.[dev]'`. See `docs/market-data.md` for snapshot reports, replay and the
+distinction between provider-adjusted and verified as-traded prices.

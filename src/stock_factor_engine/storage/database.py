@@ -66,7 +66,41 @@ MIGRATIONS = ((1, (
         for table in ('filings', 'financial_facts', 'raw_documents')
         for action in ('UPDATE', 'DELETE')
     ),
-)),)
+)), (2, (
+    """CREATE TABLE market_snapshots (
+        id TEXT PRIMARY KEY, security_id TEXT NOT NULL REFERENCES securities(id),
+        raw_document_id TEXT NOT NULL REFERENCES raw_documents(id),
+        source TEXT NOT NULL, retrieved_at TEXT NOT NULL, price_basis TEXT NOT NULL)""",
+    """CREATE TABLE daily_prices (
+        id INTEGER PRIMARY KEY, security_id TEXT NOT NULL REFERENCES securities(id),
+        source TEXT NOT NULL, trading_date TEXT NOT NULL, observation_hash TEXT NOT NULL,
+        open_decimal TEXT NOT NULL, high_decimal TEXT NOT NULL, low_decimal TEXT NOT NULL,
+        close_decimal TEXT NOT NULL, adjusted_close_decimal TEXT NOT NULL,
+        volume INTEGER NOT NULL CHECK(volume >= 0),
+        raw_document_id TEXT NOT NULL REFERENCES raw_documents(id),
+        UNIQUE(security_id, source, trading_date, observation_hash))""",
+    """CREATE TABLE corporate_actions (
+        id INTEGER PRIMARY KEY, security_id TEXT NOT NULL REFERENCES securities(id),
+        source TEXT NOT NULL, event_date TEXT NOT NULL,
+        kind TEXT NOT NULL CHECK(kind IN ('dividend', 'split')),
+        value_decimal TEXT NOT NULL, observation_hash TEXT NOT NULL,
+        raw_document_id TEXT NOT NULL REFERENCES raw_documents(id),
+        UNIQUE(security_id, source, event_date, kind, observation_hash))""",
+    """CREATE TABLE snapshot_prices (
+        snapshot_id TEXT NOT NULL REFERENCES market_snapshots(id),
+        price_id INTEGER NOT NULL REFERENCES daily_prices(id),
+        PRIMARY KEY(snapshot_id, price_id))""",
+    """CREATE TABLE snapshot_actions (
+        snapshot_id TEXT NOT NULL REFERENCES market_snapshots(id),
+        action_id INTEGER NOT NULL REFERENCES corporate_actions(id),
+        PRIMARY KEY(snapshot_id, action_id))""",
+    *tuple(
+        f"""CREATE TRIGGER {table}_no_{action.lower()} BEFORE {action} ON {table}
+        BEGIN SELECT RAISE(ABORT, '{table} is append-only'); END"""
+        for table in ('market_snapshots', 'daily_prices', 'corporate_actions', 'snapshot_prices', 'snapshot_actions')
+        for action in ('UPDATE', 'DELETE')
+    ),
+)))
 
 
 def migrate(connection: sqlite3.Connection) -> None:

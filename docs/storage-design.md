@@ -94,5 +94,6 @@ for schema changes; unknown/non-contiguous histories fail closed. Reopening an
 up-to-date database is safe and preserves stored data. Connections returned by
 this function belong to the caller and must be closed explicitly.
 
-The storage release introduces persistence schema and initialization. Prices,
-derived metrics, strategy versions and backtest results need later migrations.
+Schema v2 adds versioned daily prices, corporate actions and explicit snapshot
+membership; see `market-data.md`. Strategy versions and backtest results still
+need later migrations. Derived metrics currently compute on demand.

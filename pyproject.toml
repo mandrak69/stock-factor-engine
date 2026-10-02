@@ -7,7 +7,7 @@ name = "stock-factor-engine"
 version = "0.1.0"
 description = "Point-in-time stock selection and backtesting engine for explainable factor strategies."
 requires-python = ">=3.12"
-dependencies = []
+dependencies = ["tzdata>=2025.1"]
 
 [project.optional-dependencies]
 dev = [
