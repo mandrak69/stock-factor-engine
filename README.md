@@ -62,3 +62,24 @@ python -m stock_factor_engine.providers.sec --cik 0000789019
 
 Use your actual contact address. See `docs/sec-ingestion.md` for supported
 concepts, archived replay, quarantine and historical-data limitations.
+
+## TTM metrics and coverage
+
+```powershell
+python -m stock_factor_engine.fundamentals --as-of 2026-10-02T00:00:00Z
+```
+
+Reports point-in-time revenue, operating income, operating cash flow, capital
+expenditure and free cash flow with source explanations. See `docs/ttm-metrics.md`
+for period validation, supported fiscal durations and calculation limits.
+
+## Balance and quality metrics
+
+```powershell
+python -m stock_factor_engine.fundamentals --as-of 2026-10-02T00:00:00Z --balance
+```
+
+Reports debt, cash, invested capital, effective tax rate, ROIC proxy and interest
+coverage with independent availability statuses. See `docs/balance-metrics.md`
+for formulas and missing-data policies. Replaying an archived SEC run imports
+the newly mapped concepts without another download.

@@ -14,7 +14,7 @@ from stock_factor_engine.storage.time import timestamp
 from .client import BASE_URL, SecClient, decode_json, normalize_cik
 
 
-PARSER_VERSION = 'sec-v0.1.0'
+PARSER_VERSION = 'sec-v0.2.0'
 # Explicit, deliberately small mapping. Aliases remain separate observations.
 CONCEPTS = {
     'RevenueFromContractWithCustomerExcludingAssessedTax': 'revenue',
@@ -24,7 +24,23 @@ CONCEPTS = {
     'PaymentsToAcquirePropertyPlantAndEquipment': 'capital_expenditure',
     'CashAndCashEquivalentsAtCarryingValue': 'cash', 'Assets': 'total_assets',
     'StockholdersEquity': 'shareholders_equity',
+    'DebtLongtermAndShorttermCombinedAmount': 'total_debt',
+    'LongTermDebt': 'long_term_debt_total',
+    'LongTermDebtCurrent': 'long_term_debt_current',
+    'LongTermDebtNoncurrent': 'long_term_debt_noncurrent',
+    'ShortTermBorrowings': 'short_term_borrowings',
+    'CommercialPaper': 'commercial_paper',
+    'ShortTermInvestments': 'short_term_investments',
+    'InterestExpense': 'interest_expense',
+    'InterestExpenseNonOperating': 'interest_expense_nonoperating',
+    'InterestExpenseNonoperating': 'interest_expense_nonoperating',
+    'IncomeTaxExpenseBenefit': 'income_tax_expense',
+    'IncomeLossFromContinuingOperationsBeforeIncomeTaxesExtraordinaryItemsNoncontrollingInterest': 'pretax_income',
+    'IncomeLossFromContinuingOperationsBeforeIncomeTaxesMinorityInterestAndIncomeLossFromEquityMethodInvestments': 'pretax_income_before_equity_method',
 }
+INSTANT_CONCEPTS = {'cash', 'total_assets', 'shareholders_equity', 'total_debt',
+                    'long_term_debt_total', 'long_term_debt_current', 'long_term_debt_noncurrent',
+                    'short_term_borrowings', 'commercial_paper', 'short_term_investments'}
 FORMS = {'10-K', '10-Q', '10-K/A', '10-Q/A'}
 
 
@@ -76,7 +92,7 @@ def parse_facts(payload: dict, company_id: str, filings: dict[str, Filing]):
                                          unit, date.fromisoformat(observation['end']), filing.available_at,
                                          date.fromisoformat(observation['start']) if 'start' in observation else None,
                                          'us-gaap')
-                    duration = source_concept not in {'CashAndCashEquivalentsAtCarryingValue', 'Assets', 'StockholdersEquity'}
+                    duration = CONCEPTS[source_concept] not in INSTANT_CONCEPTS
                     if duration == fact.is_instant:
                         raise ValueError('Unexpected instant/duration shape')
                     parsed.append((fact, source_concept))

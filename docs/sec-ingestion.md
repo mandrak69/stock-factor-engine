@@ -31,7 +31,9 @@ before evidence metadata is committed can leave an orphan file.
 
 This slice supports 10-K, 10-Q and their amendments, and an explicit subset of
 US-GAAP USD concepts: revenue, operating income, net income, operating cash flow,
-capital expenditure, cash, assets and equity. Unmapped concepts and other forms
+capital expenditure, cash, assets and equity. Parser v0.2 additionally maps debt,
+short-term investments, interest, tax and pretax-income concepts; see
+`balance-metrics.md`. Unmapped concepts and other forms
 remain in raw evidence but are not normalized. Revenue aliases remain distinct
 observations; ambiguous conflicting aliases cause historical queries to fail
 closed. No automatic debt totals or accounting-derived metrics are produced.
@@ -44,7 +46,7 @@ Amendment lineage is not inferred; each amendment retains its own accession.
 
 ## Availability policy and limitations
 
-For parser `sec-v0.1.0`, `available_at = accepted_at + 5 minutes`. This is an
+For parsers `sec-v0.1.0` and `sec-v0.2.0`, `available_at = accepted_at + 5 minutes`. This is an
 explicit research convention and does not prove exact public dissemination time.
 API acceptance timestamps with explicit offsets are normalized to UTC. Date-only
 filing timestamps are never converted into guessed midnight availability.
