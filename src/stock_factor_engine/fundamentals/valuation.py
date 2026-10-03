@@ -10,7 +10,7 @@ from .ttm import Term, _sum, calculate_ttm, shape
 
 
 def valuation_metrics(facts, bars, *, company_id, as_of, price_basis,
-                      snapshot_last_date, split_dates=(), period_end=None):
+                      snapshot_last_date, split_dates=(), period_end=None, share_scope_reason=None):
     selected = facts_as_of(facts, company_id=company_id, as_of=as_of)
     today = as_of.astimezone(ZoneInfo('America/New_York')).date()
     if len({bar.trading_date for bar in bars}) != len(bars) or any(
@@ -83,6 +83,7 @@ def valuation_metrics(facts, bars, *, company_id, as_of, price_basis,
             share_reason = 'Share count more than 120 days before price'
         elif any(latest < day <= snapshot_last_date for day in split_dates):
             share_reason = 'Split after share observation; provider price and reported share basis not reconciled'
+    share_reason = share_scope_reason or share_reason
     shares = Result(None if share_reason else share_fact.value, 'shares',
                     'latest reported outstanding shares; never weighted-average shares', share_reason,
                     inputs={'observation_date': share_fact.period_end if share_fact else None,
@@ -121,6 +122,7 @@ def valuation_metrics(facts, bars, *, company_id, as_of, price_basis,
             eps_reason = 'Diluted EPS must be positive; loss/zero earnings have no P/E'
         elif any(eps_fact.period_start <= day <= snapshot_last_date for day in split_dates):
             eps_reason = 'Split during or after EPS period; reported EPS and provider price basis not reconciled'
+        eps_reason = share_scope_reason or eps_reason
         eps = Result(None if eps_reason else eps_fact.value, 'USD/shares', 'reported direct annual diluted EPS',
                      eps_reason, inputs={'period_start': eps_fact.period_start if eps_fact else None,
                                          'period_end': eps_fact.period_end if eps_fact else None},

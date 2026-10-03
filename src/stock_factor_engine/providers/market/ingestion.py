@@ -23,7 +23,7 @@ def ingest_market(db, data_dir: Path, *, symbol='MSFT', response=None):
         raise ValueError('Ingestion requires no active transaction')
     company_id, security_id = identity['company_id'], identity['security_id']
     if identity['requires_sec'] and not db.execute('SELECT 1 FROM companies WHERE id=?', (company_id,)).fetchone():
-        raise ValueError('Import Microsoft SEC data before prices')
+        raise ValueError(f'Import {symbol} SEC data before prices')
     run_id, raw_id = uuid4().hex, uuid4().hex
     root = Path(data_dir).resolve()
     db.execute('INSERT INTO ingestion_runs VALUES (?, ?, ?, ?, NULL, ?, NULL)',

@@ -2,7 +2,8 @@
 
 ## Scope and provider
 
-The importer supports Microsoft common stock (USD, NASDAQ) and SPY ETF shares
+The importer supports the explicitly configured equities MSFT, AAPL, GOOGL,
+GOOG, AMZN and META (USD, NASDAQ), and SPY ETF shares
 (USD, NYSE Arca) using Yahoo
 Finance's chart JSON endpoint. It needs no API key and no dataframe dependency.
 This is an unofficial research adapter, not an exchange feed or a guaranteed
@@ -63,10 +64,13 @@ normalized observations are reused. A changed historical adjusted close creates
 a new version; it never overwrites the older series. Queries use one explicit
 snapshot, so old and new adjustment vintages cannot be mixed accidentally.
 All five tables are append-only. Migration v2 preserves the existing financial
-schema/data. Microsoft requires its company to exist from SEC ingestion.
+schema/data. Company equities require their company to exist from SEC ingestion.
 SPY creates the explicitly configured fund identity, CIK 0000884394, without
 importing fund filings. Schema v2 already supports its ETF security type.
 When replaying a SPY snapshot, include `--symbol SPY` in the replay command.
+Other snapshot replays likewise require their matching symbol. The central
+registry lives in `universe/registry.py`; see `docs/universe.md` for batch imports
+and share-class coverage limits.
 The initial security/ticker validity starts at the first observed Yahoo date;
 this is observed-history metadata, not a validated historical universe record.
 

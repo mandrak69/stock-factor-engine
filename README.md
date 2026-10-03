@@ -127,3 +127,17 @@ Reports market-cap estimate, P/S, FCF yield and P/E using matching direct annual
 diluted EPS. Source share dates, price dates, fiscal periods, assumptions and
 unavailable inputs are explicit. See `docs/valuation.md` for split and freshness
 policies. This mode reads the existing financial and market tables.
+
+## Multi-company research universe
+
+```powershell
+.\.venv\Scripts\python.exe -m stock_factor_engine.universe list
+$env:SEC_USER_AGENT = 'stock-factor-engine/0.1 your-contact@example.com'
+.\.venv\Scripts\python.exe -m stock_factor_engine.universe ingest
+.\.venv\Scripts\python.exe -m stock_factor_engine.universe report --as-of (Get-Date).ToUniversalTime().ToString('o')
+```
+
+Defaults to MSFT, AAPL, GOOGL, AMZN and META, with SPY benchmark ingestion.
+Reports growth, margins, valuation, momentum and risk in a Markdown table or
+detailed JSON. See `docs/universe.md` for class identities, partial failures,
+coverage and current-list limitations.

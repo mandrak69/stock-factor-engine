@@ -5,9 +5,11 @@ python -m stock_factor_engine.fundamentals --valuation --as-of (Get-Date).ToUniv
 ```
 
 The report reads the existing SQLite database without new schema or derived
-tables. It requires one configured USD common-stock security for the company.
-MSFT is the current supported market adapter instrument. Independent results
-retain formulas, SEC sources/accessions/availability, share observation dates,
+tables. Select a registered USD common-stock security with `--symbol AAPL`
+(or MSFT, AMZN, GOOGL, GOOG, META). Without a symbol, a company must have exactly
+one configured common-stock security. GOOGL and GOOG share a company but have
+separate price securities. Independent results retain formulas,
+SEC sources/accessions/availability, share observation dates,
 price dates, fiscal periods, snapshot source/ID, assumptions and missing reasons.
 
 ## Definitions
@@ -61,3 +63,13 @@ adjustments or SEC aggregates into a validated historical trading dataset.
 Results are independently available: missing/stale shares block market cap,
 P/S and FCF yield but can leave annual P/E available; missing EPS does not block
 the other valuations. Ratios use decimal arithmetic and no composite score.
+
+## Multiple share classes
+
+The universe registry identifies Alphabet (A/B/C) and Meta (A/B) as multiple-class
+issuers. Their aggregate SEC shares and EPS lack verified class allocation in
+this adapter. Valuation therefore blocks outstanding shares, market cap, P/S,
+FCF yield and annual P/E for these issuers, including direct valuation CLI
+requests. Financial/company-level growth and margins and individual traded-class
+price factors remain separately available when their own inputs pass checks.
+This is explicit missing coverage, not zero capitalization or zero earnings.
