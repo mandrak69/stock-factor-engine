@@ -27,7 +27,7 @@ def ingest_market(db, data_dir: Path, *, symbol='MSFT', response=None):
     run_id, raw_id = uuid4().hex, uuid4().hex
     root = Path(data_dir).resolve()
     db.execute('INSERT INTO ingestion_runs VALUES (?, ?, ?, ?, NULL, ?, NULL)',
-               (run_id, SOURCE, 'yahoo-v0.2.0', timestamp(datetime.now(UTC)), 'running'))
+               (run_id, SOURCE, 'yahoo-v0.2.1', timestamp(datetime.now(UTC)), 'running'))
     db.commit()
     raw_record = None
     try:

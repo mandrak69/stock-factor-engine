@@ -8,7 +8,7 @@ The first strategy is **Conservative Compounder v0.1**:
 - 25% Value
 - 20% Momentum
 - 15% Risk
-- quarterly rebalance
+- annual / monthly / weekly portfolio variants in the frozen Strategy v0.1 kernel
 - hard eligibility filters before scoring
 - point-in-time data only
 - S&P 500 Total Return benchmark
@@ -141,3 +141,26 @@ Defaults to MSFT, AAPL, GOOGL, AMZN and META, with SPY benchmark ingestion.
 Reports growth, margins, valuation, momentum and risk in a Markdown table or
 detailed JSON. See `docs/universe.md` for class identities, partial failures,
 coverage and current-list limitations.
+
+
+## CompoundRank strategy and market exposure
+
+The frozen stock-selection kernel and its tests are integrated from the local
+Strategy v0.1 project; see [Strategy v0.1](docs/strategy-v0.1.md). Existing
+research price factors retain their own documented definitions and are not
+silently substituted for the kernel's required 12-1/6-1 and 63-session inputs.
+
+The separate [Market Regime specification](docs/market-regime-v0.1.md) documents
+the approved score anchors, narrow-market override, exposure levels and optional
+VX penalty. The overlay scales stock targets and cash without changing rankings.
+
+```powershell
+python -m stock_factor_engine.regime ingest --data-dir data
+python -m stock_factor_engine.regime report --database data/engine.sqlite --as-of 2026-10-17T18:00:00+00:00
+```
+
+Without independently verified exact-date membership, breadth and the regime
+decision are unavailable. `--constituents-json` accepts an explicit complete
+historical membership import; it does not provide or certify that history.
+No full historical regime backtest has been claimed. Run all tests with
+`python -m pytest`.

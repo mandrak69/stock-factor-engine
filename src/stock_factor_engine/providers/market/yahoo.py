@@ -15,7 +15,7 @@ PRICE_BASIS = 'provider_split_adjusted_ohlc_dividend_adjusted_close'
 
 
 def fetch(symbol: str):
-    if not re.fullmatch(r'[A-Z0-9.-]{1,20}', symbol):
+    if not re.fullmatch(r'\^?[A-Z0-9.-]{1,20}', symbol):
         raise ValueError('Invalid ticker symbol')
     url = f'https://query1.finance.yahoo.com/v8/finance/chart/{symbol}?' + urlencode({
         'period1': 0, 'period2': int(datetime.now(UTC).timestamp()), 'interval': '1d',
@@ -38,13 +38,18 @@ def parse(content: bytes, symbol: str, retrieved_at: datetime):
     identity = IDENTITIES.get(symbol)
     if identity is None or meta.get('symbol') != symbol or meta.get('currency') != 'USD' or meta.get('instrumentType') != identity['instrument_type']:
         raise ValueError('Only explicitly configured matching USD instruments are supported')
-    if meta.get('exchangeTimezoneName') != 'America/New_York':
-        raise ValueError('Only US Eastern exchange dates are supported in v0.1')
-    timezone = ZoneInfo('America/New_York')
+    expected_timezone = identity.get('exchange_timezone', 'America/New_York')
+    if meta.get('exchangeTimezoneName') != expected_timezone:
+        raise ValueError('Exchange timezone does not match configured instrument')
+    timezone = ZoneInfo(expected_timezone)
     today = retrieved_at.astimezone(timezone).date()
     timestamps = result['timestamp']
     quotes = result['indicators']['quote'][0]
-    adjusted = result['indicators']['adjclose'][0]['adjclose']
+    # An index has no dividend total-return series. Preserve raw close.
+    if identity['instrument_type'] == 'INDEX':
+        adjusted = quotes['close']
+    else:
+        adjusted = result['indicators']['adjclose'][0]['adjclose']
     arrays = [quotes[name] for name in ('open', 'high', 'low', 'close', 'volume')] + [adjusted]
     if any(len(values) != len(timestamps) for values in arrays):
         raise ValueError('Price columns have different lengths')

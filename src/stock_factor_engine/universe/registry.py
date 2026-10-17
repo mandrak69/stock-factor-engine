@@ -23,6 +23,24 @@ IDENTITIES = {
             'share_class': 'fund', 'multiple_share_classes': False},
 }
 
+# Provider-scoped identities; these are market inputs, never stock candidates.
+MARKET_SYMBOLS = ('SPY', 'RSP', 'HYG', 'LQD', '^VIX')
+for symbol, name, exchange in (
+    ('RSP', 'Invesco S&P 500 Equal Weight ETF', 'NYSE_ARCA'),
+    ('HYG', 'iShares iBoxx USD High Yield Corporate Bond ETF', 'NYSE_ARCA'),
+    ('LQD', 'iShares iBoxx USD Investment Grade Corporate Bond ETF', 'NYSE_ARCA'),
+    ('^VIX', 'Cboe Volatility Index', 'CBOE'),
+):
+    is_index = symbol == '^VIX'
+    IDENTITIES[symbol] = {
+        'company_id': 'market:' + symbol, 'security_id': 'market:' + symbol,
+        'instrument_type': 'INDEX' if is_index else 'ETF',
+        'security_type': 'index' if is_index else 'etf', 'exchange': exchange,
+        'legal_name': name, 'cik': None, 'requires_sec': False,
+        'share_class': 'index' if is_index else 'fund', 'multiple_share_classes': False,
+        'exchange_timezone': 'America/Chicago' if is_index else 'America/New_York',
+    }
+
 
 def selected_symbols(symbols):
     symbols = tuple(symbols)
