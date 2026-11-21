@@ -183,3 +183,11 @@ participant and relationship registry. See [registry notes](research/ai-ecosyste
 Cash, contract obligations, financing facilities and project targets remain
 separate. Global 95% coverage and consolidated financials are unavailable until
 the underlying transactions and denominator can be reconciled.
+
+## AI ecosystem financial accounts
+
+The analytical boundary worksheet separates reported parent context, actual
+cash/revenue eliminations, funding disclosures and future commitments.
+See [method and CLI](research/ai-ecosystem/ACCOUNTS.md) and the
+[dated financial report](research/ai-ecosystem/reports/2026-11-20/financial-report.md).
+Incomplete bilateral/control evidence leaves group totals unavailable.

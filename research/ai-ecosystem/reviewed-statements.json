@@ -1,0 +1,64 @@
+[
+  {
+    "entity_id": "anthropic",
+    "source_id": "anthropic_s1",
+    "relative_file": "anthropic-s1.html",
+    "sha256": "bfc995542bad462ba99b5dc8c9c1331197ab67f8c3c7bc2b5ac1971e4999fc71",
+    "unit": "USD millions",
+    "periods": [["2025-01-01", "2025-12-31"], ["2025-01-01", "2025-09-30"], ["2026-01-01", "2026-09-30"]],
+    "ttm_start": "2025-10-01",
+    "ttm_end": "2026-09-30",
+    "metrics": {
+      "revenue": {"values_millions": [4585, 2545, 33242], "table_index": 114, "required_text": "Revenue $ 41 $ 386 $ 4,585 $ 2,545 $ 33,242"},
+      "operating_income": {"values_millions": [-8060, -5224, -1260], "table_index": 114, "required_text": "Operating loss (551) (2,980) (8,060) (5,224) (1,260)"},
+      "operating_cash_flow": {"values_millions": [-2637, -2024, 6569], "table_index": 119, "required_text": "Net cash provided by (used in) operating activities (1,627) (5,692) (2,637) (2,024) 6,569"},
+      "capital_expenditure": {"values_millions": [131, 111, 925], "table_index": 119, "required_text": "Purchases of property and equipment (2) (15) (131) (111) (925)"}
+    },
+    "latest_period_context_millions": {
+      "operating_cash_flow": 6569, "investing_cash_flow": -36546,
+      "financing_cash_flow": 110735, "fx": -7,
+      "opening_cash_including_restricted": 17401, "closing_cash_including_restricted": 98152,
+      "finance_lease_principal_payments": 88,
+      "leased_assets_and_equipment_prepayments": 1955,
+      "accounts_receivable_cash_adjustment": -7076,
+      "deferred_revenue_cash_adjustment": 1702
+    },
+    "notes": [
+      "Whole-issuer reported figures, not verified external AI demand or bilateral settled cash.",
+      "CFO is affected by working capital and noncash fair-value adjustments; accounting net loss is not cash burn.",
+      "Cash-flow closing balance 98,152m differs by 50m from balance-sheet cash 95,562m plus restricted cash 2,540m in this archived document; unresolved, no clean liquidity estimate.",
+      "Finance-lease principal and equipment prepayments are excluded from cash PP&E metric and must be separately reconciled."
+    ]
+  },
+  {
+    "entity_id": "nscale",
+    "source_id": "nscale_s1",
+    "relative_file": "nscale_s1.raw",
+    "sha256": "3409a6ed5c7c01d608dce48b495cd26bebfb5b362eb37160916f4d2ecdd0cdbb",
+    "unit": "USD millions",
+    "periods": [["2025-01-01", "2025-12-31"], ["2025-01-01", "2025-06-30"], ["2026-01-01", "2026-06-30"]],
+    "ttm_start": "2025-07-01",
+    "ttm_end": "2026-06-30",
+    "metrics": {
+      "revenue": {"values_millions": [33.0, 10.4, 140.6], "table_index": 8, "required_text": "Revenue $ 140.6 $ 10.4 $ 33.0 $ 19.1"},
+      "operating_income": {"values_millions": [-169.8, -24.7, -492.0], "table_index": 8, "required_text": "Operating loss (492.0 ) (24.7 ) (169.8 ) (16.1 )"},
+      "operating_cash_flow": {"values_millions": [1376.4, 5.6, 1686.1], "table_index": 9, "required_text": "Net cash provided by (used in) operating activities $ 1,686.1 $ 5.6 $ 1,376.4 $ (19.2 )"},
+      "capital_expenditure": {"values_millions": [621.4, 113.7, 3230.1], "table_index": 88, "required_text": "Purchases of property and equipment (3,230.1 ) (113.7 )"}
+    },
+    "additional_checks": [{"table_index": 46, "required_text": "Purchase of property and equipment $ (621.4 ) $ (64.2 )"}],
+    "latest_period_context_millions": {
+      "operating_cash_flow": 1686.1, "investing_cash_flow": -3285.8,
+      "financing_cash_flow": 1628.4, "fx": -2.9,
+      "opening_cash_including_restricted": 2067.3, "closing_cash_including_restricted": 2093.1,
+      "deferred_revenue_cash_adjustment": 3811.5,
+      "accounts_receivable_cash_adjustment": -1505.4,
+      "cash_and_equivalents": 1478.4,
+      "restricted_cash": 614.7
+    },
+    "notes": [
+      "CFO includes 3,811.5m deferred-revenue inflow and -1,505.4m receivables movement in H1 2026; positive CFO is not evidence of profitable recurring operations.",
+      "Bridge uses original historical consolidation perimeter; acquisitions/JV roll-up and customer prepayments affect comparability.",
+      "These figures are issuer totals and are never inserted as external group cash."
+    ]
+  }
+]

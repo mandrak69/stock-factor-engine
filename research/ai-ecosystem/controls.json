@@ -1,0 +1,17 @@
+[
+  {
+    "parent_id": "wistron",
+    "subsidiary_id": "wiwynn",
+    "reported_ownership": "0.3371",
+    "reported_control": true,
+    "period_start": "2026-01-01",
+    "period_end": "2026-09-30",
+    "available_at": "2026-11-08T00:00:00Z",
+    "url": "https://www.wiwynn.com/hubfs/Investors/Financial_Report/Wiwynn_2026Q3_Financial.pdf",
+    "evidence_file": "wiwynn.pdf",
+    "sha256": "4e9b587ca54c9997da40b62ec9ac8dd21e855a2b69a68c3802860023e3bb56b1",
+    "reviewed_page_index": 54,
+    "locator": "Note 7(a): parent and ultimate controlling party; Wistron issues consolidated financial statements",
+    "note": "Ownership percentage alone is not the control test. Do not add subsidiary statements again or eliminate parent-internal transactions a second time."
+  }
+]

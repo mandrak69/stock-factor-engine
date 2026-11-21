@@ -1,0 +1,21 @@
+{
+  "version": "analytical-boundary-v0.1",
+  "reviewed_evidence_dir": "data/ai-ecosystem-2026-11-20/evidence",
+  "as_of": "2026-11-20T21:30:00+00:00",
+  "period_start": "2026-01-01",
+  "period_end": "2026-09-30",
+  "scope": "all company_group nodes from the dated registry; no project/reference nodes; analytical aggregation of independent groups, not statutory control consolidation",
+  "cash": [],
+  "external_counterparties": [],
+  "sales": [],
+  "coverage": [],
+  "cash_reconciliation": null,
+  "perimeter_review": null,
+  "notes": [
+    "Empty transaction ledgers mean unavailable, never zero actual cash or sales.",
+    "Reported corporate investments remain in the financing disclosure schedule until execution, period and bilateral reconciliation are reviewed.",
+    "Do not insert contract notional, backlog, credit limits, GW capacity or warrants into cash/sales ledgers.",
+    "Parent-company context uses each issuer's latest available TTM, labeled by exact dates; it is not summed across fiscal calendars.",
+    "No identical-calendar group estimate is inferred from mismatched TTM figures."
+  ]
+}
