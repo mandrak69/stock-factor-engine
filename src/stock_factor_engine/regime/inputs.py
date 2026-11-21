@@ -4,7 +4,7 @@ The completion convention matches the existing SQLite price adapter: a session
 becomes usable at the following New York midnight, never during that session.
 """
 from dataclasses import dataclass
-from datetime import date, datetime, timedelta
+from datetime import date, datetime, time, timedelta
 from decimal import Decimal
 from typing import Mapping, Protocol
 from zoneinfo import ZoneInfo
@@ -25,12 +25,14 @@ class MembershipProvider(Protocol):
     def members_on(self, session: date) -> Membership | None: ...
 
 
-def completed(bars, as_of):
+def completed(bars, as_of, *, include_completed_close=False):
     if as_of.tzinfo is None or as_of.utcoffset() is None:
         raise ValueError('as_of must be timezone-aware')
     _validate(bars)
-    cutoff = as_of.astimezone(ZoneInfo('America/New_York')).date()
-    return [bar for bar in bars if bar.trading_date < cutoff]
+    local = as_of.astimezone(ZoneInfo('America/New_York'))
+    cutoff = local.date()
+    return [bar for bar in bars if bar.trading_date < cutoff or
+            (include_completed_close and local.time() >= time(16, 15) and bar.trading_date == cutoff)]
 
 
 def window(bars, session, count, expected_dates=None):
@@ -87,10 +89,10 @@ def breadth(member_prices: Mapping[str, list[DailyPrice]], membership, session, 
                   len(membership.security_ids), details=details)
 
 
-def regime_inputs(series, *, as_of, membership=None, member_prices=None):
+def regime_inputs(series, *, as_of, membership=None, member_prices=None, include_completed_close=False):
     if as_of.tzinfo is None or as_of.utcoffset() is None:
         raise ValueError('as_of must be timezone-aware')
-    series = {symbol: completed(bars, as_of) for symbol, bars in series.items()}
+    series = {symbol: completed(bars, as_of, include_completed_close=include_completed_close) for symbol, bars in series.items()}
     spy = series.get('SPY', [])
     cutoff = as_of.astimezone(ZoneInfo('America/New_York')).date()
     definitions = ('breadth', 'rsp_spy', 'spy_trend', 'vix_spot', 'hyg_lqd')

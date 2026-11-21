@@ -148,3 +148,15 @@ def test_upgrade_from_v1_keeps_financial_data(tmp_path, monkeypatch):
         assert connection.execute('SELECT COUNT(*) FROM daily_prices').fetchone()[0] == 0
     finally:
         connection.close()
+
+
+def test_action_before_requested_price_window_is_ignored_but_inside_missing_bar_fails():
+    data = payload()
+    result = data['chart']['result'][0]
+    result['events']['dividends']['outside'] = {'date': result['timestamp'][0] - 86400, 'amount': 1}
+    bars, actions, rejected, _ = parse(response(data)[0], 'MSFT', RETRIEVED)
+    assert len(bars) == 3 and len(actions) == 2 and not rejected
+    result['events']['dividends']['bad_first_bar'] = {'date': result['timestamp'][0], 'amount': 1}
+    result['indicators']['quote'][0]['close'][0] = None
+    with pytest.raises(ValueError, match='no valid bar'):
+        parse(response(data)[0], 'MSFT', RETRIEVED)

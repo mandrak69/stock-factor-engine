@@ -14,7 +14,7 @@ from stock_factor_engine.storage.time import timestamp
 from .client import BASE_URL, SecClient, decode_json, normalize_cik
 
 
-PARSER_VERSION = 'sec-v0.3.0'
+PARSER_VERSION = 'sec-v0.4.0'
 # Explicit, deliberately small mapping. Aliases remain separate observations.
 CONCEPTS = {
     'RevenueFromContractWithCustomerExcludingAssessedTax': 'revenue',
@@ -22,6 +22,10 @@ CONCEPTS = {
     'OperatingIncomeLoss': 'operating_income', 'NetIncomeLoss': 'net_income',
     'NetCashProvidedByUsedInOperatingActivities': 'operating_cash_flow',
     'PaymentsToAcquirePropertyPlantAndEquipment': 'capital_expenditure',
+    'AssetsCurrent': 'current_assets', 'LiabilitiesCurrent': 'current_liabilities',
+    'PropertyPlantAndEquipmentNet': 'net_ppe', 'DebtCurrent': 'current_debt_total',
+    'DepreciationDepletionAndAmortization': 'depreciation_amortization',
+    'Depreciation': 'depreciation', 'AmortizationOfIntangibleAssets': 'amortization_intangibles',
     'CashAndCashEquivalentsAtCarryingValue': 'cash', 'Assets': 'total_assets',
     'StockholdersEquity': 'shareholders_equity',
     'DebtLongtermAndShorttermCombinedAmount': 'total_debt',
@@ -49,7 +53,7 @@ NAMESPACE_CONCEPTS = {'us-gaap': CONCEPTS, 'dei': {
 }}
 SHARE_CONCEPTS = {'reported_shares_outstanding', 'cover_shares_outstanding',
                   'weighted_average_shares_basic', 'weighted_average_shares_diluted'}
-INSTANT_CONCEPTS = {'cash', 'total_assets', 'shareholders_equity', 'total_debt',
+INSTANT_CONCEPTS = {'current_assets', 'current_liabilities', 'net_ppe', 'current_debt_total', 'cash', 'total_assets', 'shareholders_equity', 'total_debt',
                     'long_term_debt_total', 'long_term_debt_current', 'long_term_debt_noncurrent',
                     'short_term_borrowings', 'commercial_paper', 'short_term_investments',
                     'reported_shares_outstanding', 'cover_shares_outstanding'}

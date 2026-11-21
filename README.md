@@ -164,3 +164,13 @@ decision are unavailable. `--constituents-json` accepts an explicit complete
 historical membership import; it does not provide or certify that history.
 No full historical regime backtest has been claimed. Run all tests with
 `python -m pytest`.
+
+
+## Dated CURRENT CompoundRank report
+
+`python -m stock_factor_engine.current --evidence-dir data/current-2026-11-20 --output data/reports/current-2026-11-20`
+builds the full ranking, exclusions, prior-date comparison, model portfolio and
+regime from archived evidence. See [current screening](docs/current-screening.md)
+for exact ROC/EV formulas, acceptance timing, membership provenance, required
+inputs and fail-closed allocation. Missing source data produces an explicitly
+unavailable diagnostic report rather than fabricated scores.

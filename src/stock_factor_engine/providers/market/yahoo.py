@@ -26,7 +26,7 @@ def fetch(symbol: str):
     return content, datetime.now(UTC), url
 
 
-def parse(content: bytes, symbol: str, retrieved_at: datetime):
+def parse(content: bytes, symbol: str, retrieved_at: datetime, *, identity=None):
     if retrieved_at.tzinfo is None or retrieved_at.utcoffset() is None:
         raise ValueError('retrieved_at must be timezone-aware')
     payload = json.loads(content, parse_float=Decimal)
@@ -35,7 +35,7 @@ def parse(content: bytes, symbol: str, retrieved_at: datetime):
         raise ValueError('Yahoo did not return one valid price series')
     result = chart['result'][0]
     meta = result['meta']
-    identity = IDENTITIES.get(symbol)
+    identity = identity or IDENTITIES.get(symbol)
     if identity is None or meta.get('symbol') != symbol or meta.get('currency') != 'USD' or meta.get('instrumentType') != identity['instrument_type']:
         raise ValueError('Only explicitly configured matching USD instruments are supported')
     expected_timezone = identity.get('exchange_timezone', 'America/New_York')
@@ -67,10 +67,11 @@ def parse(content: bytes, symbol: str, retrieved_at: datetime):
     if not bars or len({bar.trading_date for bar in bars}) != len(bars):
         raise ValueError('Empty series or duplicate trading dates')
     dates = {bar.trading_date for bar in bars}
+    coverage_start = min(datetime.fromtimestamp(epoch, timezone).date() for epoch in timestamps)
     for event_type, kind in [('dividends', 'dividend'), ('splits', 'split')]:
         for event in result.get('events', {}).get(event_type, {}).values():
             event_date = datetime.fromtimestamp(event['date'], timezone).date()
-            if event_date >= today:
+            if event_date >= today or event_date < coverage_start:
                 continue
             if event_date not in dates:
                 raise ValueError(f'Corporate action has no valid bar at {event_date}')
