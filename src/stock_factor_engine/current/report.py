@@ -192,7 +192,7 @@ def build_report(folder, *, as_of, previous_as_of, output):
     rows = ranking_rows(rankings['current'], members, prior_ranks)
     previous_rows = ranking_rows(rankings['previous'], members)
     paper_holdings = {item.symbol for item in rankings['previous'].ranked[:20]} if len(previous_rows) >= 20 else set()
-    rotation = ranking_rows(rankings['current'], members, prior_ranks, paper_holdings)
+    rotation = ranking_rows(rankings['current'], members, prior_ranks, paper_holdings) if len(previous_rows) >= 20 else []
     for symbol in sorted(paper_holdings - {row['Ticker'] for row in rotation}):
         rotation.append({'Ticker': symbol, 'Company': members[symbol]['company'], 'Sector': members[symbol]['sector'],
                          'Action': 'SELL', 'Previous Rank': prior_ranks[symbol], 'Reason': '; '.join(exclusions['current'].get(symbol, ['No current rank']))})
@@ -253,7 +253,7 @@ def build_report(folder, *, as_of, previous_as_of, output):
                'quant500_overlap': sorted(set(QUANT500) & {row['Ticker'] for row in rows[:20]}) if len(rows) >= 20 else None,
                'quant500_scored_reference': sorted(set(QUANT500) & set(by_symbol)),
                'paper_rotation_status': 'available' if len(previous_rows) >= 20 else 'unavailable: fewer than 20 prior ranked names',
-               'portfolio_basis': 'No actual holdings. Initial model starts from cash; paper rotation separately assumes prior Top20.',
+               'portfolio_basis': 'No actual holdings. Initial model starts from cash. Paper rotation: ' + ('hypothetical prior Top20' if len(previous_rows) >= 20 else 'unavailable because fewer than 20 prior names are scored'),
                'data_vintage': 'Retrospective reconstruction from downloads on/after decision date. SEC availability uses accepted_at+5m; not a contemporaneously archived complete data vintage.'}
     (output / 'summary.json').write_text(json.dumps(summary, default=str, indent=2), encoding='utf-8')
     (output / 'audit.json').write_text(json.dumps({'financials': audits, 'prices': price_audit,
@@ -275,7 +275,7 @@ def build_report(folder, *, as_of, previous_as_of, output):
         '- Market data: Yahoo raw close for price and capitalization, adjusted close for momentum/risk/ratios and SMA. Downloaded after the decision; vendor corrections cannot be ruled out.',
         '- Formulas, score weights and thresholds were not changed after inspecting the result. No market-cap filter. Missing short debt or D&A is never assumed zero.',
         '- Report covers complete-data subset, not a claim that unscored companies are economically ineligible. Exclusions identify the exact reason.',
-        '- No real portfolio supplied. Main Action uses an empty starting portfolio (BUY/WATCH). Separate paper rotation uses previous Top20 as hypothetical holdings; no trades have been executed.',
+        '- No real portfolio supplied. Main Action uses an empty starting portfolio (BUY/WATCH). Paper rotation: ' + summary['paper_rotation_status'] + '. No trades have been executed.',
         '- A high rank is a screening result. Model targets would be executed no earlier than the next trading session.',
         f'- Source code base commit at generation: `{commit}`; see delivery commit for final implementation.', '',
         '## TOP 20 BUY candidates', '', 'Provisional complete-data subset only. A full Top20 is unavailable when fewer than 20 names can be scored.', '', table(rows[:20]),
