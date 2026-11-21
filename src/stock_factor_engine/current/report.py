@@ -21,7 +21,7 @@ from .calculations import candidate, completed_prices
 QUANT500 = ('SNDK', 'MU', 'PSX', 'VLO', 'MPC', 'STX', 'WDC', 'SMCI', 'HPE', 'DELL',
             'TER', 'APA', 'OXY', 'NUE', 'FTNT', 'NVDA', 'CVS', 'PLTR', 'CVX', 'EOG')
 FIELDS = ('Rank', 'Ticker', 'Company', 'Sector', 'Quality', 'Value', 'Momentum', 'Risk',
-          'Final Score', 'Previous Rank', 'Rank Change', 'Action')
+          'Final Score', 'Previous Rank', 'Rank Change', 'Action', 'Rank Scope')
 WEIGHTS = {'quality': D('.40'), 'value': D('.25'), 'momentum': D('.20'), 'risk': D('.15')}
 
 
@@ -60,7 +60,8 @@ def ranking_rows(ranking, members, previous=None, holdings=frozenset()):
             'Sector': member['sector'], 'Quality': item.components['quality'], 'Value': item.components['value'],
             'Momentum': item.components['momentum'], 'Risk': item.components['risk'], 'Final Score': item.score,
             'Previous Rank': prior, 'Rank Change': None if prior is None else prior - item.rank,
-            'Action': action(item.rank, item.symbol in holdings)})
+            'Action': action(item.rank, item.symbol in holdings),
+            'Rank Scope': f'Provisional: {len(ranking.ranked)} complete-data names; global rank unavailable'})
     return rows
 
 
@@ -133,12 +134,27 @@ def build_report(folder, *, as_of, previous_as_of, output):
                     if str(submissions['cik']).zfill(10) != cik or str(payload['cik']).zfill(10) != cik:
                         raise ValueError('SEC source CIK differs from dated roster')
                     filings, filing_rejects = parse_filings(submissions['filings']['recent'], 'sec:' + cik)
-                    filing_map = {filing.accession_number: filing for filing in filings}
+                    archive_sources = []
+                    earliest = previous_as_of.date().replace(year=previous_as_of.year - 3)
+                    for page in submissions['filings'].get('files', []):
+                        if page.get('filingTo', '9999-12-31') < earliest.isoformat():
+                            continue
+                        archive_raw, archive_meta = load_evidence(folder, 'archive_' + page['name'][:-5])
+                        archived, rejected = parse_filings(json.loads(archive_raw), 'sec:' + cik)
+                        filings.extend(archived)
+                        filing_rejects.extend(rejected)
+                        archive_sources.append(archive_meta)
+                    filing_map = {}
+                    for filing in filings:
+                        existing = filing_map.get(filing.accession_number)
+                        if existing is not None and existing != filing:
+                            raise ValueError('Conflicting SEC submissions pages for ' + filing.accession_number)
+                        filing_map[filing.accession_number] = filing
                     parsed, fact_rejects = parse_facts(payload, 'sec:' + cik, filing_map)
                     facts = [item[0] for item in parsed]
                     cutoff_date = previous_as_of.date().replace(year=previous_as_of.year - 3)
                     facts = [fact for fact in facts if fact.period_end >= cutoff_date]
-                    sec_audit = {'submissions': submission_meta, 'companyfacts': facts_meta,
+                    sec_audit = {'submissions': submission_meta, 'archives': archive_sources, 'companyfacts': facts_meta,
                         'rejected_filings': filing_rejects, 'rejected_fact_count': len(fact_rejects),
                         'filings': {key: asdict(value) for key, value in filing_map.items()}}
                     fact_cache = {cik: (facts, filing_map, sec_audit)}
@@ -175,7 +191,7 @@ def build_report(folder, *, as_of, previous_as_of, output):
     prior_ranks = {item.symbol: item.rank for item in rankings['previous'].ranked}
     rows = ranking_rows(rankings['current'], members, prior_ranks)
     previous_rows = ranking_rows(rankings['previous'], members)
-    paper_holdings = {item.symbol for item in rankings['previous'].ranked[:20]}
+    paper_holdings = {item.symbol for item in rankings['previous'].ranked[:20]} if len(previous_rows) >= 20 else set()
     rotation = ranking_rows(rankings['current'], members, prior_ranks, paper_holdings)
     for symbol in sorted(paper_holdings - {row['Ticker'] for row in rotation}):
         rotation.append({'Ticker': symbol, 'Company': members[symbol]['company'], 'Sector': members[symbol]['sector'],
@@ -201,7 +217,7 @@ def build_report(folder, *, as_of, previous_as_of, output):
         if item:
             deficits = {key: (means[key] - item.components[key]) * weight for key, weight in WEIGHTS.items()}
             entry.update({key.title(): item.components[key] for key in WEIGHTS})
-            entry['Largest weighted deficit vs our Top20 mean'] = max(deficits, key=deficits.get)
+            entry['Largest weighted deficit vs scored candidate mean'] = max(deficits, key=deficits.get)
             entry['Weighted deficit'] = max(deficits.values())
         else:
             entry['Reason'] = '; '.join(exclusions['current'].get(symbol, ['Not in verified dated universe']))
@@ -213,18 +229,30 @@ def build_report(folder, *, as_of, previous_as_of, output):
     csv_write(output / f'excluded-{current_date}.csv', exclusion_rows, ('Ticker', 'Company', 'Sector', 'Reason'))
     csv_write(output / f'paper-rotation-{current_date}.csv', rotation, FIELDS + ('Reason',))
     quant_fields = ('Quant500 Rank', 'Ticker', 'Our Rank', 'Quality', 'Value', 'Momentum', 'Risk',
-                    'Largest weighted deficit vs our Top20 mean', 'Weighted deficit', 'Reason')
+                    'Largest weighted deficit vs scored candidate mean', 'Weighted deficit', 'Reason')
     csv_write(output / 'quant500-comparison.csv', quant, quant_fields)
-    model_portfolio = [{'Ticker': row['Ticker'], 'Equity sleeve weight': D('.05'),
+    model_portfolio = [{'Ticker': row['Ticker'], 'Equity sleeve weight': D('.05') if len(rows) >= 20 else None,
         'Effective portfolio weight': allocation['equity_weights'][row['Ticker']] if allocation else None,
-        'Status': 'target only; no execution' if allocation else 'unavailable: no complete regime decision'} for row in rows[:20]]
+        'Status': 'target only; no execution' if allocation else 'unavailable: fewer than 20 names or incomplete regime decision'} for row in rows[:20]]
     csv_write(output / 'initial-model-portfolio.csv', model_portfolio,
               ('Ticker', 'Equity sleeve weight', 'Effective portfolio weight', 'Status'))
-    summary = {'status': 'partial' if rows else 'unavailable', 'decision_timestamp': as_of, 'previous_timestamp': previous_as_of, 'universe': len(members),
+    def exclusion_kind(reasons):
+        for reason in reasons:
+            if reason.startswith('Excluded sector:'):
+                return reason
+        filters = ('Capital Employed is not positive', 'TTM EBIT is not positive', 'Price below',
+                   'Fewer than 252 completed trading sessions')
+        if any(any(marker in reason for marker in filters) for reason in reasons):
+            return 'Other explicit universe filters'
+        return 'Data unavailable or ambiguous; eligibility not established'
+    coverage_counts = dict(Counter(exclusion_kind(reasons) for reasons in exclusions['current'].values()))
+    summary = {'coverage_counts': coverage_counts, 'status': 'partial' if rows else 'unavailable', 'decision_timestamp': as_of, 'previous_timestamp': previous_as_of, 'universe': len(members),
                'issuers': len({item['cik'] for item in members.values()}), 'scored': len(rows),
                'excluded': len(exclusion_rows), 'previous_scored': len(previous_rows), 'regime': regime,
                'allocation': allocation, 'membership': membership, 'price_errors': price_errors,
-               'quant500_overlap': sorted(set(QUANT500) & {row['Ticker'] for row in rows[:20]}) if rows else None,
+               'quant500_overlap': sorted(set(QUANT500) & {row['Ticker'] for row in rows[:20]}) if len(rows) >= 20 else None,
+               'quant500_scored_reference': sorted(set(QUANT500) & set(by_symbol)),
+               'paper_rotation_status': 'available' if len(previous_rows) >= 20 else 'unavailable: fewer than 20 prior ranked names',
                'portfolio_basis': 'No actual holdings. Initial model starts from cash; paper rotation separately assumes prior Top20.',
                'data_vintage': 'Retrospective reconstruction from downloads on/after decision date. SEC availability uses accepted_at+5m; not a contemporaneously archived complete data vintage.'}
     (output / 'summary.json').write_text(json.dumps(summary, default=str, indent=2), encoding='utf-8')
@@ -239,6 +267,8 @@ def build_report(folder, *, as_of, previous_as_of, output):
         f'Decision timestamp: **{as_of.isoformat()}** (16:30 New York). Cena i faktori ukljucuju zavrsenu sesiju 20.11.',
         f'Universe: {len(members)} securities / 500 companies. Scored: **{len(rows)}**. Excluded/unavailable: **{len(exclusion_rows)}**.',
         f'Previous ranking: {previous_as_of.isoformat()}, {len(previous_rows)} scored. Rank Change = previous rank minus current rank.',
+        'Rank movements also reflect changes in complete-data cross-section coverage, not only changes in one company.',
+        '', '## Coverage', '', table([{'Category': key, 'Count': value} for key, value in coverage_counts.items()], ('Category', 'Count')),
         '', '## Podaci i ogranicenja', '',
         f'- Dated membership revision: [{membership["revision_id"]}]({membership["source"]}), published {membership["published_at"]}. ' + membership['verification'],
         '- SEC: original accession linked to accepted_at; available_at = accepted_at + 5 minutes. Future filings are excluded. Companyfacts downloaded later are not an independently archived as-of vintage.',
@@ -248,25 +278,25 @@ def build_report(folder, *, as_of, previous_as_of, output):
         '- No real portfolio supplied. Main Action uses an empty starting portfolio (BUY/WATCH). Separate paper rotation uses previous Top20 as hypothetical holdings; no trades have been executed.',
         '- A high rank is a screening result. Model targets would be executed no earlier than the next trading session.',
         f'- Source code base commit at generation: `{commit}`; see delivery commit for final implementation.', '',
-        '## TOP 20 BUY candidates', '', table(rows[:20]),
+        '## TOP 20 BUY candidates', '', 'Provisional complete-data subset only. A full Top20 is unavailable when fewer than 20 names can be scored.', '', table(rows[:20]),
         '## KEEP zone 21-35', '', 'This is the rank zone; without actual holdings these rows are WATCH.', '', table(rows[20:35]),
-        '## SELL candidates', '', 'No real holdings supplied. Hypothetical prior-Top20 rotation:', '',
+        '## SELL candidates', '', 'No real holdings supplied. Hypothetical prior-Top20 rotation status: ' + summary['paper_rotation_status'], '',
         table([row for row in rotation if row['Action'] == 'SELL'], FIELDS + ('Reason',)),
         '## Biggest rank improvements', '', table(sorted([row for row in rows if row['Rank Change'] is not None and row['Rank Change'] > 0], key=lambda row: -row['Rank Change'])[:10]),
         '## Biggest rank deteriorations', '', table(sorted([row for row in rows if row['Rank Change'] is not None and row['Rank Change'] < 0], key=lambda row: row['Rank Change'])[:10]),
-        '## Market Regime', '', f'Status: **{regime["status"]}**. Regime: **{regime["regime"]}**. Score: **{regime["score"]}**. Target equity exposure: **{regime["equity_exposure"]}**.', '',
-        table([{'Input': key, 'Value': factor.value, 'Status': factor.payload()['status'], 'Reason': factor.reason}
-               for key, factor in regime_values.items()], ('Input', 'Value', 'Status', 'Reason')),
+        '## Market Regime', '', f'Status: **{regime["status"]}**. Regime: **{regime["regime"] or "unavailable"}**. Score: **{regime["score"] if regime["score"] is not None else "unavailable"}**. Target equity exposure: **{regime["equity_exposure"] if regime["equity_exposure"] is not None else "unavailable"}**.', '',
+        table([{'Input': key, 'Value': factor.value * 100 if factor.value is not None and factor.unit == 'ratio' else factor.value, 'Unit': '%' if factor.unit == 'ratio' else factor.unit, 'Status': factor.payload()['status'], 'Reason': factor.reason}
+               for key, factor in regime_values.items()], ('Input', 'Value', 'Unit', 'Status', 'Reason')),
         'Breadth incomplete members: ' + ', '.join(regime_values['breadth'].details.get('missing', [])) if regime_values['breadth'].details else '',
         'VIX front-month: unavailable/optional; no invented ticker or penalty.', '',
-        '## Combined portfolio', '', table(model_portfolio, ('Ticker', 'Equity sleeve weight', 'Effective portfolio weight', 'Status')),
+        '## Combined portfolio', '', 'Weight columns below are fractions of the full portfolio (0.05 means 5%).', '', table(model_portfolio, ('Ticker', 'Equity sleeve weight', 'Effective portfolio weight', 'Status')),
         ('Cash/defensive target: ' + str(allocation['cash_weight']) if allocation else 'Effective targets and cash/defensive bucket: unavailable because regime or Top20 is incomplete. No default exposure is substituted.'),
         'Illustration only: at 75% equity exposure with 20 equal weights, each stock would be 3.75% of total portfolio and cash/defensive 25%.', '',
         '## Quant500 sanity check', '',
-        'Reference Top20 is supplied by the user, not independently verified or treated as the same methodology. ' + ('Overlap unavailable: no valid stock ranking.' if summary['quant500_overlap'] is None else 'Overlap: ' + str(len(summary['quant500_overlap'])) + '/20 (' + ', '.join(summary['quant500_overlap']) + ').'),
-        'For scored reference names, the largest weighted component deficit relative to our Top20 mean describes our model. Without Quant500 component data its actual cause of disagreement cannot be established. No parameter was tuned to match the list.', '',
+        'Reference Top20 is supplied by the user, not independently verified or treated as the same methodology. ' + ('Top20 overlap unavailable: fewer than 20 names are scored.' if summary['quant500_overlap'] is None else 'Overlap: ' + str(len(summary['quant500_overlap'])) + '/20 (' + ', '.join(summary['quant500_overlap']) + ').'),
+        'Scored Quant500 reference names: ' + ', '.join(summary['quant500_scored_reference']) + '. For scored reference names, the largest weighted component deficit relative to the scored candidate mean (up to 20 names) describes our model. Without Quant500 component data its actual cause of disagreement cannot be established. No parameter was tuned to match the list.', '',
         table(quant, quant_fields), '',
-        '## All scored companies', '', table(rows),
+        '## All scored companies', '', 'Percentiles are relative to this complete-data subset, not the entire economically eligible S&P 500. A global rank cannot be claimed from incomplete factor coverage.', '', table(rows),
         '## All excluded or unavailable companies', '', table(exclusion_rows, ('Ticker', 'Company', 'Sector', 'Reason'))]
     (output / f'compoundrank-{current_date}.md').write_text('\n'.join(lines), encoding='utf-8')
     return summary

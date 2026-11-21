@@ -16,7 +16,8 @@ callers retain their conservative next-midnight default. No next-session fills
 or actual trades are simulated here.
 
 SEC submissions provide `accepted_at`; existing parser policy sets `available_at`
-to acceptance plus five minutes. Only available filing-backed fact versions
+to acceptance plus five minutes. Required historical submissions pages are merged
+with recent submissions to preserve original acceptance evidence. Only available filing-backed fact versions
 and financial periods ending by the decision session are used. Later filings
 cannot rewrite an earlier view. Raw responses, retrieval times and SHA-256 hashes
 are saved outside Git. The input source vintage is downloaded retrospectively,
@@ -62,7 +63,11 @@ factor is explicitly unavailable.
   daily returns times sqrt(252), requiring 64 prices.
 - DD252 = worst running-peak drawdown within the last 252 adjusted prices.
 
-TTM accounting windows must match. Ambiguous facts, nonpositive ratio
+TTM accounting windows must match. The latest available income/revenue/cash-flow
+reporting end anchors the calculation; an older EBIT period is never substituted
+when the latest period is incomplete. Ambiguities outside contributing windows
+do not block an unrelated factor. Explicit debt totals and complete components
+must agree. Ambiguous facts, nonpositive ratio
 denominators, missing short debt and incomplete price windows are explicit
 unavailable reasons; no zero assumptions or partial-date intersections are used.
 Percentiles and 1%/99% winsorization are owned solely by the existing kernel.
@@ -89,14 +94,16 @@ committed because it contains large provider responses/derived local data.
 
 No real portfolio was provided. Main Action assumes an initially empty portfolio:
 BUY at rank <=20, otherwise WATCH. Paper rotation separately treats previous
-Top20 as hypothetical holdings, giving KEEP through rank 35 and SELL above 35
+Top20 as hypothetical holdings only when at least 20 prior names are scoreable,
+giving KEEP through rank 35 and SELL above 35
 or when unscored. Neither list is an executed position record. Rank Change is
 previous rank minus current rank, unavailable without both ranks.
 
 Breadth includes all dated members, including Financials/Utilities and names
 excluded from stock selection. One member without the full matching 200-session
 window makes breadth and the combined regime unavailable. No equity/cash
-allocation is published from that unavailable decision. A 75% exposure example
+allocation is published from that unavailable decision or when fewer than 20
+current names are scoreable. A 75% exposure example
 is illustrative only: 20 equal weights would be 3.75% each and 25% cash.
 
 Quant500's supplied list is an external reference, not a calibration target.
@@ -104,3 +111,19 @@ For scored reference names, weighted component deficits against our Top20 mean
 describe our ranking. Without Quant500 component values they cannot establish
 the cause of its ranking. Without our ranking the overlap is unavailable, not
 zero. Parameters are never changed to improve agreement.
+
+
+## Coverage findings for the first run
+
+All 508 market series and 393 non-excluded issuers' submissions/companyfacts
+were downloaded, plus four relevant archived submissions pages, without network
+errors. Exact mapped accounting facts remain incomplete for most issuers.
+This is a source-coverage limitation, not a valid full S&P 500 Top20 result.
+Partial-cohort percentiles must not be interpreted as whole-universe percentiles.
+Ranking CSV rows expose this in the Rank Scope column. If fewer than 20 names
+are scoreable, Top20 overlap, model allocations and prior-Top20 paper holdings
+remain unavailable rather than being silently reduced to a smaller portfolio.
+A complete report requires verified missing-tag/filing mappings or a reconciled
+point-in-time fundamental provider. Restricted cash, nonproduction-only D&A,
+lease-inclusive balances with a different scope and weighted-average shares
+are not silently substituted to increase the number of ranked names.

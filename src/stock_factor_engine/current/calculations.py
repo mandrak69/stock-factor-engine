@@ -1,4 +1,5 @@
 from dataclasses import asdict
+from datetime import timedelta
 from decimal import Decimal as D
 
 from stock_factor_engine.point_in_time.financials import facts_as_of
@@ -36,12 +37,26 @@ def session_factors(bars, session, reference_dates):
 
 
 def fundamental_factors(facts, *, company_id, as_of, session, price, splits=()):
-    selected = facts_as_of(facts, company_id=company_id, as_of=as_of)
-    selected = [fact for fact in selected if fact.period_end <= session]
-    ends = [fact.period_end for fact in selected if fact.concept == 'operating_income' and not fact.is_instant]
+    visible = [fact for fact in facts if fact.company_id == company_id and fact.available_at <= as_of
+               and fact.period_end <= session]
+    ends = [fact.period_end for fact in visible if fact.concept in
+            ('operating_income', 'net_income', 'revenue', 'operating_cash_flow') and not fact.is_instant]
     if not ends:
         raise ValueError('No available operating income with justified SEC acceptance/availability timestamp')
     end = max(ends)
+    durations = {'operating_income', 'operating_cash_flow', 'capital_expenditure', 'revenue',
+                 'depreciation_amortization', 'depreciation', 'amortization_intangibles'}
+    balances = {'cash', 'current_assets', 'current_liabilities', 'net_ppe', 'total_debt',
+                'current_debt_total', 'long_term_debt_total', 'long_term_debt_current',
+                'long_term_debt_noncurrent', 'short_term_borrowings'}
+    shares = {'cover_shares_outstanding', 'reported_shares_outstanding'}
+    relevant = [fact for fact in visible if
+                (fact.concept in durations and not fact.is_instant
+                 and end - timedelta(days=400) <= fact.period_end <= end)
+                or (fact.concept in balances and fact.is_instant and fact.period_end == end)
+                or (fact.concept in shares and fact.is_instant and fact.period_end >= end)]
+    # Ambiguities outside any factor's contributing windows are not factor inputs.
+    selected = facts_as_of(relevant, company_id=company_id, as_of=as_of)
     evidence = {}
     windows = {}
     reasons = []
@@ -81,6 +96,15 @@ def fundamental_factors(facts, *, company_id, as_of, session, price, splits=()):
             total_debt = lt + raw['short_term_borrowings']
         elif raw['current_debt_total'] is not None and raw['long_term_debt_noncurrent'] is not None:
             total_debt = raw['current_debt_total'] + raw['long_term_debt_noncurrent']
+    lt_components = None
+    if raw['long_term_debt_current'] is not None and raw['long_term_debt_noncurrent'] is not None:
+        lt_components = raw['long_term_debt_current'] + raw['long_term_debt_noncurrent']
+    if raw['long_term_debt_total'] is not None and lt_components is not None and raw['long_term_debt_total'] != lt_components:
+        reasons.append('Long-term debt total conflicts with current plus noncurrent components')
+    lt_check = raw['long_term_debt_total'] if raw['long_term_debt_total'] is not None else lt_components
+    if raw['total_debt'] is not None and lt_check is not None and raw['short_term_borrowings'] is not None:
+        if raw['total_debt'] != lt_check + raw['short_term_borrowings']:
+            reasons.append('Combined total debt conflicts with complete debt components')
     short_debt = raw['current_debt_total']
     if short_debt is None:
         if total_debt is not None and raw['long_term_debt_noncurrent'] is not None:

@@ -182,3 +182,28 @@ def test_price_filter_and_capitalization_undo_splits_after_historical_session():
     post_decision_split = CorporateAction(SESSION + timedelta(days=3), 'split', D(2))
     past_split = CorporateAction(SESSION - timedelta(days=3), 'split', D(3))
     assert as_traded_price(bar, [post_decision_split, past_split]) == D(20)
+
+
+
+def test_missing_latest_operating_income_cannot_fall_back_to_older_quarter():
+    newest_revenue = FinancialFact(COMPANY, 'new-quarter', 'revenue', D(100), 'USD',
+        date(2026, 9, 30), AVAILABLE, date(2026, 7, 1))
+    metrics, reasons, audit = calculate(facts() + [newest_revenue])
+    assert metrics is None and audit['period_end'] == date(2026, 9, 30)
+    assert any('operating_income ending 2026-09-30' in reason for reason in reasons)
+
+
+
+def test_conflicting_complete_debt_components_are_not_silently_ignored():
+    extra = [FinancialFact(COMPANY, 'original', concept, D(value), 'USD', date(2025, 12, 31), AVAILABLE)
+             for concept, value in [('long_term_debt_current', 10), ('short_term_borrowings', 5)]]
+    metrics, reasons, _ = calculate(facts() + extra)
+    assert metrics is None
+    assert any('Combined total debt conflicts' in reason for reason in reasons)
+
+
+
+def test_ambiguous_old_facts_outside_contributing_windows_do_not_block_current_factors():
+    old_a = FinancialFact(COMPANY, 'old', 'revenue', D(100), 'USD', date(2023, 12, 31), AVAILABLE, date(2023, 1, 1))
+    old_b = replace(old_a, value=D(101))
+    assert calculate(facts() + [old_a, old_b])[:2] == calculate(facts())[:2]

@@ -96,3 +96,33 @@ def download_universe(store, members, *, include_sec=False):
                 print(f'Downloaded/checked {index}/{len(jobs)}; errors={len(errors)}', flush=True)
     (store.directory.parent / 'download_errors.json').write_text(json.dumps(errors, indent=2), encoding='utf-8')
     return errors
+
+
+
+def download_submission_archives(store, members, *, earliest_filing_date):
+    jobs = {}
+    for member in members:
+        if member['sector'] in ('Financials', 'Utilities'):
+            continue
+        cik = member['cik']
+        meta_path = store.directory / ('submissions_' + cik + '.meta.json')
+        if not meta_path.exists():
+            continue
+        content = gzip.decompress((store.directory / ('submissions_' + cik + '.json.gz')).read_bytes())
+        payload = json.loads(content)
+        for page in payload['filings'].get('files', []):
+            if page.get('filingTo', '9999-12-31') < earliest_filing_date.isoformat():
+                continue
+            name = page['name']
+            if not re.fullmatch(r'CIK' + cik + r'-submissions-[0-9]+\.json', name):
+                raise ValueError('Invalid SEC historical submissions filename')
+            jobs[name] = ('archive_' + name[:-5], 'https://data.sec.gov/submissions/' + name)
+    errors = {}
+    for index, (name, (key, url)) in enumerate(jobs.items(), 1):
+        try:
+            store.get(key, url, 'sec')
+        except Exception as error:
+            errors[name] = type(error).__name__ + ': ' + str(error)
+        print(f'Submission archives {index}/{len(jobs)}; errors={len(errors)}', flush=True)
+    (store.directory.parent / 'archive_errors.json').write_text(json.dumps(errors, indent=2), encoding='utf-8')
+    return errors
