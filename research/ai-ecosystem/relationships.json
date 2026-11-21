@@ -1,0 +1,893 @@
+[
+  {
+    "id": "anthropic_azure_2025",
+    "from_id": "anthropic",
+    "to_id": "microsoft",
+    "kind": "compute_commitment",
+    "status": "historical_disclosure",
+    "source_ids": [
+      "ms_nvda_anthropic"
+    ],
+    "source_locator": "Azure commitment",
+    "amount_usd": "30000000000",
+    "amount_qualifier": "announced_contract_value",
+    "period_start": null,
+    "period_end": null,
+    "cash_verified": false,
+    "notes": "Replaced in the active view by the amended 2026 disclosure.",
+    "superseded_by": "anthropic_azure_2026"
+  },
+  {
+    "id": "anthropic_azure_2026",
+    "from_id": "anthropic",
+    "to_id": "microsoft",
+    "kind": "compute_commitment",
+    "status": "contractual",
+    "source_ids": [
+      "anthropic_s1"
+    ],
+    "source_locator": "Infrastructure Service Arrangements: Microsoft",
+    "amount_usd": "44900000000.0",
+    "amount_qualifier": "minimum",
+    "period_start": null,
+    "period_end": null,
+    "cash_verified": false,
+    "notes": "Amended agreement; delivery-related cancellation conditions apply.",
+    "period_start_month": "2026-11",
+    "period_end_month": "2033-06",
+    "period_precision": "month"
+  },
+  {
+    "id": "anthropic_google",
+    "from_id": "anthropic",
+    "to_id": "alphabet",
+    "kind": "compute_commitment",
+    "status": "contractual",
+    "source_ids": [
+      "anthropic_s1"
+    ],
+    "source_locator": "Infrastructure Service Arrangements: Google",
+    "amount_usd": "121300000000.0",
+    "amount_qualifier": "minimum",
+    "period_start": null,
+    "period_end": null,
+    "cash_verified": false,
+    "notes": "Excludes additional estimated TPU procurement; not cash paid.",
+    "period_start_month": "2026-04",
+    "period_end_month": "2033-07",
+    "period_precision": "month"
+  },
+  {
+    "id": "anthropic_aws",
+    "from_id": "anthropic",
+    "to_id": "amazon",
+    "kind": "compute_commitment",
+    "status": "contractual",
+    "source_ids": [
+      "anthropic_s1"
+    ],
+    "source_locator": "Infrastructure Service Arrangements: Amazon",
+    "amount_usd": "110000000000",
+    "amount_qualifier": "minimum",
+    "period_start": null,
+    "period_end": null,
+    "cash_verified": false,
+    "notes": "Usage-independent minimum with stated exceptions; not annual revenue.",
+    "period_start_month": "2026-05",
+    "period_end_month": "2036-04",
+    "period_precision": "month"
+  },
+  {
+    "id": "anthropic_spacex",
+    "from_id": "anthropic",
+    "to_id": "spacex",
+    "kind": "compute_commitment",
+    "status": "conditional",
+    "source_ids": [
+      "anthropic_s1"
+    ],
+    "source_locator": "Infrastructure Service Arrangements: SpaceXAI",
+    "amount_usd": "120500000000.0",
+    "amount_qualifier": "up_to",
+    "period_start": null,
+    "period_end": null,
+    "cash_verified": false,
+    "notes": "Terminable on notice after initial noncancelable periods; not all a firm minimum.",
+    "period_precision": "end_year_only",
+    "period_end_year": 2029
+  },
+  {
+    "id": "anthropic_nscale",
+    "from_id": "anthropic",
+    "to_id": "nscale",
+    "kind": "compute_commitment",
+    "status": "conditional",
+    "source_ids": [
+      "anthropic_s1"
+    ],
+    "source_locator": "Infrastructure Service Arrangements: Nscale",
+    "amount_usd": "44600000000.0",
+    "amount_qualifier": "up_to_approximate",
+    "period_start": null,
+    "period_end": null,
+    "cash_verified": false,
+    "notes": "Capacity delivery/acceptance and financing conditions.",
+    "period_precision": "end_year_only",
+    "period_end_year": 2033
+  },
+  {
+    "id": "anthropic_lambda",
+    "from_id": "anthropic",
+    "to_id": "lambda",
+    "kind": "compute_commitment",
+    "status": "conditional",
+    "source_ids": [
+      "anthropic_s1"
+    ],
+    "source_locator": "Infrastructure Service Arrangements: Lambda",
+    "amount_usd": "41300000000.0",
+    "amount_qualifier": "approximate",
+    "period_start": null,
+    "period_end": null,
+    "cash_verified": false,
+    "notes": "Fees on delivery; a major tranche has a facility-lease termination condition.",
+    "period_precision": "end_year_only",
+    "period_end_year": 2034
+  },
+  {
+    "id": "anthropic_lease_pool",
+    "from_id": "anthropic",
+    "to_id": "broadcom_lease_pool",
+    "kind": "lease_commitment",
+    "status": "contractual",
+    "source_ids": [
+      "anthropic_s1"
+    ],
+    "source_locator": "Infrastructure Equipment Leases",
+    "amount_usd": "161200000000.0",
+    "amount_qualifier": "principal_excluding_interest",
+    "period_start": null,
+    "period_end": null,
+    "cash_verified": false,
+    "notes": "Five-year master lease arrangements; partly assigned. Neither full cash paid nor all attributable to Broadcom."
+  },
+  {
+    "id": "google_anthropic_facility",
+    "from_id": "alphabet",
+    "to_id": "anthropic",
+    "kind": "financing_facility",
+    "status": "conditional",
+    "source_ids": [
+      "anthropic_s1"
+    ],
+    "source_locator": "Convertible Notes: Google 2026 NPA",
+    "amount_usd": "20000000000",
+    "amount_qualifier": "facility_capacity_not_cash",
+    "period_start": null,
+    "period_end": null,
+    "cash_verified": false,
+    "notes": "Facility capacity; outstanding balance/current drawdowns are not reconciled here.",
+    "period_end_month": "2030-12",
+    "period_precision": "month"
+  },
+  {
+    "id": "broadcom_anthropic_facility",
+    "from_id": "broadcom",
+    "to_id": "anthropic",
+    "kind": "financing_facility",
+    "status": "conditional",
+    "source_ids": [
+      "anthropic_s1"
+    ],
+    "source_locator": "Infrastructure Partner 2026 NPA",
+    "amount_usd": "42000000000",
+    "amount_qualifier": "facility_capacity_not_cash",
+    "period_start": null,
+    "period_end": null,
+    "cash_verified": false,
+    "notes": "Purpose-limited financing for rent; may be assigned. Do not add to rent as another infrastructure purchase."
+  },
+  {
+    "id": "amd_anthropic_put",
+    "from_id": "amd",
+    "to_id": "anthropic",
+    "kind": "conditional_equity",
+    "status": "conditional",
+    "source_ids": [
+      "anthropic_s1"
+    ],
+    "source_locator": "Hardware Supply Agreement / purchased put option",
+    "amount_usd": "5000000000",
+    "amount_qualifier": "up_to_conditional",
+    "period_start": null,
+    "period_end": null,
+    "cash_verified": false,
+    "notes": "Anthropic election and conditions; not an executed equity purchase."
+  },
+  {
+    "id": "anthropic_amd_hardware",
+    "from_id": "anthropic",
+    "to_id": "amd",
+    "kind": "hardware_framework",
+    "status": "conditional",
+    "source_ids": [
+      "anthropic_s1"
+    ],
+    "source_locator": "Infrastructure Service Arrangements: AMD",
+    "amount_usd": "20000000000",
+    "amount_qualifier": "expected_exceeds_not_fixed",
+    "period_start": null,
+    "period_end": null,
+    "cash_verified": false,
+    "notes": "No fixed dollar commitment; expenditure estimate conditional on procuring full initial capacity."
+  },
+  {
+    "id": "anthropic_fluidstack",
+    "from_id": "anthropic",
+    "to_id": "fluidstack",
+    "kind": "service_relationship",
+    "status": "reported",
+    "source_ids": [
+      "anthropic_s1"
+    ],
+    "source_locator": "Infrastructure Strategy: Data Centers",
+    "amount_usd": null,
+    "amount_qualifier": null,
+    "period_start": null,
+    "period_end": null,
+    "cash_verified": false,
+    "notes": "Colocation and development/operations agreement; dollar amount not established here."
+  },
+  {
+    "id": "nvidia_anthropic_equity",
+    "from_id": "nvidia",
+    "to_id": "anthropic",
+    "kind": "equity_commitment",
+    "status": "historical_disclosure",
+    "source_ids": [
+      "ms_nvda_anthropic"
+    ],
+    "source_locator": "Proposed investments",
+    "amount_usd": "10000000000",
+    "amount_qualifier": "up_to",
+    "period_start": null,
+    "period_end": null,
+    "cash_verified": false,
+    "notes": "2025 announcement; current executed amount not reconciled."
+  },
+  {
+    "id": "microsoft_anthropic_equity",
+    "from_id": "microsoft",
+    "to_id": "anthropic",
+    "kind": "equity_commitment",
+    "status": "historical_disclosure",
+    "source_ids": [
+      "ms_nvda_anthropic"
+    ],
+    "source_locator": "Proposed investments",
+    "amount_usd": "5000000000",
+    "amount_qualifier": "up_to",
+    "period_start": null,
+    "period_end": null,
+    "cash_verified": false,
+    "notes": "2025 announcement; current executed amount not reconciled."
+  },
+  {
+    "id": "amazon_openai_investment",
+    "from_id": "amazon",
+    "to_id": "openai",
+    "kind": "reported_equity_investment",
+    "status": "reported",
+    "source_ids": [
+      "amazon_q3"
+    ],
+    "source_locator": "Liquidity and Capital Resources: investments",
+    "amount_usd": "50000000000",
+    "amount_qualifier": "reported_invested",
+    "period_start": "2026-01-01",
+    "period_end": "2026-09-30",
+    "cash_verified": false,
+    "notes": "Reported nine-month investment; recipient-specific cash settlement not separately reconciled."
+  },
+  {
+    "id": "amazon_anthropic_investment",
+    "from_id": "amazon",
+    "to_id": "anthropic",
+    "kind": "reported_equity_investment",
+    "status": "reported",
+    "source_ids": [
+      "amazon_q3"
+    ],
+    "source_locator": "Liquidity and Capital Resources: investments",
+    "amount_usd": "10000000000",
+    "amount_qualifier": "reported_invested",
+    "period_start": "2026-01-01",
+    "period_end": "2026-09-30",
+    "cash_verified": false,
+    "notes": "Reported nine-month investment; not added to older round announcements."
+  },
+  {
+    "id": "nvidia_openai_intent",
+    "from_id": "nvidia",
+    "to_id": "openai",
+    "kind": "equity_intent",
+    "status": "nonbinding",
+    "source_ids": [
+      "nvda_openai"
+    ],
+    "source_locator": "Letter of intent",
+    "amount_usd": "100000000000",
+    "amount_qualifier": "nonbinding_up_to",
+    "period_start": null,
+    "period_end": null,
+    "cash_verified": false,
+    "notes": "Historical intent contingent on deployment; not evidence of USD 100bn invested or current outstanding funding."
+  },
+  {
+    "id": "openai_nvidia_platform",
+    "from_id": "openai",
+    "to_id": "nvidia",
+    "kind": "platform_deployment",
+    "status": "announced",
+    "source_ids": [
+      "nvda_openai"
+    ],
+    "source_locator": "10 GW systems deployment",
+    "amount_usd": null,
+    "amount_qualifier": null,
+    "period_start": null,
+    "period_end": null,
+    "cash_verified": false,
+    "notes": "Systems platform plan; direct purchasing entity and payment amount unverified.",
+    "quantity": "10",
+    "quantity_unit": "GW"
+  },
+  {
+    "id": "openai_amd_platform",
+    "from_id": "openai",
+    "to_id": "amd",
+    "kind": "platform_deployment",
+    "status": "announced",
+    "source_ids": [
+      "amd_openai"
+    ],
+    "source_locator": "OpenAI GPU product purchase agreement",
+    "amount_usd": null,
+    "amount_qualifier": null,
+    "period_start": null,
+    "period_end": null,
+    "cash_verified": false,
+    "notes": "Multi-year capacity framework; no USD purchase price assigned.",
+    "quantity": "6",
+    "quantity_unit": "GW"
+  },
+  {
+    "id": "amd_openai_warrant",
+    "from_id": "amd",
+    "to_id": "openai",
+    "kind": "equity_warrant",
+    "status": "conditional",
+    "source_ids": [
+      "amd_openai"
+    ],
+    "source_locator": "OpenAI warrant",
+    "amount_usd": null,
+    "amount_qualifier": null,
+    "period_start": null,
+    "period_end": null,
+    "cash_verified": false,
+    "notes": "Purchase/performance milestones; maximum shares, not a dollar investment.",
+    "quantity": "160000000",
+    "quantity_unit": "shares"
+  },
+  {
+    "id": "openai_broadcom_platform",
+    "from_id": "openai",
+    "to_id": "broadcom",
+    "kind": "platform_deployment",
+    "status": "announced",
+    "source_ids": [
+      "broadcom_openai"
+    ],
+    "source_locator": "Accelerator development and deployment term sheet",
+    "amount_usd": null,
+    "amount_qualifier": null,
+    "period_start": null,
+    "period_end": null,
+    "cash_verified": false,
+    "notes": "Deployment target, not realized CapEx.",
+    "quantity": "10",
+    "quantity_unit": "GW"
+  },
+  {
+    "id": "microsoft_nebius",
+    "from_id": "microsoft",
+    "to_id": "nebius",
+    "kind": "compute_commitment",
+    "status": "conditional",
+    "source_ids": [
+      "nebius_microsoft"
+    ],
+    "source_locator": "Commercial agreement pages 1,4",
+    "amount_usd": "17400000000.0",
+    "amount_qualifier": "approximate_base",
+    "period_start": "2025-09-08",
+    "period_end": null,
+    "cash_verified": false,
+    "notes": "Optional services raise the total to about USD 19.4bn, not USD 17.4bn plus USD 19.4bn.",
+    "period_precision": "end_year_only",
+    "maximum_usd": "19400000000",
+    "period_end_year": 2031
+  },
+  {
+    "id": "meta_nebius_dedicated",
+    "from_id": "meta",
+    "to_id": "nebius",
+    "kind": "compute_commitment",
+    "status": "conditional",
+    "source_ids": [
+      "nebius_meta"
+    ],
+    "source_locator": "Dedicated capacity",
+    "amount_usd": "12000000000",
+    "amount_qualifier": "contract_value",
+    "period_start": null,
+    "period_end": null,
+    "cash_verified": false,
+    "notes": "Five-year service subject to delivery; paired with a distinct residual-capacity backstop.",
+    "period_precision": "starts_early_2027_five_year_term",
+    "overlap_group": "meta_nebius_2026",
+    "period_start_year": 2027
+  },
+  {
+    "id": "meta_nebius_backstop",
+    "from_id": "meta",
+    "to_id": "nebius",
+    "kind": "capacity_backstop",
+    "status": "conditional",
+    "source_ids": [
+      "nebius_meta"
+    ],
+    "source_locator": "Additional available capacity",
+    "amount_usd": "15000000000",
+    "amount_qualifier": "up_to_residual_capacity",
+    "period_start": null,
+    "period_end": null,
+    "cash_verified": false,
+    "notes": "Only unsold eligible capacity; USD 27bn headline already includes the USD 12bn base.",
+    "overlap_group": "meta_nebius_2026"
+  },
+  {
+    "id": "openai_coreweave_order",
+    "from_id": "openai",
+    "to_id": "coreweave",
+    "kind": "compute_commitment",
+    "status": "conditional",
+    "source_ids": [
+      "coreweave_q3"
+    ],
+    "source_locator": "September 2025 order form",
+    "amount_usd": "6500000000.0",
+    "amount_qualifier": "up_to_order_form",
+    "period_start": null,
+    "period_end": "2031-05-31",
+    "cash_verified": false,
+    "notes": "One disclosed order, not total OpenAI/CoreWeave spending."
+  },
+  {
+    "id": "microsoft_nscale",
+    "from_id": "microsoft",
+    "to_id": "nscale",
+    "kind": "compute_relationship",
+    "status": "reported",
+    "source_ids": [
+      "nscale_s1"
+    ],
+    "source_locator": "Microsoft statements of work",
+    "amount_usd": null,
+    "amount_qualifier": null,
+    "period_start": null,
+    "period_end": null,
+    "cash_verified": false,
+    "notes": "Named commercial GPU infrastructure relationship; current full dollar value not extracted."
+  },
+  {
+    "id": "nvidia_supplier_tsmc",
+    "from_id": "nvidia",
+    "to_id": "tsmc",
+    "kind": "supply_relationship",
+    "status": "reported",
+    "source_ids": [
+      "nvda_10k"
+    ],
+    "source_locator": "Manufacturing",
+    "amount_usd": null,
+    "amount_qualifier": null,
+    "period_start": null,
+    "period_end": null,
+    "cash_verified": false,
+    "notes": "Named supply-chain relationship; current bilateral cash amount unavailable."
+  },
+  {
+    "id": "nvidia_supplier_sk_hynix",
+    "from_id": "nvidia",
+    "to_id": "sk_hynix",
+    "kind": "supply_relationship",
+    "status": "reported",
+    "source_ids": [
+      "nvda_10k"
+    ],
+    "source_locator": "Manufacturing",
+    "amount_usd": null,
+    "amount_qualifier": null,
+    "period_start": null,
+    "period_end": null,
+    "cash_verified": false,
+    "notes": "Named supply-chain relationship; current bilateral cash amount unavailable."
+  },
+  {
+    "id": "nvidia_supplier_micron",
+    "from_id": "nvidia",
+    "to_id": "micron",
+    "kind": "supply_relationship",
+    "status": "reported",
+    "source_ids": [
+      "nvda_10k"
+    ],
+    "source_locator": "Manufacturing",
+    "amount_usd": null,
+    "amount_qualifier": null,
+    "period_start": null,
+    "period_end": null,
+    "cash_verified": false,
+    "notes": "Named supply-chain relationship; current bilateral cash amount unavailable."
+  },
+  {
+    "id": "nvidia_supplier_samsung_electronics",
+    "from_id": "nvidia",
+    "to_id": "samsung_electronics",
+    "kind": "supply_relationship",
+    "status": "reported",
+    "source_ids": [
+      "nvda_10k"
+    ],
+    "source_locator": "Manufacturing",
+    "amount_usd": null,
+    "amount_qualifier": null,
+    "period_start": null,
+    "period_end": null,
+    "cash_verified": false,
+    "notes": "Named supply-chain relationship; current bilateral cash amount unavailable."
+  },
+  {
+    "id": "nvidia_partner_dell",
+    "from_id": "nvidia",
+    "to_id": "dell",
+    "kind": "platform_partnership",
+    "status": "announced",
+    "source_ids": [
+      "system_partners"
+    ],
+    "source_locator": "System manufacturers",
+    "amount_usd": null,
+    "amount_qualifier": null,
+    "period_start": null,
+    "period_end": null,
+    "cash_verified": false,
+    "notes": "Undirected technical partnership; does not identify a payer or direct GPU purchase.",
+    "direction": "undirected"
+  },
+  {
+    "id": "nvidia_partner_hpe",
+    "from_id": "nvidia",
+    "to_id": "hpe",
+    "kind": "platform_partnership",
+    "status": "announced",
+    "source_ids": [
+      "system_partners"
+    ],
+    "source_locator": "System manufacturers",
+    "amount_usd": null,
+    "amount_qualifier": null,
+    "period_start": null,
+    "period_end": null,
+    "cash_verified": false,
+    "notes": "Undirected technical partnership; does not identify a payer or direct GPU purchase.",
+    "direction": "undirected"
+  },
+  {
+    "id": "nvidia_partner_supermicro",
+    "from_id": "nvidia",
+    "to_id": "supermicro",
+    "kind": "platform_partnership",
+    "status": "announced",
+    "source_ids": [
+      "system_partners"
+    ],
+    "source_locator": "System manufacturers",
+    "amount_usd": null,
+    "amount_qualifier": null,
+    "period_start": null,
+    "period_end": null,
+    "cash_verified": false,
+    "notes": "Undirected technical partnership; does not identify a payer or direct GPU purchase.",
+    "direction": "undirected"
+  },
+  {
+    "id": "nvidia_partner_lenovo",
+    "from_id": "nvidia",
+    "to_id": "lenovo",
+    "kind": "platform_partnership",
+    "status": "announced",
+    "source_ids": [
+      "system_partners"
+    ],
+    "source_locator": "System manufacturers",
+    "amount_usd": null,
+    "amount_qualifier": null,
+    "period_start": null,
+    "period_end": null,
+    "cash_verified": false,
+    "notes": "Undirected technical partnership; does not identify a payer or direct GPU purchase.",
+    "direction": "undirected"
+  },
+  {
+    "id": "nvidia_partner_foxconn",
+    "from_id": "nvidia",
+    "to_id": "foxconn",
+    "kind": "platform_partnership",
+    "status": "announced",
+    "source_ids": [
+      "system_partners"
+    ],
+    "source_locator": "System manufacturers",
+    "amount_usd": null,
+    "amount_qualifier": null,
+    "period_start": null,
+    "period_end": null,
+    "cash_verified": false,
+    "notes": "Undirected technical partnership; does not identify a payer or direct GPU purchase.",
+    "direction": "undirected"
+  },
+  {
+    "id": "nvidia_partner_quanta",
+    "from_id": "nvidia",
+    "to_id": "quanta",
+    "kind": "platform_partnership",
+    "status": "announced",
+    "source_ids": [
+      "system_partners"
+    ],
+    "source_locator": "System manufacturers",
+    "amount_usd": null,
+    "amount_qualifier": null,
+    "period_start": null,
+    "period_end": null,
+    "cash_verified": false,
+    "notes": "Undirected technical partnership; does not identify a payer or direct GPU purchase.",
+    "direction": "undirected"
+  },
+  {
+    "id": "nvidia_partner_wiwynn",
+    "from_id": "nvidia",
+    "to_id": "wiwynn",
+    "kind": "platform_partnership",
+    "status": "announced",
+    "source_ids": [
+      "system_partners"
+    ],
+    "source_locator": "System manufacturers",
+    "amount_usd": null,
+    "amount_qualifier": null,
+    "period_start": null,
+    "period_end": null,
+    "cash_verified": false,
+    "notes": "Undirected technical partnership; does not identify a payer or direct GPU purchase.",
+    "direction": "undirected"
+  },
+  {
+    "id": "stargate_softbank",
+    "from_id": "softbank",
+    "to_id": "stargate",
+    "kind": "project_participation",
+    "status": "announced",
+    "source_ids": [
+      "stargate"
+    ],
+    "source_locator": "Initial equity funders",
+    "amount_usd": null,
+    "amount_qualifier": null,
+    "period_start": null,
+    "period_end": null,
+    "cash_verified": false,
+    "notes": "No paid per-participant contribution established; project target is not each participant investment."
+  },
+  {
+    "id": "stargate_openai",
+    "from_id": "openai",
+    "to_id": "stargate",
+    "kind": "project_participation",
+    "status": "announced",
+    "source_ids": [
+      "stargate"
+    ],
+    "source_locator": "Initial equity funders",
+    "amount_usd": null,
+    "amount_qualifier": null,
+    "period_start": null,
+    "period_end": null,
+    "cash_verified": false,
+    "notes": "No paid per-participant contribution established; project target is not each participant investment."
+  },
+  {
+    "id": "stargate_oracle",
+    "from_id": "oracle",
+    "to_id": "stargate",
+    "kind": "project_participation",
+    "status": "announced",
+    "source_ids": [
+      "stargate"
+    ],
+    "source_locator": "Initial equity funders",
+    "amount_usd": null,
+    "amount_qualifier": null,
+    "period_start": null,
+    "period_end": null,
+    "cash_verified": false,
+    "notes": "No paid per-participant contribution established; project target is not each participant investment."
+  },
+  {
+    "id": "stargate_mgx",
+    "from_id": "mgx",
+    "to_id": "stargate",
+    "kind": "project_participation",
+    "status": "announced",
+    "source_ids": [
+      "stargate"
+    ],
+    "source_locator": "Initial equity funders",
+    "amount_usd": null,
+    "amount_qualifier": null,
+    "period_start": null,
+    "period_end": null,
+    "cash_verified": false,
+    "notes": "No paid per-participant contribution established; project target is not each participant investment."
+  },
+  {
+    "id": "aip_blackrock",
+    "from_id": "blackrock",
+    "to_id": "aip",
+    "kind": "project_participation",
+    "status": "announced",
+    "source_ids": [
+      "aip"
+    ],
+    "source_locator": "AIP membership",
+    "amount_usd": null,
+    "amount_qualifier": null,
+    "period_start": null,
+    "period_end": null,
+    "cash_verified": false,
+    "notes": "Partnership participation, not proof that own balance-sheet cash was contributed."
+  },
+  {
+    "id": "aip_microsoft",
+    "from_id": "microsoft",
+    "to_id": "aip",
+    "kind": "project_participation",
+    "status": "announced",
+    "source_ids": [
+      "aip"
+    ],
+    "source_locator": "AIP membership",
+    "amount_usd": null,
+    "amount_qualifier": null,
+    "period_start": null,
+    "period_end": null,
+    "cash_verified": false,
+    "notes": "Partnership participation, not proof that own balance-sheet cash was contributed."
+  },
+  {
+    "id": "aip_mgx",
+    "from_id": "mgx",
+    "to_id": "aip",
+    "kind": "project_participation",
+    "status": "announced",
+    "source_ids": [
+      "aip"
+    ],
+    "source_locator": "AIP membership",
+    "amount_usd": null,
+    "amount_qualifier": null,
+    "period_start": null,
+    "period_end": null,
+    "cash_verified": false,
+    "notes": "Partnership participation, not proof that own balance-sheet cash was contributed."
+  },
+  {
+    "id": "aip_nvidia",
+    "from_id": "nvidia",
+    "to_id": "aip",
+    "kind": "project_participation",
+    "status": "announced",
+    "source_ids": [
+      "aip"
+    ],
+    "source_locator": "AIP membership",
+    "amount_usd": null,
+    "amount_qualifier": null,
+    "period_start": null,
+    "period_end": null,
+    "cash_verified": false,
+    "notes": "Partnership participation, not proof that own balance-sheet cash was contributed."
+  },
+  {
+    "id": "aip_spacex",
+    "from_id": "spacex",
+    "to_id": "aip",
+    "kind": "project_participation",
+    "status": "announced",
+    "source_ids": [
+      "aip"
+    ],
+    "source_locator": "AIP membership",
+    "amount_usd": null,
+    "amount_qualifier": null,
+    "period_start": null,
+    "period_end": null,
+    "cash_verified": false,
+    "notes": "Partnership participation, not proof that own balance-sheet cash was contributed."
+  },
+  {
+    "id": "oracle_openai_platform",
+    "from_id": "oracle",
+    "to_id": "openai",
+    "kind": "platform_partnership",
+    "status": "announced",
+    "source_ids": [
+      "stargate"
+    ],
+    "source_locator": "Initial technology partners",
+    "amount_usd": null,
+    "amount_qualifier": null,
+    "period_start": null,
+    "period_end": null,
+    "cash_verified": false,
+    "notes": "Infrastructure collaboration; direct payment amount not established.",
+    "direction": "undirected"
+  },
+  {
+    "id": "nvidia_supplier_wistron",
+    "from_id": "nvidia",
+    "to_id": "wistron",
+    "kind": "supply_relationship",
+    "status": "reported",
+    "source_ids": [
+      "nvda_10k"
+    ],
+    "source_locator": "Manufacturing",
+    "amount_usd": null,
+    "amount_qualifier": null,
+    "period_start": null,
+    "period_end": null,
+    "cash_verified": false,
+    "notes": "Named contract manufacturing relationship; no direct cash amount established."
+  },
+  {
+    "id": "nvidia_supplier_fabrinet",
+    "from_id": "nvidia",
+    "to_id": "fabrinet",
+    "kind": "supply_relationship",
+    "status": "reported",
+    "source_ids": [
+      "nvda_10k"
+    ],
+    "source_locator": "Manufacturing",
+    "amount_usd": null,
+    "amount_qualifier": null,
+    "period_start": null,
+    "period_end": null,
+    "cash_verified": false,
+    "notes": "Named contract manufacturing relationship; no direct cash amount established."
+  }
+]

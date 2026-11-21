@@ -1,0 +1,32 @@
+[
+  {
+    "id": "anthropic_aggregate_obligations",
+    "entity_id": "anthropic",
+    "amount_usd": "895400000000",
+    "source_ids": [
+      "anthropic_s1"
+    ],
+    "basis": "aggregate future commitments including subsequent events; overlaps named components",
+    "notes": "Not revenue or cash already paid; not a reconciled denominator for the mixed contract records."
+  },
+  {
+    "id": "stargate_target",
+    "entity_id": "stargate",
+    "amount_usd": "500000000000",
+    "source_ids": [
+      "stargate"
+    ],
+    "basis": "announced four-year investment target",
+    "notes": "Not committed capital attributable to each founding partner and not evidence of completion."
+  },
+  {
+    "id": "aip_potential",
+    "entity_id": "aip",
+    "amount_usd": "100000000000",
+    "source_ids": [
+      "aip"
+    ],
+    "basis": "potential financing including debt",
+    "notes": "Financing ambition, not paid equity or observed infrastructure purchases."
+  }
+]

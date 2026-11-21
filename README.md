@@ -174,3 +174,12 @@ regime from archived evidence. See [current screening](docs/current-screening.md
 for exact ROC/EV formulas, acceptance timing, membership provenance, required
 inputs and fail-closed allocation. Missing source data produces an explicitly
 unavailable diagnostic report rather than fabricated scores.
+
+
+## AI ecosystem relationship map
+
+`python -m stock_factor_engine.ecosystem` exports the independently sourced
+participant and relationship registry. See [registry notes](research/ai-ecosystem/README.md).
+Cash, contract obligations, financing facilities and project targets remain
+separate. Global 95% coverage and consolidated financials are unavailable until
+the underlying transactions and denominator can be reconciled.

@@ -1,0 +1,156 @@
+[
+  {
+    "id": "anthropic_s1",
+    "title": "Anthropic S-1/A, accession 0001628280-26-068676",
+    "url": "https://www.sec.gov/Archives/edgar/data/2130357/000162828026068676/anthropicpbc-sx1ax1.htm",
+    "published_date": "2026-11-02",
+    "available_at": "2026-11-02T14:29:24+00:00",
+    "availability_policy": "SEC acceptance + 5 minutes",
+    "locator": "MD&A: Contractual Obligations / Infrastructure Service Arrangements / Infrastructure Equipment Leases; Convertible Notes; Infrastructure Strategy",
+    "evidence_type": "primary",
+    "reviewed_date": "2026-11-21"
+  },
+  {
+    "id": "amazon_q3",
+    "title": "Amazon Q3 2026 Form 10-Q",
+    "url": "https://www.sec.gov/Archives/edgar/data/1018724/000101872426000040/amzn-20260930.htm",
+    "published_date": "2026-10-29",
+    "available_at": "2026-10-29T22:25:46+00:00",
+    "availability_policy": "SEC acceptance + 5 minutes",
+    "locator": "Liquidity and Capital Resources; investments in OpenAI and Anthropic",
+    "evidence_type": "primary",
+    "reviewed_date": "2026-11-21"
+  },
+  {
+    "id": "ms_nvda_anthropic",
+    "title": "Microsoft, NVIDIA and Anthropic partnerships",
+    "url": "https://blogs.nvidia.com/blog/microsoft-nvidia-anthropic-announce-partnership/",
+    "published_date": "2025-11-18",
+    "available_at": "2025-11-20T00:00:00+00:00",
+    "availability_policy": "publication date + 2 days; conservative day precision",
+    "locator": "Azure purchase commitment and proposed equity investments",
+    "evidence_type": "primary",
+    "reviewed_date": "2026-11-21"
+  },
+  {
+    "id": "nvda_openai",
+    "title": "OpenAI and NVIDIA systems partnership letter of intent",
+    "url": "https://openai.com/index/openai-nvidia-systems-partnership/",
+    "published_date": "2025-09-22",
+    "available_at": "2025-09-24T00:00:00+00:00",
+    "availability_policy": "publication date + 2 days; conservative day precision",
+    "locator": "10 GW deployment and intended investment; nonbinding letter of intent",
+    "evidence_type": "primary",
+    "reviewed_date": "2026-11-21"
+  },
+  {
+    "id": "amd_openai",
+    "title": "AMD 2025 Form 10-K/A filed February 4, 2026",
+    "url": "https://ir.amd.com/financial-information/sec-filings/content/0000002488-26-000021/amd-20251227.htm",
+    "published_date": "2026-02-04",
+    "available_at": "2026-02-06T00:00:00+00:00",
+    "availability_policy": "publication date + 2 days; conservative day precision",
+    "locator": "OpenAI purchase agreement and milestone-dependent warrant",
+    "evidence_type": "primary",
+    "reviewed_date": "2026-11-21"
+  },
+  {
+    "id": "broadcom_openai",
+    "title": "OpenAI and Broadcom strategic collaboration",
+    "url": "https://openai.com/index/openai-and-broadcom-announce-strategic-collaboration/",
+    "published_date": "2025-10-13",
+    "available_at": "2025-10-15T00:00:00+00:00",
+    "availability_policy": "publication date + 2 days; conservative day precision",
+    "locator": "Term sheet for 10 GW; deployment target 2026-2029",
+    "evidence_type": "primary",
+    "reviewed_date": "2026-11-21"
+  },
+  {
+    "id": "nebius_microsoft",
+    "title": "Nebius Microsoft commercial agreement Form 6-K",
+    "url": "https://assets.nebius.com/assets/86625727-9e66-46c1-af79-c27d57434e3c/25-25580-1_Nebius%20Group%20N.V._6-K.pdf",
+    "published_date": "2025-09-08",
+    "available_at": "2025-09-10T00:00:00+00:00",
+    "availability_policy": "publication date + 2 days; conservative day precision",
+    "locator": "Pages 1 and 4: base value, expansion option, delivery and financing conditions",
+    "evidence_type": "primary",
+    "reviewed_date": "2026-11-21"
+  },
+  {
+    "id": "nebius_meta",
+    "title": "Nebius Meta infrastructure agreement",
+    "url": "https://nebius.com/newsroom/nebius-signs-new-ai-infrastructure-agreement-with-meta",
+    "published_date": "2026-03-16",
+    "available_at": "2026-03-18T00:00:00+00:00",
+    "availability_policy": "publication date + 2 days; conservative day precision",
+    "locator": "USD 12bn dedicated capacity plus up to USD 15bn residual-capacity backstop",
+    "evidence_type": "primary",
+    "reviewed_date": "2026-11-21"
+  },
+  {
+    "id": "nscale_s1",
+    "title": "Nscale September 2026 Form S-1",
+    "url": "https://www.sec.gov/Archives/edgar/data/2110365/000119312526395475/ck0002110365-20260918.htm",
+    "published_date": "2026-09-18",
+    "available_at": "2026-09-20T00:00:00+00:00",
+    "availability_policy": "publication date + 2 days; conservative day precision",
+    "locator": "Microsoft statements of work and GPU infrastructure business",
+    "evidence_type": "primary",
+    "reviewed_date": "2026-11-21"
+  },
+  {
+    "id": "coreweave_q3",
+    "title": "CoreWeave Q3 2026 Form 10-Q",
+    "url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000465/crwv-20260930.htm",
+    "published_date": "2026-11-12",
+    "available_at": "2026-11-12T12:25:41+00:00",
+    "availability_policy": "SEC acceptance + 5 minutes",
+    "locator": "OpenAI master agreement and September 2025 order form through May 2031",
+    "evidence_type": "primary",
+    "reviewed_date": "2026-11-21"
+  },
+  {
+    "id": "nvda_10k",
+    "title": "NVIDIA FY2026 Form 10-K",
+    "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
+    "published_date": "2026-02-25",
+    "available_at": "2026-02-25T21:47:19+00:00",
+    "availability_policy": "SEC acceptance + 5 minutes",
+    "locator": "Manufacturing: wafer foundries and memory suppliers",
+    "evidence_type": "primary",
+    "reviewed_date": "2026-11-21"
+  },
+  {
+    "id": "system_partners",
+    "title": "NVIDIA Vera Rubin system partners",
+    "url": "https://nvidianews.nvidia.com/news/vera-rubin-full-production-agentic-ai-factory",
+    "published_date": "2026-05-31",
+    "available_at": "2026-06-02T00:00:00+00:00",
+    "availability_policy": "publication date + 2 days; conservative day precision",
+    "locator": "Dell, HPE, Lenovo, Supermicro, Foxconn, QCT and Wiwynn system partnerships",
+    "evidence_type": "primary",
+    "reviewed_date": "2026-11-21"
+  },
+  {
+    "id": "stargate",
+    "title": "Stargate initial structure",
+    "url": "https://openai.com/index/announcing-the-stargate-project/",
+    "published_date": "2025-01-21",
+    "available_at": "2025-01-23T00:00:00+00:00",
+    "availability_policy": "publication date + 2 days; conservative day precision",
+    "locator": "Initial funders, technology partners and project target",
+    "evidence_type": "primary",
+    "reviewed_date": "2026-11-21"
+  },
+  {
+    "id": "aip",
+    "title": "BlackRock/GIP, Microsoft and MGX welcome NVIDIA and xAI to AIP",
+    "url": "https://ir.blackrock.com/news-and-events/press-releases/press-releases-details/2025/BlackRock-Global-Infrastructure-Partners-Microsoft-and-MGX-Welcome-NVIDIA-and-xAI-to-the-AI-Infrastructure-Partnership-to-Drive-Investment-in-Data-Centers-and-Enabling-Infrastructure/default.aspx",
+    "published_date": "2025-03-19",
+    "available_at": "2025-03-21T00:00:00+00:00",
+    "availability_policy": "publication date + 2 days; conservative day precision",
+    "locator": "Partnership participants; financing ambition, not paid capital",
+    "evidence_type": "primary",
+    "reviewed_date": "2026-11-21"
+  }
+]

@@ -1,0 +1,22 @@
+{
+  "version": "ai-ecosystem-map-v0.1",
+  "as_of": "2026-11-20T21:30:00+00:00",
+  "target_coverage": "0.95",
+  "scope": "Western-centered AI compute, funding and hardware network; selected global suppliers. Not a global AI industry census.",
+  "coverage_status": "unverified",
+  "coverage_denominator": null,
+  "consolidated_financials_status": "unavailable",
+  "scope_notes": [
+    "Whole-parent cash is relevant to solvency, but retail, advertising, Office and space revenues must not be labeled AI end demand.",
+    "No claim of improper accounting follows from these relationships.",
+    "Thirty-two company/group references are a seed map, not a quantified 95 percent sample."
+  ],
+  "gaps": [
+    "Global coverage: ByteDance, Alibaba, Tencent, Baidu and other regional networks not quantified.",
+    "Additional developers/hosts/landlords including Mistral, Cohere, Crusoe, IREN and others require tracing.",
+    "Debt holders, managed funds, SPVs and lease assignees often cannot be allocated to a named ultimate counterparty.",
+    "No complete matrix of settled bilateral cash, recognition timing, receivables/payables or internal asset margins.",
+    "Announcements, future contract values, financing capacity and reported investments use different bases/periods.",
+    "Corporate pages were reviewed retrospectively; publication availability is not a complete contemporaneous website archive."
+  ]
+}

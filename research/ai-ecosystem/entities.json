@@ -1,0 +1,645 @@
+[
+  {
+    "id": "nvidia",
+    "name": "NVIDIA",
+    "layer": "core",
+    "roles": [
+      "accelerators",
+      "supplier",
+      "investor"
+    ],
+    "aliases": [
+      "NVIDIA Corporation",
+      "NVDA"
+    ],
+    "source_ids": [
+      "nvda_10k",
+      "ms_nvda_anthropic"
+    ],
+    "node_type": "company_group",
+    "financials_consolidated": false,
+    "notes": ""
+  },
+  {
+    "id": "amd",
+    "name": "AMD",
+    "layer": "core",
+    "roles": [
+      "accelerators",
+      "supplier",
+      "conditional_financing"
+    ],
+    "aliases": [
+      "Advanced Micro Devices"
+    ],
+    "source_ids": [
+      "amd_openai",
+      "anthropic_s1"
+    ],
+    "node_type": "company_group",
+    "financials_consolidated": false,
+    "notes": ""
+  },
+  {
+    "id": "broadcom",
+    "name": "Broadcom",
+    "layer": "core",
+    "roles": [
+      "accelerators",
+      "networking",
+      "lease_arranger",
+      "conditional_financing"
+    ],
+    "aliases": [
+      "AVGO"
+    ],
+    "source_ids": [
+      "broadcom_openai",
+      "anthropic_s1"
+    ],
+    "node_type": "company_group",
+    "financials_consolidated": false,
+    "notes": ""
+  },
+  {
+    "id": "microsoft",
+    "name": "Microsoft",
+    "layer": "core",
+    "roles": [
+      "cloud",
+      "infrastructure_buyer",
+      "investor"
+    ],
+    "aliases": [
+      "Azure",
+      "Microsoft Azure",
+      "MSFT"
+    ],
+    "source_ids": [
+      "ms_nvda_anthropic",
+      "nscale_s1"
+    ],
+    "node_type": "company_group",
+    "financials_consolidated": false,
+    "notes": ""
+  },
+  {
+    "id": "amazon",
+    "name": "Amazon",
+    "layer": "core",
+    "roles": [
+      "cloud",
+      "infrastructure_buyer",
+      "investor"
+    ],
+    "aliases": [
+      "AWS",
+      "Amazon Web Services",
+      "AMZN"
+    ],
+    "source_ids": [
+      "amazon_q3"
+    ],
+    "node_type": "company_group",
+    "financials_consolidated": false,
+    "notes": ""
+  },
+  {
+    "id": "alphabet",
+    "name": "Alphabet",
+    "layer": "core",
+    "roles": [
+      "cloud",
+      "accelerator_designer",
+      "investor_or_lender"
+    ],
+    "aliases": [
+      "Google",
+      "GCP",
+      "Google Cloud",
+      "GOOG",
+      "GOOGL"
+    ],
+    "source_ids": [
+      "anthropic_s1"
+    ],
+    "node_type": "company_group",
+    "financials_consolidated": false,
+    "notes": ""
+  },
+  {
+    "id": "meta",
+    "name": "Meta Platforms",
+    "layer": "core",
+    "roles": [
+      "infrastructure_buyer",
+      "model_developer"
+    ],
+    "aliases": [
+      "Meta",
+      "META"
+    ],
+    "source_ids": [
+      "nebius_meta"
+    ],
+    "node_type": "company_group",
+    "financials_consolidated": false,
+    "notes": ""
+  },
+  {
+    "id": "oracle",
+    "name": "Oracle",
+    "layer": "core",
+    "roles": [
+      "cloud",
+      "infrastructure_buyer",
+      "project_partner"
+    ],
+    "aliases": [
+      "OCI",
+      "Oracle Cloud"
+    ],
+    "source_ids": [
+      "stargate"
+    ],
+    "node_type": "company_group",
+    "financials_consolidated": false,
+    "notes": ""
+  },
+  {
+    "id": "openai",
+    "name": "OpenAI",
+    "layer": "core",
+    "roles": [
+      "model_developer",
+      "compute_buyer"
+    ],
+    "aliases": [
+      "OpenAI Group",
+      "OpenAI OpCo"
+    ],
+    "source_ids": [
+      "stargate",
+      "amazon_q3"
+    ],
+    "node_type": "company_group",
+    "financials_consolidated": false,
+    "notes": ""
+  },
+  {
+    "id": "anthropic",
+    "name": "Anthropic",
+    "layer": "core",
+    "roles": [
+      "model_developer",
+      "compute_buyer"
+    ],
+    "aliases": [
+      "Anthropic PBC",
+      "Claude"
+    ],
+    "source_ids": [
+      "anthropic_s1"
+    ],
+    "node_type": "company_group",
+    "financials_consolidated": false,
+    "notes": ""
+  },
+  {
+    "id": "spacex",
+    "name": "SpaceX / SpaceX AI",
+    "layer": "core",
+    "roles": [
+      "model_developer",
+      "compute_supplier"
+    ],
+    "aliases": [
+      "xAI",
+      "X.AI LLC",
+      "SpaceX.AI LLC",
+      "SpaceXAI",
+      "SpaceXSI"
+    ],
+    "source_ids": [
+      "anthropic_s1"
+    ],
+    "node_type": "company_group",
+    "financials_consolidated": false,
+    "notes": "Parent ownership is disclosed; do not treat non-AI space revenue as AI demand."
+  },
+  {
+    "id": "coreweave",
+    "name": "CoreWeave",
+    "layer": "core",
+    "roles": [
+      "gpu_cloud",
+      "compute_supplier"
+    ],
+    "aliases": [
+      "CRWV"
+    ],
+    "source_ids": [
+      "coreweave_q3"
+    ],
+    "node_type": "company_group",
+    "financials_consolidated": false,
+    "notes": ""
+  },
+  {
+    "id": "nebius",
+    "name": "Nebius",
+    "layer": "core",
+    "roles": [
+      "gpu_cloud",
+      "compute_supplier"
+    ],
+    "aliases": [
+      "Nebius Group",
+      "NBIS"
+    ],
+    "source_ids": [
+      "nebius_microsoft",
+      "nebius_meta"
+    ],
+    "node_type": "company_group",
+    "financials_consolidated": false,
+    "notes": ""
+  },
+  {
+    "id": "nscale",
+    "name": "Nscale",
+    "layer": "core",
+    "roles": [
+      "gpu_cloud",
+      "compute_supplier"
+    ],
+    "aliases": [
+      "Nscale Limited",
+      "Nscale Global Holdings"
+    ],
+    "source_ids": [
+      "nscale_s1",
+      "anthropic_s1"
+    ],
+    "node_type": "company_group",
+    "financials_consolidated": false,
+    "notes": ""
+  },
+  {
+    "id": "lambda",
+    "name": "Lambda",
+    "layer": "core",
+    "roles": [
+      "gpu_cloud",
+      "compute_supplier"
+    ],
+    "aliases": [
+      "Lambda Inc."
+    ],
+    "source_ids": [
+      "anthropic_s1"
+    ],
+    "node_type": "company_group",
+    "financials_consolidated": false,
+    "notes": "The GPU cloud company, not the AWS Lambda service."
+  },
+  {
+    "id": "fluidstack",
+    "name": "Fluidstack",
+    "layer": "core",
+    "roles": [
+      "data_center_development",
+      "compute_infrastructure"
+    ],
+    "aliases": [
+      "Fluidstack USA I Inc."
+    ],
+    "source_ids": [
+      "anthropic_s1"
+    ],
+    "node_type": "company_group",
+    "financials_consolidated": false,
+    "notes": "Added after reviewing the original seed list; amount not disclosed in this register."
+  },
+  {
+    "id": "tsmc",
+    "name": "TSMC",
+    "layer": "supply_chain",
+    "roles": [
+      "foundry_or_memory"
+    ],
+    "aliases": [
+      "Taiwan Semiconductor Manufacturing"
+    ],
+    "source_ids": [
+      "nvda_10k"
+    ],
+    "node_type": "company_group",
+    "financials_consolidated": false,
+    "notes": "Group-level supplier relation; no counterparty payment amount verified."
+  },
+  {
+    "id": "sk_hynix",
+    "name": "SK hynix",
+    "layer": "supply_chain",
+    "roles": [
+      "foundry_or_memory"
+    ],
+    "aliases": [
+      "SK Hynix Inc."
+    ],
+    "source_ids": [
+      "nvda_10k"
+    ],
+    "node_type": "company_group",
+    "financials_consolidated": false,
+    "notes": "Group-level supplier relation; no counterparty payment amount verified."
+  },
+  {
+    "id": "micron",
+    "name": "Micron",
+    "layer": "supply_chain",
+    "roles": [
+      "foundry_or_memory"
+    ],
+    "aliases": [
+      "Micron Technology"
+    ],
+    "source_ids": [
+      "nvda_10k"
+    ],
+    "node_type": "company_group",
+    "financials_consolidated": false,
+    "notes": "Group-level supplier relation; no counterparty payment amount verified."
+  },
+  {
+    "id": "samsung_electronics",
+    "name": "Samsung Electronics",
+    "layer": "supply_chain",
+    "roles": [
+      "foundry_or_memory"
+    ],
+    "aliases": [
+      "Samsung Electronics Co."
+    ],
+    "source_ids": [
+      "nvda_10k"
+    ],
+    "node_type": "company_group",
+    "financials_consolidated": false,
+    "notes": "Group-level supplier relation; no counterparty payment amount verified."
+  },
+  {
+    "id": "dell",
+    "name": "Dell Technologies",
+    "layer": "supply_chain",
+    "roles": [
+      "systems_manufacturer"
+    ],
+    "aliases": [
+      "Dell",
+      "DELL"
+    ],
+    "source_ids": [
+      "system_partners"
+    ],
+    "node_type": "company_group",
+    "financials_consolidated": false,
+    "notes": "Platform partnership does not establish direct bilateral cash purchases or a complete legal consolidation perimeter."
+  },
+  {
+    "id": "hpe",
+    "name": "Hewlett Packard Enterprise",
+    "layer": "supply_chain",
+    "roles": [
+      "systems_manufacturer"
+    ],
+    "aliases": [
+      "HPE"
+    ],
+    "source_ids": [
+      "system_partners"
+    ],
+    "node_type": "company_group",
+    "financials_consolidated": false,
+    "notes": "Platform partnership does not establish direct bilateral cash purchases or a complete legal consolidation perimeter."
+  },
+  {
+    "id": "supermicro",
+    "name": "Super Micro Computer",
+    "layer": "supply_chain",
+    "roles": [
+      "systems_manufacturer"
+    ],
+    "aliases": [
+      "Supermicro",
+      "SMCI"
+    ],
+    "source_ids": [
+      "system_partners"
+    ],
+    "node_type": "company_group",
+    "financials_consolidated": false,
+    "notes": "Platform partnership does not establish direct bilateral cash purchases or a complete legal consolidation perimeter."
+  },
+  {
+    "id": "lenovo",
+    "name": "Lenovo",
+    "layer": "supply_chain",
+    "roles": [
+      "systems_manufacturer"
+    ],
+    "aliases": [
+      "Lenovo Group"
+    ],
+    "source_ids": [
+      "system_partners"
+    ],
+    "node_type": "company_group",
+    "financials_consolidated": false,
+    "notes": "Platform partnership does not establish direct bilateral cash purchases or a complete legal consolidation perimeter."
+  },
+  {
+    "id": "foxconn",
+    "name": "Foxconn / Hon Hai",
+    "layer": "supply_chain",
+    "roles": [
+      "systems_manufacturer"
+    ],
+    "aliases": [
+      "Foxconn",
+      "Hon Hai"
+    ],
+    "source_ids": [
+      "system_partners"
+    ],
+    "node_type": "company_group",
+    "financials_consolidated": false,
+    "notes": "Platform partnership does not establish direct bilateral cash purchases or a complete legal consolidation perimeter."
+  },
+  {
+    "id": "quanta",
+    "name": "Quanta Computer / QCT",
+    "layer": "supply_chain",
+    "roles": [
+      "systems_manufacturer"
+    ],
+    "aliases": [
+      "QCT",
+      "Quanta Cloud Technology"
+    ],
+    "source_ids": [
+      "system_partners"
+    ],
+    "node_type": "company_group",
+    "financials_consolidated": false,
+    "notes": "Platform partnership does not establish direct bilateral cash purchases or a complete legal consolidation perimeter."
+  },
+  {
+    "id": "wiwynn",
+    "name": "Wiwynn",
+    "layer": "supply_chain",
+    "roles": [
+      "systems_manufacturer"
+    ],
+    "aliases": [],
+    "source_ids": [
+      "system_partners"
+    ],
+    "node_type": "company_group",
+    "financials_consolidated": false,
+    "notes": "Platform partnership does not establish direct bilateral cash purchases or a complete legal consolidation perimeter."
+  },
+  {
+    "id": "softbank",
+    "name": "SoftBank Group",
+    "layer": "capital",
+    "roles": [
+      "project_financier"
+    ],
+    "aliases": [
+      "SoftBank"
+    ],
+    "source_ids": [
+      "stargate"
+    ],
+    "node_type": "company_group",
+    "financials_consolidated": false,
+    "notes": ""
+  },
+  {
+    "id": "mgx",
+    "name": "MGX",
+    "layer": "capital",
+    "roles": [
+      "project_financier"
+    ],
+    "aliases": [],
+    "source_ids": [
+      "stargate",
+      "aip"
+    ],
+    "node_type": "company_group",
+    "financials_consolidated": false,
+    "notes": ""
+  },
+  {
+    "id": "blackrock",
+    "name": "BlackRock / GIP",
+    "layer": "capital",
+    "roles": [
+      "asset_manager",
+      "infrastructure_financing"
+    ],
+    "aliases": [
+      "BlackRock",
+      "Global Infrastructure Partners",
+      "GIP"
+    ],
+    "source_ids": [
+      "aip"
+    ],
+    "node_type": "company_group",
+    "financials_consolidated": false,
+    "notes": "Managed fund assets and commitments are not automatically assets or cash of BlackRock Corporation."
+  },
+  {
+    "id": "stargate",
+    "name": "Stargate project reference",
+    "layer": "reference",
+    "roles": [
+      "project"
+    ],
+    "aliases": [
+      "Stargate"
+    ],
+    "source_ids": [
+      "stargate"
+    ],
+    "node_type": "project_reference",
+    "financials_consolidated": false,
+    "notes": "Project reference, not a separately added company balance sheet."
+  },
+  {
+    "id": "aip",
+    "name": "AI Infrastructure Partnership reference",
+    "layer": "reference",
+    "roles": [
+      "project"
+    ],
+    "aliases": [
+      "AIP"
+    ],
+    "source_ids": [
+      "aip"
+    ],
+    "node_type": "project_reference",
+    "financials_consolidated": false,
+    "notes": "Project membership is not a paid capital contribution."
+  },
+  {
+    "id": "broadcom_lease_pool",
+    "name": "Broadcom-originated lease counterparties",
+    "layer": "reference",
+    "roles": [
+      "partly_unidentified_assignees"
+    ],
+    "aliases": [],
+    "source_ids": [
+      "anthropic_s1"
+    ],
+    "node_type": "unresolved_contract_pool",
+    "financials_consolidated": false,
+    "notes": "Some rights were assigned to third parties/SPVs; do not allocate the full lease amount to Broadcom or count assignments again."
+  },
+  {
+    "id": "wistron",
+    "name": "Wistron",
+    "layer": "supply_chain",
+    "roles": [
+      "contract_manufacturing"
+    ],
+    "aliases": [],
+    "source_ids": [
+      "nvda_10k"
+    ],
+    "node_type": "company_group",
+    "financials_consolidated": false,
+    "notes": "Named supplier; no bilateral cash amount established. Common-control perimeter requires separate verification."
+  },
+  {
+    "id": "fabrinet",
+    "name": "Fabrinet",
+    "layer": "supply_chain",
+    "roles": [
+      "contract_manufacturing"
+    ],
+    "aliases": [],
+    "source_ids": [
+      "nvda_10k"
+    ],
+    "node_type": "company_group",
+    "financials_consolidated": false,
+    "notes": "Named supplier; no bilateral cash amount established. Common-control perimeter requires separate verification."
+  }
+]
