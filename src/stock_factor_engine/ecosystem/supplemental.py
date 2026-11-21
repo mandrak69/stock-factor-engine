@@ -1,5 +1,5 @@
 """Reviewed same-period disclosures supplement the standardized TTM feed."""
-from datetime import date
+from datetime import date, timedelta
 from decimal import Decimal
 from html.parser import HTMLParser
 import hashlib
@@ -48,6 +48,36 @@ def supplemental_statements(rows, evidence_dir, as_of, members):
         amount = Decimal(str(row['amount']))
         if not amount.is_finite():
             raise ValueError('Nonfinite supplemental amount')
+        if row.get('ttm_bridge'):
+            verify_ttm_bridge(row, evidence_dir, as_of)
         result.append({**row, 'amount': amount,
             'basis': 'reported issuer, no internal eliminations; never external AI-only cash'})
     return result
+
+
+def verify_ttm_bridge(row, evidence_dir, as_of):
+    """Annual minus prior YTD plus current YTD, with both source captures pinned."""
+    bridge = row['ttm_bridge']
+    annual, prior, current = [bridge[k] for k in ('annual', 'prior_ytd', 'current_ytd')]
+    if row['currency'] != 'USD' or bridge['unit'] != 'USD':
+        raise ValueError('TTM bridge requires consistent USD units')
+    if instant(annual['available_at']) > instant(as_of):
+        raise ValueError('Annual bridge evidence not available at cutoff')
+    path = evidence_dir.parent / 'evidence' / annual['evidence_file']
+    if path.name != annual['evidence_file'] or hashlib.sha256(path.read_bytes()).hexdigest() != annual['sha256']:
+        raise ValueError('Annual bridge evidence hash/path mismatch')
+    text = Text()
+    text.feed(path.read_text(encoding='utf-8', errors='replace'))
+    if annual['anchor'] not in re.sub(r'\s+', ' ', ' '.join(text.parts)):
+        raise ValueError('Annual bridge amount anchor changed')
+    d = date.fromisoformat
+    if (annual['period_start'] != prior['period_start']
+            or d(annual['period_end']) + timedelta(days=1) != d(current['period_start'])
+            or d(prior['period_end']) + timedelta(days=1) != d(row['period_start'])
+            or current['period_end'] != row['period_end']
+            or not d(prior['period_start']) <= d(prior['period_end']) < d(annual['period_end']) < d(current['period_end'])
+            or not 350 <= (d(row['period_end']) - d(row['period_start'])).days + 1 <= 380):
+        raise ValueError('TTM bridge periods do not form a contiguous trailing year')
+    amounts = [Decimal(str(term['value_usd'])) for term in (annual, prior, current)]
+    if any(not value.is_finite() or value < 0 for value in amounts) or amounts[0] - amounts[1] + amounts[2] != Decimal(row['amount']):
+        raise ValueError('TTM bridge arithmetic mismatch')

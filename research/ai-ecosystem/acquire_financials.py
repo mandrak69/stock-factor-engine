@@ -55,6 +55,10 @@ def main():
                 destination.write_bytes((registry / 'excerpts' / row['curated_extract_file']).read_bytes())
         documents.append((Path('data/ai-ecosystem-2026-11-20/supplemental-evidence') / row['evidence_file'],
                           row['url'], row['sha256']))
+    for row in json.loads((registry / 'supplemental.json').read_text()):
+        if row.get('ttm_bridge'):
+            annual = row['ttm_bridge']['annual']
+            documents.append((Path('data/ai-ecosystem-2026-11-20/evidence') / annual['evidence_file'], annual['url'], annual['sha256']))
     opener = build_opener(SafeRedirects())
     for path, url, expected in dict.fromkeys(documents):
         try:

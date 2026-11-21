@@ -17,6 +17,46 @@
     "availability_policy": "publication date + 2 days; Lenovo +36h conservative global-day bound"
   },
   {
+    "entity_id": "nvidia",
+    "url": "https://nvidianews.nvidia.com/news/nvidia-announces-financial-results-for-third-quarter-fiscal-2027",
+    "published_date": "2026-11-17",
+    "available_at": "2026-11-19T00:00:00Z",
+    "period_start": "2025-10-27",
+    "period_end": "2026-10-25",
+    "period_basis": "TTM derived from annual minus prior nine months plus current nine months",
+    "currency": "USD",
+    "metric": "revenue_ttm",
+    "amount": "361808000000",
+    "anchor": "Revenue $ 115,844 $ 57,006 $ 293,681 $ 147,811",
+    "note": "215.938 -147.811 +293.681 =361.808 billion USD. Whole issuer revenue, before analytical group eliminations. Do not combine with July-ended CFO TTM.",
+    "evidence_file": "nvidia.html",
+    "sha256": "2e952b2165b23d8d40abd3fe49976f9e9adab508d8d20d61829c54156193e039",
+    "availability_policy": "publication date + 2 days; Lenovo +36h conservative global-day bound",
+    "ttm_bridge": {
+      "unit": "USD",
+      "annual": {
+        "period_start": "2025-01-27",
+        "period_end": "2026-01-25",
+        "value_usd": "215938000000",
+        "available_at": "2026-02-25T21:47:19Z",
+        "evidence_file": "nvda_10k.raw",
+        "sha256": "a3011282c903156f65b023fd1cea0ba6637d15fc3c3d63a8a6926015a926a35f",
+        "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
+        "anchor": "Revenue $ 215,938 $ 130,497"
+      },
+      "prior_ytd": {
+        "period_start": "2025-01-27",
+        "period_end": "2025-10-26",
+        "value_usd": "147811000000"
+      },
+      "current_ytd": {
+        "period_start": "2026-01-26",
+        "period_end": "2026-10-25",
+        "value_usd": "293681000000"
+      }
+    }
+  },
+  {
     "entity_id": "sk_hynix",
     "url": "https://news.skhynix.com/en/q3-2026-business-results/",
     "published_date": "2026-10-28",

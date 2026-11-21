@@ -99,3 +99,9 @@ Neither global 95% coverage nor a fraud score is inferred. Exact external AI
 demand requires bilateral settlements, recognition timing, receivables/payables,
 legal/control perimeter, principal/agent treatment and AI allocations that the
 public aggregate statements do not fully disclose.
+
+NVIDIA latest revenue TTM is separately verified as USD361.808bn through
+2026-10-25: FY2026 USD215.938bn minus prior 9M USD147.811bn plus current
+9M USD293.681bn. Both source hashes, amount anchors, USD units, availability
+and contiguous periods are checked. This supplemental TTM must not be mixed
+with July-ended TTM CFO/capex or treated as external group revenue.

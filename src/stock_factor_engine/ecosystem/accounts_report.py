@@ -94,7 +94,7 @@ def build_accounts_report(registry, roots, output):
     write_csv(output / 'parent-financials.csv', parents, parent_fields)
     write_csv(output / 'supplemental-statements.csv', supplements,
         ['entity_id', 'metric', 'amount', 'currency', 'period_start', 'period_end', 'period_basis',
-         'available_at', 'availability_policy', 'basis', 'url', 'sha256', 'evidence_format', 'reviewed_page_index', 'locator', 'note'])
+         'available_at', 'availability_policy', 'basis', 'url', 'sha256', 'ttm_bridge', 'evidence_format', 'reviewed_page_index', 'locator', 'note'])
     write_csv(output / 'metric-evidence.csv', metric_rows,
               ['entity_id', 'metric', 'value_usd', 'period_start', 'period_end', 'status', 'reason', 'evidence_json'])
     fields = ['id', 'from_id', 'to_id', 'kind', 'status', 'amount_usd', 'amount_qualifier',
@@ -143,7 +143,7 @@ def build_accounts_report(registry, roots, output):
             'unavailable' if ratio is None else f'{ratio:.2f}x']) + ' |')
     lines += ['', '## Novije i strane objave — poseban period i valuta', '',
         'Ovi podaci dopunjuju starije TTM redove. Nisu sabrani sa njima. PP&E plus intangible assets ima drugačiji obuhvat od PP&E-only.',
-        'NVIDIA ima noviju objavu za oktobarski kvartal; julsku standardizovanu seriju iz gornje tabele ne tretirati kao poslednji operativni rezultat.', '',
+        'NVIDIA: najnoviji kvartal 115.844 mlrd USD; potvrđeni TTM prihod 361.808 mlrd USD = 215.938 − 147.811 + 293.681. TTM se završava 25.10.2026; ne mešati ga sa julskim TTM ostalih pokazatelja.', '',
         '| Kompanija | Metrika | Period | Milijarde izvorne valute | Valuta |',
         '|---|---|---|---:|---|']
     for row in supplements:

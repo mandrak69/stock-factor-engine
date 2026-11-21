@@ -55,11 +55,12 @@ ne uključuje automatski finance lease additions, otplate lease glavnice ili sve
 ## Novije i strane objave — poseban period i valuta
 
 Ovi podaci dopunjuju starije TTM redove. Nisu sabrani sa njima. PP&E plus intangible assets ima drugačiji obuhvat od PP&E-only.
-NVIDIA ima noviju objavu za oktobarski kvartal; julsku standardizovanu seriju iz gornje tabele ne tretirati kao poslednji operativni rezultat.
+NVIDIA: najnoviji kvartal 115.844 mlrd USD; potvrđeni TTM prihod 361.808 mlrd USD = 215.938 − 147.811 + 293.681. TTM se završava 25.10.2026; ne mešati ga sa julskim TTM ostalih pokazatelja.
 
 | Kompanija | Metrika | Period | Milijarde izvorne valute | Valuta |
 |---|---|---|---:|---|
 | nvidia | revenue | 2026-07-27 – 2026-10-25 | 115.844 | USD |
+| nvidia | revenue_ttm | 2025-10-27 – 2026-10-25 | 361.808 | USD |
 | sk_hynix | revenue | 2026-07-01 – 2026-09-30 | 104,615.500 | KRW |
 | samsung_electronics | revenue | 2026-07-01 – 2026-09-30 | 195,300.000 | KRW |
 | lenovo | revenue | 2026-07-01 – 2026-09-30 | 30.200 | USD |
