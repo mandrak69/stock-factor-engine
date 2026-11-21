@@ -102,7 +102,7 @@ def build_report(registry, output, as_of=None):
         '- Reference: projekti i delimicno nepoznati zakupodavci; nisu dodatne kompanije za sabiranje bilansa.',
         '- Whole-group likvidnost i AI-specific potraznja su razliciti pogledi. Maloprodaja, reklame, Office i svemirske usluge nisu automatski AI prihod.', '',
         '## Operativno jezgro', '', markdown_table([row for row in participants if row['Layer']=='core'], ('Name','Roles','Sources','Notes')),
-        '## Dobavljaci i kapital', '', markdown_table([row for row in participants if row['Layer'] in ('supply_chain','capital')], ('Name','Layer','Roles','Sources','Notes')),
+        '## Operativni dobavljaci', '', markdown_table([row for row in participants if row['Layer'] == 'supply_chain'], ('Name','Layer','Roles','Sources','Notes')),
         '## Odabrane veze', '', 'Isprekidane strelice prikazuju razlicite vrste odnosa i obaveza. Nisu dokaz izvrsenog toka istog novca niti sabirljivi iznosi.', '',
         '```mermaid', '\n'.join(diagram), '```', '',
         '## Najveci objavljeni ugovorni iznosi u registru', '',

@@ -4,9 +4,13 @@
   "as_of": "2026-11-20T21:30:00+00:00",
   "period_start": "2026-01-01",
   "period_end": "2026-09-30",
-  "scope": "all company_group nodes from the dated registry; no project/reference nodes; analytical aggregation of independent groups, not statutory control consolidation",
+  "scope": "29 operating issuer references from core/supply_chain layers; 28 candidate accounting units after folding Wiwynn into Wistron. Pure financiers excluded.",
   "cash": [],
-  "external_counterparties": [],
+  "external_counterparties": [
+    "blackrock",
+    "mgx",
+    "softbank"
+  ],
   "sales": [],
   "coverage": [],
   "cash_reconciliation": null,

@@ -686,23 +686,6 @@
     "direction": "undirected"
   },
   {
-    "id": "stargate_softbank",
-    "from_id": "softbank",
-    "to_id": "stargate",
-    "kind": "project_participation",
-    "status": "announced",
-    "source_ids": [
-      "stargate"
-    ],
-    "source_locator": "Initial equity funders",
-    "amount_usd": null,
-    "amount_qualifier": null,
-    "period_start": null,
-    "period_end": null,
-    "cash_verified": false,
-    "notes": "No paid per-participant contribution established; project target is not each participant investment."
-  },
-  {
     "id": "stargate_openai",
     "from_id": "openai",
     "to_id": "stargate",
@@ -737,59 +720,8 @@
     "notes": "No paid per-participant contribution established; project target is not each participant investment."
   },
   {
-    "id": "stargate_mgx",
-    "from_id": "mgx",
-    "to_id": "stargate",
-    "kind": "project_participation",
-    "status": "announced",
-    "source_ids": [
-      "stargate"
-    ],
-    "source_locator": "Initial equity funders",
-    "amount_usd": null,
-    "amount_qualifier": null,
-    "period_start": null,
-    "period_end": null,
-    "cash_verified": false,
-    "notes": "No paid per-participant contribution established; project target is not each participant investment."
-  },
-  {
-    "id": "aip_blackrock",
-    "from_id": "blackrock",
-    "to_id": "aip",
-    "kind": "project_participation",
-    "status": "announced",
-    "source_ids": [
-      "aip"
-    ],
-    "source_locator": "AIP membership",
-    "amount_usd": null,
-    "amount_qualifier": null,
-    "period_start": null,
-    "period_end": null,
-    "cash_verified": false,
-    "notes": "Partnership participation, not proof that own balance-sheet cash was contributed."
-  },
-  {
     "id": "aip_microsoft",
     "from_id": "microsoft",
-    "to_id": "aip",
-    "kind": "project_participation",
-    "status": "announced",
-    "source_ids": [
-      "aip"
-    ],
-    "source_locator": "AIP membership",
-    "amount_usd": null,
-    "amount_qualifier": null,
-    "period_start": null,
-    "period_end": null,
-    "cash_verified": false,
-    "notes": "Partnership participation, not proof that own balance-sheet cash was contributed."
-  },
-  {
-    "id": "aip_mgx",
-    "from_id": "mgx",
     "to_id": "aip",
     "kind": "project_participation",
     "status": "announced",

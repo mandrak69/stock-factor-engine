@@ -1,7 +1,7 @@
 # Analytical AI boundary accounts v0.1
 
-Cutoff: 2026-11-20 21:30 UTC. Map: 32 issuer/group references; Wiwynn is folded
-into its controlling parent Wistron, leaving 31 candidate accounting units.
+Cutoff: 2026-11-20 21:30 UTC. Map: 29 operating issuer/group references; Wiwynn is folded
+into its controlling parent Wistron, leaving 28 candidate accounting units.
 controls.json pins the primary Note 7(a) evidence. Full legal/control review is
 still required; no assumption of complete independent group coverage is made.
 Structural projects/pools are not extra issuers. This is an
@@ -29,7 +29,7 @@ establish complete contemporaneous data-vintage coverage.
 data/reports/ai-financials-2026-11-20 contains:
 
 - financial-report.md: methodology, issuer tables and qualifications.
-- parent-financials.csv: all 32 companies, exact TTM dates, USD figures and gaps.
+- parent-financials.csv: all 29 operating companies, exact TTM dates, USD figures and gaps.
 - supplemental-statements.csv: newer NVIDIA release and foreign/6-K statements
   in their actual quarter/YTD periods and original currencies; never summed with
   the TTM rows. PP&E plus intangibles is distinct from PP&E-only.
@@ -105,3 +105,9 @@ NVIDIA latest revenue TTM is separately verified as USD361.808bn through
 9M USD293.681bn. Both source hashes, amount anchors, USD units, availability
 and contiguous periods are checked. This supplemental TTM must not be mixed
 with July-ended TTM CFO/capex or treated as external group revenue.
+
+Pure-financier scope update: SoftBank Group, MGX and BlackRock/GIP are outside
+the active operating group and its financial/participant exports. Hardware
+suppliers and operating companies with investment activity remain inside.
+Confirmed payments from excluded financiers are external financing, not revenue.
+Prior broad-scope records remain available in Git history.

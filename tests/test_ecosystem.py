@@ -24,7 +24,7 @@ def current(bundle):
 
 def test_seed_map_is_not_claimed_as_95_percent_or_consolidated_accounts(bundle):
     result = summarize(bundle, current(bundle))
-    assert result['company_group_count'] == 32
+    assert result['company_group_count'] == 29
     assert result['reference_node_count'] == 3
     assert result['global_flow_coverage'] is None
     assert result['group_external_net_cash_usd'] is None
@@ -162,3 +162,19 @@ def test_export_labels_unknowns_and_excludes_obsolete_azure_amount(tmp_path):
 def test_historical_report_requires_historical_entity_perimeter(tmp_path):
     with pytest.raises(ValueError, match='Refresh entity perimeter'):
         build_report(REGISTRY,tmp_path,'2025-01-01T00:00:00Z')
+
+
+def test_operating_scope_excludes_pure_financiers_but_keeps_operating_investors(bundle):
+    ids = {e['id'] for e in bundle['entities']}
+    assert not ids & {'softbank', 'mgx', 'blackrock'}
+    assert {'nvidia', 'microsoft', 'amazon', 'alphabet', 'tsmc', 'wistron'} <= ids
+    assert all(e['layer'] in {'core', 'supply_chain'} for e in bundle['entities'] if e['node_type'] == 'company_group')
+    assert all(r['from_id'] in ids and r['to_id'] in ids for r in bundle['relationships'])
+
+
+def test_pure_financier_cannot_silently_reenter_operating_perimeter(bundle):
+    entity = deepcopy(bundle['entities'][0])
+    entity.update(id='new_fund', name='New Fund', aliases=[], layer='capital')
+    bundle['entities'].append(entity)
+    with pytest.raises(ValueError, match='outside operating perimeter'):
+        validate(bundle)

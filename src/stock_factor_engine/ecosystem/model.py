@@ -46,6 +46,9 @@ def validate(bundle):
         if source.get('available_at') is not None:
             instant(source['available_at'])
     for node in nodes.values():
+        allowed = bundle['config'].get('company_layers')
+        if node['node_type'] == 'company_group' and allowed is not None and node['layer'] not in allowed:
+            raise ValueError('Company outside operating perimeter: ' + node['id'])
         refs(node)
     for edge in edges.values():
         refs(edge)

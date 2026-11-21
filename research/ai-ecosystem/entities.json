@@ -511,59 +511,6 @@
     "notes": "Platform partnership does not establish direct bilateral cash purchases or a complete legal consolidation perimeter."
   },
   {
-    "id": "softbank",
-    "name": "SoftBank Group",
-    "layer": "capital",
-    "roles": [
-      "project_financier"
-    ],
-    "aliases": [
-      "SoftBank"
-    ],
-    "source_ids": [
-      "stargate"
-    ],
-    "node_type": "company_group",
-    "financials_consolidated": false,
-    "notes": ""
-  },
-  {
-    "id": "mgx",
-    "name": "MGX",
-    "layer": "capital",
-    "roles": [
-      "project_financier"
-    ],
-    "aliases": [],
-    "source_ids": [
-      "stargate",
-      "aip"
-    ],
-    "node_type": "company_group",
-    "financials_consolidated": false,
-    "notes": ""
-  },
-  {
-    "id": "blackrock",
-    "name": "BlackRock / GIP",
-    "layer": "capital",
-    "roles": [
-      "asset_manager",
-      "infrastructure_financing"
-    ],
-    "aliases": [
-      "BlackRock",
-      "Global Infrastructure Partners",
-      "GIP"
-    ],
-    "source_ids": [
-      "aip"
-    ],
-    "node_type": "company_group",
-    "financials_consolidated": false,
-    "notes": "Managed fund assets and commitments are not automatically assets or cash of BlackRock Corporation."
-  },
-  {
     "id": "stargate",
     "name": "Stargate project reference",
     "layer": "reference",

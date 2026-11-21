@@ -1,7 +1,7 @@
 # AI ecosystem evidence registry v0.1
 
 This is an analyst-curated seed map, not consolidated accounts, a fraud finding,
-or a claim of 95% global cash-flow coverage. It covers 32 company/group references
+or a claim of 95% global cash-flow coverage. It covers 29 operating company/group references
 plus three non-company project/contract-pool references as of 2026-11-20 21:30 UTC.
 Fluidstack, Wistron and Fabrinet were added after tracing primary disclosures.
 
@@ -46,3 +46,9 @@ Active means latest included disclosure, not a verified current outstanding
 balance or a complete search of all later amendments. Original source captures
 are stored locally under data/ai-ecosystem-2026-11-20/evidence and excluded from
 Git. All 14 registry sources were archived with SHA-256 evidence references.
+
+Pure-financier scope update: SoftBank Group, MGX and BlackRock/GIP are outside
+the active operating group and its financial/participant exports. Hardware
+suppliers and operating companies with investment activity remain inside.
+Confirmed payments from excluded financiers are external financing, not revenue.
+Prior broad-scope records remain available in Git history.

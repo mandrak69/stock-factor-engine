@@ -20,7 +20,7 @@ ISSUERS = {
     'meta': '0001326801', 'oracle': '0001341439', 'coreweave': '0001769628',
     'nebius': '0001513845', 'nscale': '0002110365', 'anthropic': '0002130357',
     'micron': '0000723125', 'dell': '0001571996', 'hpe': '0001645590',
-    'supermicro': '0001375365', 'blackrock': '0002012383', 'fabrinet': '0001408710',
+    'supermicro': '0001375365', 'fabrinet': '0001408710',
     'tsmc': '0001046179',
 }
 METRICS = ('revenue', 'operating_income', 'operating_cash_flow', 'capital_expenditure')

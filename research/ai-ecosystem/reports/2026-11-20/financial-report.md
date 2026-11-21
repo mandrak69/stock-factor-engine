@@ -1,13 +1,14 @@
 # AI ekosistem — finansijski pregled i eliminacije
 
-Decision cutoff: **2026-11-20T21:30:00+00:00**. Granica: **32 kompanije/grupe** iz datiranog registra.
+Decision cutoff: **2026-11-20T21:30:00+00:00**. Granica: **29 kompanije/grupe** iz datiranog registra.
 Ciljni period grupnog obračuna: **2026-01-01 – 2026-09-30**.
-Posle potvrđenog spajanja Wiwynn u Wistron: **31 računovodstvenih jedinica**; kompletna kontrolna mapa još zahteva pregled.
+Posle potvrđenog spajanja Wiwynn u Wistron: **28 računovodstvenih jedinica**; kompletna kontrolna mapa još zahteva pregled.
 Wiwynn je naveden i zasebno radi konteksta. Njegove finansije se ne dodaju ponovo Wistron konsolidovanim finansijama.
 
 Kontrolna veza: [Wiwynn Q3 2026, Note 7(a), PDF strana 55](https://www.wiwynn.com/hubfs/Investors/Financial_Report/Wiwynn_2026Q3_Financial.pdf).
 
 **Grupni spoljni prihod: unavailable; neto novac: unavailable (milijarde USD). Dobit: unavailable.**
+SoftBank Group, MGX i BlackRock/GIP su izvan operativne grupe. Njihove potvrđene uplate predstavljale bi spoljno finansiranje.
 Registar ugovora ne dokazuje izvršene uplate. Prazan transakcioni registar ne znači nula stvarnog prometa.
 Ovo je analitičko objedinjavanje nezavisnih kompanija, bez tvrdnje da postoji zajednička kontrola ili nepravilno knjiženje.
 
@@ -46,9 +47,6 @@ ne uključuje automatski finance lease additions, otplate lease glavnice ili sve
 | Foxconn / Hon Hai | ? – ? | unavailable | unavailable | unavailable | unavailable | unavailable |
 | Quanta Computer / QCT | ? – ? | unavailable | unavailable | unavailable | unavailable | unavailable |
 | Wiwynn | ? – ? | unavailable | unavailable | unavailable | unavailable | unavailable |
-| SoftBank Group | ? – ? | unavailable | unavailable | unavailable | unavailable | unavailable |
-| MGX | ? – ? | unavailable | unavailable | unavailable | unavailable | unavailable |
-| BlackRock / GIP | 2025-10-01 – 2026-09-30 | 28.542 | 5.230 | 0.446 | 4.784 | 11.73x |
 | Wistron | ? – ? | unavailable | unavailable | unavailable | unavailable | unavailable |
 | Fabrinet | 2025-09-27 – 2026-09-25 | 5.137 | 0.175 | 0.366 | -0.190 | 0.48x |
 
@@ -75,9 +73,6 @@ NVIDIA: najnoviji kvartal 115.844 mlrd USD; potvrđeni TTM prihod 361.808 mlrd U
 | foxconn | revenue | 2026-01-01 – 2026-09-30 | 7,661.062 | TWD |
 | foxconn | operating_cash_flow | 2026-01-01 – 2026-09-30 | -125.723 | TWD |
 | foxconn | reported_capital_expenditures | 2026-01-01 – 2026-09-30 | 161.726 | TWD |
-| softbank | revenue | 2026-04-01 – 2026-09-30 | 4,235.037 | JPY |
-| softbank | operating_cash_flow | 2026-04-01 – 2026-09-30 | -527.298 | JPY |
-| softbank | financing_cash_flow | 2026-04-01 – 2026-09-30 | 8,049.058 | JPY |
 | wiwynn | related_party_purchases_from_parent | 2026-01-01 – 2026-09-30 | 127.874 | TWD |
 | wistron | revenue | 2026-01-01 – 2026-09-30 | 2,890.000 | TWD |
 
@@ -103,7 +98,7 @@ Revidirana Azure obaveza zamenjuje staru objavu; istorijska cifra se ne dodaje p
 
 ## Šta nedostaje
 
-Za svih 32 članice nedostaje kompletan usaglašen registar međusobnih prihoda i plaćanja. Precizni razlozi po kompaniji i metrici su u data-gaps.csv i metric-evidence.csv.
+Za svih 29 operativnih članica nedostaje kompletan usaglašen registar međusobnih prihoda i plaćanja. Precizni razlozi su u data-gaps.csv i metric-evidence.csv.
 IPO S-1 i strani/custom taksonomski izveštaji nisu automatski tretirani kao standardni US-GAAP 10-Q/10-K. Neobjavljeni iznosi ostaju nepoznati.
 Za AI-only rezultat dodatno nedostaje pouzdana raspodela prihoda, operativnih troškova, capex-a i obrtnog kapitala na AI i ostalo poslovanje.
 95% globalne pokrivenosti nije dokazano: nema potpunog, usaglašenog imenioca. Broj kompanija ili zbir najava nisu zamena.
@@ -130,7 +125,6 @@ Njegove principe koristimo analitički; ove nezavisne kompanije nisu pravna kons
 - Dell Technologies: [SEC filing 0001571996-26-000046](https://www.sec.gov/Archives/edgar/data/1571996/000157199626000046/0001571996-26-000046-index.html)
 - Hewlett Packard Enterprise: [SEC filing 0001645590-26-000080](https://www.sec.gov/Archives/edgar/data/1645590/000164559026000080/0001645590-26-000080-index.html)
 - Super Micro Computer: [SEC filing 0001375365-26-000027](https://www.sec.gov/Archives/edgar/data/1375365/000137536526000027/0001375365-26-000027-index.html)
-- BlackRock / GIP: [SEC filing 0001193125-26-447043](https://www.sec.gov/Archives/edgar/data/2012383/000119312526447043/0001193125-26-447043-index.html)
 - Fabrinet: [SEC filing 0001408710-26-000041](https://www.sec.gov/Archives/edgar/data/1408710/000140871026000041/0001408710-26-000041-index.html)
 
 ## Provereni S-1 izveštaji i radni kapital
