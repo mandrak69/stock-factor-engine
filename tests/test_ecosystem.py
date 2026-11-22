@@ -150,7 +150,7 @@ def test_export_labels_unknowns_and_excludes_obsolete_azure_amount(tmp_path):
     assert len(rows) == result['active_relationship_count']
     assert not any(row['ID']=='anthropic_azure_2025' for row in rows)
     assert all(row['Aggregation permitted']=='False' for row in rows)
-    unknown = next(row for row in rows if row['ID']=='microsoft_nscale')
+    unknown = next(row for row in rows if row['ID']=='openai_nvidia_platform')
     assert unknown['USD amount'] == ''
     report = (tmp_path/'ecosystem.md').read_text(encoding='utf-8')
     assert '95% nije dokazana' in report

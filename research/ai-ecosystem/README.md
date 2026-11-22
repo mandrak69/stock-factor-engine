@@ -1,7 +1,7 @@
 # AI ecosystem evidence registry v0.1
 
 This is an analyst-curated seed map, not consolidated accounts, a fraud finding,
-or a claim of 95% global cash-flow coverage. It covers 29 operating company/group references
+or a claim of 95% global cash-flow coverage. Its source corpus covers 29 operating company/group references
 plus three non-company project/contract-pool references as of 2026-11-20 21:30 UTC.
 Fluidstack, Wistron and Fabrinet were added after tracing primary disclosures.
 
@@ -52,3 +52,20 @@ the active operating group and its financial/participant exports. Hardware
 suppliers and operating companies with investment activity remain inside.
 Confirmed payments from excluded financiers are external financing, not revenue.
 Prior broad-scope records remain available in Git history.
+
+## Report-only USD50bn equity value filter
+
+The source corpus retains 29 operating issuer references for audit. Main reports
+now contain only issuers meeting USD50bn equity value. Unknown values are excluded
+with reasons in size-exclusions.csv; market-values.csv lists selected values,
+bases and dates. Public caps are vendor snapshots dated Nov20 close, captured
+retrospectively; original dissemination/share-count vintage is unverified. Native
+KRW/HKD/TWD caps use the prior completed Nov19 FX day, not future Nov20 FX bars.
+OpenAI uses a clearly labeled March31 primary private funding proxy, not current
+exchange market cap or a claim to its latest private round. No values are added
+together across these bases. Excluded operators become outside counterparties
+for the selected group. CompoundRank stock-selection filters are unchanged.
+
+The default current report selects 18 companies at the USD50bn equity-value
+threshold. The unfiltered operating corpus is retained as reference material,
+while excluded companies appear only in the separate size-exclusions audit.

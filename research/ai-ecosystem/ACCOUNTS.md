@@ -1,7 +1,9 @@
 # Analytical AI boundary accounts v0.1
 
-Cutoff: 2026-11-20 21:30 UTC. Map: 29 operating issuer/group references; Wiwynn is folded
-into its controlling parent Wistron, leaving 28 candidate accounting units.
+Cutoff: 2026-11-20 21:30 UTC. The source corpus has 29 operating issuer references.
+The USD50bn report filter selects 18 issuers and 18 candidate accounting units.
+The retained source corpus records Wiwynn control by Wistron; both are below
+the size threshold and absent from the current main report.
 controls.json pins the primary Note 7(a) evidence. Full legal/control review is
 still required; no assumption of complete independent group coverage is made.
 Structural projects/pools are not extra issuers. This is an
@@ -29,7 +31,7 @@ establish complete contemporaneous data-vintage coverage.
 data/reports/ai-financials-2026-11-20 contains:
 
 - financial-report.md: methodology, issuer tables and qualifications.
-- parent-financials.csv: all 29 operating companies, exact TTM dates, USD figures and gaps.
+- parent-financials.csv: selected companies only, exact TTM dates, USD figures and gaps.
 - supplemental-statements.csv: newer NVIDIA release and foreign/6-K statements
   in their actual quarter/YTD periods and original currencies; never summed with
   the TTM rows. PP&E plus intangibles is distinct from PP&E-only.
@@ -111,3 +113,22 @@ the active operating group and its financial/participant exports. Hardware
 suppliers and operating companies with investment activity remain inside.
 Confirmed payments from excluded financiers are external financing, not revenue.
 Prior broad-scope records remain available in Git history.
+
+## Report-only USD50bn equity value filter
+
+The source corpus retains 29 operating issuer references for audit. Main reports
+now contain only issuers meeting USD50bn equity value. Unknown values are excluded
+with reasons in size-exclusions.csv; market-values.csv lists selected values,
+bases and dates. Public caps are vendor snapshots dated Nov20 close, captured
+retrospectively; original dissemination/share-count vintage is unverified. Native
+KRW/HKD/TWD caps use the prior completed Nov19 FX day, not future Nov20 FX bars.
+OpenAI uses a clearly labeled March31 primary private funding proxy, not current
+exchange market cap or a claim to its latest private round. No values are added
+together across these bases. Excluded operators become outside counterparties
+for the selected group. CompoundRank stock-selection filters are unchanged.
+
+Pinned size-source captures can be restored with
+`python research/ai-ecosystem/acquire_market_values.py`. Changed live pages are
+saved as unreviewed and cannot silently replace the November20 observations.
+Curated market-values.json is versioned; raw captures are optional for clean CI,
+with any absent local files listed in the capture audit.

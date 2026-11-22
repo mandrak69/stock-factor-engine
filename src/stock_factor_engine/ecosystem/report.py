@@ -5,6 +5,8 @@ import json
 from pathlib import Path
 import subprocess
 
+from .selection import select_report_bundle, export_size_selection
+
 from .model import FINANCING, PURCHASES, instant, load_registry, view_as_of, summarize, reciprocal_candidates
 
 
@@ -29,6 +31,7 @@ def build_report(registry, output, as_of=None):
     bundle = load_registry(registry)
     if as_of is not None and instant(as_of) != instant(bundle['config']['as_of']):
         raise ValueError('Refresh entity perimeter and provenance for another as-of; this is a curated snapshot')
+    bundle, size_decisions = select_report_bundle(bundle, registry)
     view = view_as_of(bundle, as_of or bundle['config']['as_of'])
     summary = summarize(bundle, view)
     pairs = reciprocal_candidates(view)
@@ -36,6 +39,9 @@ def build_report(registry, output, as_of=None):
     sources = {source['id']: source for source in bundle['sources']}
     output = Path(output)
     output.mkdir(parents=True, exist_ok=True)
+    export_size_selection(output, size_decisions)
+    summary['size_threshold_usd'] = bundle['config'].get('report_size_filter', {}).get('minimum_usd')
+    summary['size_excluded_count'] = sum(r['status'] != 'included' for r in size_decisions)
     participants = []
     for node in bundle['entities']:
         participants.append({'ID': node['id'], 'Name': node['name'], 'Layer': node['layer'], 'Node type': node['node_type'],
@@ -101,7 +107,7 @@ def build_report(registry, output, as_of=None):
         '- Capital: finansijeri i asset manageri; njihova fondovska sredstva nisu automatski sopstvena sredstva upravljaca.',
         '- Reference: projekti i delimicno nepoznati zakupodavci; nisu dodatne kompanije za sabiranje bilansa.',
         '- Whole-group likvidnost i AI-specific potraznja su razliciti pogledi. Maloprodaja, reklame, Office i svemirske usluge nisu automatski AI prihod.', '',
-        '## Operativno jezgro', '', markdown_table([row for row in participants if row['Layer']=='core'], ('Name','Roles','Sources','Notes')),
+        'Prag veličine: tržišna kapitalizacija ≥50 mlrd USD; privatne valuacije su posebno označeni istorijski proxy. Market-values.csv prikazuje osnove i datume; size-exclusions.csv je zaseban audit. Kotacije su retrospektivni vendor snapshot, bez potvrđene tadašnje objave.', '', '## Operativno jezgro', '', markdown_table([row for row in participants if row['Layer']=='core'], ('Name','Roles','Sources','Notes')),
         '## Operativni dobavljaci', '', markdown_table([row for row in participants if row['Layer'] == 'supply_chain'], ('Name','Layer','Roles','Sources','Notes')),
         '## Odabrane veze', '', 'Isprekidane strelice prikazuju razlicite vrste odnosa i obaveza. Nisu dokaz izvrsenog toka istog novca niti sabirljivi iznosi.', '',
         '```mermaid', '\n'.join(diagram), '```', '',

@@ -13,6 +13,7 @@ from .model import load_registry, view_as_of, FINANCING, PURCHASES
 from .reviewed import reviewed_financials
 from .supplemental import supplemental_statements
 from .perimeter import accounting_perimeter
+from .selection import select_report_bundle, export_size_selection, verify_local_captures
 
 
 def write_csv(path, rows, fields):
@@ -29,12 +30,16 @@ def display(value):
 def build_accounts_report(registry, roots, output):
     registry, output = Path(registry), Path(output)
     bundle = load_registry(registry)
+    bundle, size_decisions = select_report_bundle(bundle, registry)
+    size_by_id = {r['entity_id']: r for r in size_decisions}
     inputs = json.loads((registry / 'accounts.json').read_text(encoding='utf-8'))
     if inputs['as_of'] != bundle['config']['as_of']:
         raise ValueError('Refresh dated group perimeter and source registry before changing cutoff')
     entities = [e for e in bundle['entities'] if e['node_type'] == 'company_group']
     ids = {e['id'] for e in entities}
-    controls = json.loads((registry / 'controls.json').read_text(encoding='utf-8'))
+    excluded_ids = {r['entity_id'] for r in size_decisions if r['status'] != 'included'}
+    inputs['external_counterparties'] = sorted(set(inputs.get('external_counterparties', [])) | excluded_ids)
+    controls = [r for r in json.loads((registry / 'controls.json').read_text(encoding='utf-8')) if r['parent_id'] in ids and r['subsidiary_id'] in ids]
     perimeter = accounting_perimeter(ids, controls, Path('data/ai-ecosystem-2026-11-20/supplemental-evidence'),
         as_of=inputs['as_of'], period_start=inputs['period_start'], period_end=inputs['period_end'])
     accounts = calculate_accounts(inputs, members=perimeter['members'], as_of=inputs['as_of'],
@@ -43,13 +48,15 @@ def build_accounts_report(registry, roots, output):
     reviews = json.loads((registry / 'reviewed-statements.json').read_text(encoding='utf-8'), parse_float=Decimal)
     source_map = {s['id']: s for s in bundle['sources']}
     for review in reviews:
+        if review['entity_id'] not in ids:
+            continue
         entity = next(e for e in entities if e['id'] == review['entity_id'])
         reviewed = reviewed_financials(entity, review, source_map[review['source_id']],
             Path(inputs['reviewed_evidence_dir']), inputs['as_of'])
         financials = [reviewed if f['entity_id'] == entity['id'] else f for f in financials]
     view = view_as_of(bundle, inputs['as_of'])
     sources = {s['id']: s for s in bundle['sources']}
-    supplements = supplemental_statements(json.loads((registry / 'supplemental.json').read_text(encoding='utf-8')),
+    supplements = supplemental_statements([r for r in json.loads((registry / 'supplemental.json').read_text(encoding='utf-8')) if r['entity_id'] in ids],
         Path('data/ai-ecosystem-2026-11-20/supplemental-evidence'), inputs['as_of'], ids)
     disclosures = []
     for edge in view['active']:
@@ -78,6 +85,8 @@ def build_accounts_report(registry, roots, output):
             available = next((m for m in f['metrics'].values() if m.get('period_start') and m.get('value') is not None), None)
             if available:
                 row['ttm_start'], row['ttm_end'] = available['period_start'], available['period_end']
+        valuation = size_by_id.get(f['entity_id'], {})
+        row.update(market_value_usd=valuation.get('market_value_usd'), valuation_basis=valuation.get('valuation_basis'), valuation_date=valuation.get('observed_on'))
         row['reasons'] = '; '.join(f['reasons'])
         parents.append(row)
         for reason in f['reasons']:
@@ -87,7 +96,9 @@ def build_accounts_report(registry, roots, output):
         gaps.append({'entity_id': f['entity_id'], 'domain': 'analytical group',
                      'reason': 'Same-calendar bilateral cash/sales, AI allocation, asset margin, receivables/payables and ownership/elimination reconciliation incomplete'})
     output.mkdir(parents=True, exist_ok=True)
-    parent_fields = ['entity_id', 'company', 'cik', 'status', 'reporting_end', 'ttm_start', 'ttm_end',
+    export_size_selection(output, size_decisions)
+    capture_audit = verify_local_captures(size_decisions, Path('data/ai-ecosystem-2026-11-20/market-cap-evidence'))
+    parent_fields = ['entity_id', 'company', 'market_value_usd', 'valuation_basis', 'valuation_date', 'cik', 'status', 'reporting_end', 'ttm_start', 'ttm_end',
         'revenue_usd', 'operating_income_usd', 'operating_cash_flow_usd', 'capital_expenditure_usd',
         'reported_parent_cash_after_ppe_usd', 'reported_parent_cfo_to_ppe_ratio',
         'cash_usd', 'total_debt_usd', 'net_ppe_usd', 'scope', 'reasons']
@@ -107,7 +118,9 @@ def build_accounts_report(registry, roots, output):
     write_csv(output / 'cash-eliminations.csv', accounts['cash_eliminations'], ledger_fields)
     write_csv(output / 'sales-eliminations.csv', accounts['sales_eliminations'], ledger_fields)
     summary = {'as_of': inputs['as_of'], 'accounting_period': [inputs['period_start'], inputs['period_end']],
-               'company_count': len(entities), 'parent_context_complete_count': sum(f['status'] == 'available' for f in financials),
+               'company_count': len(entities),
+               'size_threshold_usd': bundle['config']['report_size_filter']['minimum_usd'],
+               'size_excluded_count': len(excluded_ids), 'market_value_capture_audit': capture_audit, 'parent_context_complete_count': sum(f['status'] == 'available' for f in financials),
                'accounting_perimeter': perimeter,
                'accounting_unit_count': len(perimeter['members']),
                'parent_context_partial_count': sum(f['status'] == 'partial' for f in financials),
@@ -123,23 +136,29 @@ def build_accounts_report(registry, roots, output):
     lines = ['# AI ekosistem — finansijski pregled i eliminacije', '',
         f"Decision cutoff: **{inputs['as_of']}**. Granica: **{len(entities)} kompanije/grupe** iz datiranog registra.",
         f"Ciljni period grupnog obračuna: **{inputs['period_start']} – {inputs['period_end']}**.",
-        f"Posle potvrđenog spajanja Wiwynn u Wistron: **{len(perimeter['members'])} računovodstvenih jedinica**; kompletna kontrolna mapa još zahteva pregled.",
-        'Wiwynn je naveden i zasebno radi konteksta. Njegove finansije se ne dodaju ponovo Wistron konsolidovanim finansijama.', '',
-        'Kontrolna veza: [Wiwynn Q3 2026, Note 7(a), PDF strana 55](https://www.wiwynn.com/hubfs/Investors/Financial_Report/Wiwynn_2026Q3_Financial.pdf).', '',
+        f"Računovodstveni obuhvat izabranih kompanija: **{len(perimeter['members'])} jedinica**; kompletna kontrolna mapa još zahteva pregled.",
+        ('Wiwynn je uključen u Wistron bez duplog sabiranja.' if controls else ''), '',
+        ('Kontrolna veza: [Wiwynn Note 7(a)](https://www.wiwynn.com/hubfs/Investors/Financial_Report/Wiwynn_2026Q3_Financial.pdf).' if controls else ''), '',
         f"**Grupni spoljni prihod: {display(accounts['external_revenue_usd'])}; neto novac: {display(accounts['external_net_cash_usd'])} (milijarde USD). Dobit: unavailable.**",
         'SoftBank Group, MGX i BlackRock/GIP su izvan operativne grupe. Njihove potvrđene uplate predstavljale bi spoljno finansiranje.',
         'Registar ugovora ne dokazuje izvršene uplate. Prazan transakcioni registar ne znači nula stvarnog prometa.',
         'Ovo je analitičko objedinjavanje nezavisnih kompanija, bez tvrdnje da postoji zajednička kontrola ili nepravilno knjiženje.', '',
+        '## Filter veličine', '',
+        'U glavnom izveštaju su samo operativni emitenti sa vrednošću ≥50 milijardi USD. Nije korišćen prihod, EV, backlog ili vrednost ugovora.',
+        'OpenAI je uključen na osnovu posebno označenog primarnog privatnog funding proxyja iz 31.03.2026. To nije berzanska kapitalizacija 20.11. ili potvrda najnovije privatne runde.',
+        'Javne kapitalizacije su vendor snapshot datiran na zatvaranje 20.11, preuzet naknadno. Tadašnja dostupnost vendor objave i share-count vintage nisu nezavisno arhivirani. Za azijske valute korišćen je prethodni završeni FX dan 19.11, naveden u audit JSON-u.',
+        'Vrednosti, osnove i datumi: market-values.csv. Isključeni i razlozi: size-exclusions.csv, zasebno od glavne finansijske tabele.', '',
         '## Objavljene finansije po kompaniji', '',
         'Iznosi su u milijardama USD. Svaki red ima svoj TTM period; različiti fiskalni kalendari se ne sabiraju. ',
         'Prihodi i CFO uključuju interne poslove sa drugim članicama i poslovanje koje nije AI. CFO minus cash PP&E nije grupni FCF, ',
-        'ne uključuje automatski finance lease additions, otplate lease glavnice ili sve kategorije ulaganja. Cash nije potvrđena raspoloživa likvidnost.', '',
-        '| Kompanija | TTM od–do | Prihod | CFO | Cash PP&E | CFO−PP&E | CFO/PP&E |',
-        '|---|---|---:|---:|---:|---:|---:|']
+        'ne uključuje automatski finance lease additions, otplate lease glavnice ili sve kategorije ulaganja. Cash nije potvrđena raspoloživa likvidnost.',
+        '*Vrednost kapitala je tržišna kapitalizacija na 20.11.2026; OpenAI je posebno označeni privatni funding proxy iz 31.03.2026. Sve vrednosti u tabeli su milijarde USD.', '',
+        '| Kompanija | Vrednost kapitala* | TTM od–do | Prihod | CFO | Cash PP&E | CFO−PP&E | CFO/PP&E |',
+        '|---|---:|---|---:|---:|---:|---:|---:|']
     for row in parents:
         dates = f"{row.get('ttm_start') or '?'} – {row.get('ttm_end') or row.get('reporting_end') or '?'}"
         ratio = row.get('reported_parent_cfo_to_ppe_ratio')
-        lines.append('| ' + ' | '.join([row['company'], dates, *[display(row.get(key)) for key in
+        lines.append('| ' + ' | '.join([row['company'], display(Decimal(row['market_value_usd'])), dates, *[display(row.get(key)) for key in
             ('revenue_usd', 'operating_cash_flow_usd', 'capital_expenditure_usd', 'reported_parent_cash_after_ppe_usd')],
             'unavailable' if ratio is None else f'{ratio:.2f}x']) + ' |')
     lines += ['', '## Novije i strane objave — poseban period i valuta', '',
@@ -149,7 +168,7 @@ def build_accounts_report(registry, roots, output):
         '|---|---|---|---:|---|']
     for row in supplements:
         lines.append(f"| {row['entity_id']} | {row['metric']} | {row['period_start']} – {row['period_end']} | {row['amount'] / 1000000000:,.3f} | {row['currency']} |")
-    lines += ['', 'Nebius: devetomesečni CFO 4.231 mlrd USD uključuje 7.829 mlrd USD promene deferred revenue; avansi se ne mogu tumačiti kao samostalno održiva profitabilnost.',
+    lines += ['', 'Primljeni avansi se ne mogu automatski tumačiti kao samostalno održiva profitabilnost.',
         'Izvorni URL, hash, dostupnost i napomene svakog reda su u supplemental-statements.csv.', '']
     lines += ['', '## Kako se računa grupa', '',
         '1. Priznati spoljni prihod = dokumentovana prodaja članica kupcima van granice. Interna prodaja se eliminiše jednom.',

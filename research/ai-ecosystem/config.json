@@ -28,5 +28,13 @@
     "blackrock",
     "mgx",
     "softbank"
-  ]
+  ],
+  "report_size_filter": {
+    "minimum_usd": "50000000000",
+    "allow_private_proxy": true,
+    "private_max_age_days": 365,
+    "unknown_policy": "exclude_from_main_report_not_assume_zero",
+    "scope": "AI ecosystem reports only; no change to CompoundRank stock-selection parameters",
+    "provenance": "Public values are retrospectively captured vendor snapshots dated Nov20 close; original dissemination/share-count vintage not verified. Private proxy is explicitly dated and not an exchange market cap."
+  }
 }

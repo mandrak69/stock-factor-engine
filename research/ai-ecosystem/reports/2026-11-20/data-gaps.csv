@@ -32,19 +32,6 @@ anthropic,reviewed statement qualification,Finance-lease principal and equipment
 anthropic,analytical group,"Same-calendar bilateral cash/sales, AI allocation, asset margin, receivables/payables and ownership/elimination reconciliation incomplete"
 spacex,reported parent context,"No validated standardized USD TTM feed or complete same-period cash/revenue statements established in this evidence set; no inference from annualized revenue, funding announcements or missing data"
 spacex,analytical group,"Same-calendar bilateral cash/sales, AI allocation, asset margin, receivables/payables and ownership/elimination reconciliation incomplete"
-coreweave,reported parent context,"total_debt: Missing, ambiguous or negative exact-period standardized balance; no zero/debt-component assumption"
-coreweave,analytical group,"Same-calendar bilateral cash/sales, AI allocation, asset margin, receivables/payables and ownership/elimination reconciliation incomplete"
-nebius,reported parent context,ValueError: No accepted 10-Q/10-K with justified availability; IPO S-1/foreign 20-F/6-K requires a separate reviewed parser
-nebius,analytical group,"Same-calendar bilateral cash/sales, AI allocation, asset margin, receivables/payables and ownership/elimination reconciliation incomplete"
-nscale,reported parent context,Cash/debt/net PP&E balance reconciliation not complete
-nscale,reviewed statement qualification,"CFO includes 3,811.5m deferred-revenue inflow and -1,505.4m receivables movement in H1 2026; positive CFO is not evidence of profitable recurring operations."
-nscale,reviewed statement qualification,Bridge uses original historical consolidation perimeter; acquisitions/JV roll-up and customer prepayments affect comparability.
-nscale,reviewed statement qualification,These figures are issuer totals and are never inserted as external group cash.
-nscale,analytical group,"Same-calendar bilateral cash/sales, AI allocation, asset margin, receivables/payables and ownership/elimination reconciliation incomplete"
-lambda,reported parent context,"No validated standardized USD TTM feed or complete same-period cash/revenue statements established in this evidence set; no inference from annualized revenue, funding announcements or missing data"
-lambda,analytical group,"Same-calendar bilateral cash/sales, AI allocation, asset margin, receivables/payables and ownership/elimination reconciliation incomplete"
-fluidstack,reported parent context,"No validated standardized USD TTM feed or complete same-period cash/revenue statements established in this evidence set; no inference from annualized revenue, funding announcements or missing data"
-fluidstack,analytical group,"Same-calendar bilateral cash/sales, AI allocation, asset margin, receivables/payables and ownership/elimination reconciliation incomplete"
 tsmc,reported parent context,ValueError: No accepted 10-Q/10-K with justified availability; IPO S-1/foreign 20-F/6-K requires a separate reviewed parser
 tsmc,analytical group,"Same-calendar bilateral cash/sales, AI allocation, asset margin, receivables/payables and ownership/elimination reconciliation incomplete"
 sk_hynix,reported parent context,"No validated standardized USD TTM feed or complete same-period cash/revenue statements established in this evidence set; no inference from annualized revenue, funding announcements or missing data"
@@ -58,16 +45,5 @@ dell,reported parent context,"total_debt: Missing, ambiguous or negative exact-p
 dell,analytical group,"Same-calendar bilateral cash/sales, AI allocation, asset margin, receivables/payables and ownership/elimination reconciliation incomplete"
 hpe,reported parent context,capital_expenditure: No complete TTM window for capital_expenditure ending 2026-07-31
 hpe,analytical group,"Same-calendar bilateral cash/sales, AI allocation, asset margin, receivables/payables and ownership/elimination reconciliation incomplete"
-supermicro,analytical group,"Same-calendar bilateral cash/sales, AI allocation, asset margin, receivables/payables and ownership/elimination reconciliation incomplete"
-lenovo,reported parent context,"No validated standardized USD TTM feed or complete same-period cash/revenue statements established in this evidence set; no inference from annualized revenue, funding announcements or missing data"
-lenovo,analytical group,"Same-calendar bilateral cash/sales, AI allocation, asset margin, receivables/payables and ownership/elimination reconciliation incomplete"
 foxconn,reported parent context,"No validated standardized USD TTM feed or complete same-period cash/revenue statements established in this evidence set; no inference from annualized revenue, funding announcements or missing data"
 foxconn,analytical group,"Same-calendar bilateral cash/sales, AI allocation, asset margin, receivables/payables and ownership/elimination reconciliation incomplete"
-quanta,reported parent context,"Official Q3 2026 IR presentation listing found, but download redirected to bot challenge; no verified numerical statement capture. https://www.quantatw.com/Quanta/english/investment/financials_icp.aspx"
-quanta,analytical group,"Same-calendar bilateral cash/sales, AI allocation, asset margin, receivables/payables and ownership/elimination reconciliation incomplete"
-wiwynn,reported parent context,"No validated standardized USD TTM feed or complete same-period cash/revenue statements established in this evidence set; no inference from annualized revenue, funding announcements or missing data"
-wiwynn,analytical group,"Same-calendar bilateral cash/sales, AI allocation, asset margin, receivables/payables and ownership/elimination reconciliation incomplete"
-wistron,reported parent context,"No validated standardized USD TTM feed or complete same-period cash/revenue statements established in this evidence set; no inference from annualized revenue, funding announcements or missing data"
-wistron,analytical group,"Same-calendar bilateral cash/sales, AI allocation, asset margin, receivables/payables and ownership/elimination reconciliation incomplete"
-fabrinet,reported parent context,"total_debt: Missing, ambiguous or negative exact-period standardized balance; no zero/debt-component assumption"
-fabrinet,analytical group,"Same-calendar bilateral cash/sales, AI allocation, asset margin, receivables/payables and ownership/elimination reconciliation incomplete"

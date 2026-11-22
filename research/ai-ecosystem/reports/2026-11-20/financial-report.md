@@ -1,54 +1,51 @@
 # AI ekosistem — finansijski pregled i eliminacije
 
-Decision cutoff: **2026-11-20T21:30:00+00:00**. Granica: **29 kompanije/grupe** iz datiranog registra.
+Decision cutoff: **2026-11-20T21:30:00+00:00**. Granica: **18 kompanije/grupe** iz datiranog registra.
 Ciljni period grupnog obračuna: **2026-01-01 – 2026-09-30**.
-Posle potvrđenog spajanja Wiwynn u Wistron: **28 računovodstvenih jedinica**; kompletna kontrolna mapa još zahteva pregled.
-Wiwynn je naveden i zasebno radi konteksta. Njegove finansije se ne dodaju ponovo Wistron konsolidovanim finansijama.
+Računovodstveni obuhvat izabranih kompanija: **18 jedinica**; kompletna kontrolna mapa još zahteva pregled.
 
-Kontrolna veza: [Wiwynn Q3 2026, Note 7(a), PDF strana 55](https://www.wiwynn.com/hubfs/Investors/Financial_Report/Wiwynn_2026Q3_Financial.pdf).
+
+
 
 **Grupni spoljni prihod: unavailable; neto novac: unavailable (milijarde USD). Dobit: unavailable.**
 SoftBank Group, MGX i BlackRock/GIP su izvan operativne grupe. Njihove potvrđene uplate predstavljale bi spoljno finansiranje.
 Registar ugovora ne dokazuje izvršene uplate. Prazan transakcioni registar ne znači nula stvarnog prometa.
 Ovo je analitičko objedinjavanje nezavisnih kompanija, bez tvrdnje da postoji zajednička kontrola ili nepravilno knjiženje.
 
+## Filter veličine
+
+U glavnom izveštaju su samo operativni emitenti sa vrednošću ≥50 milijardi USD. Nije korišćen prihod, EV, backlog ili vrednost ugovora.
+OpenAI je uključen na osnovu posebno označenog primarnog privatnog funding proxyja iz 31.03.2026. To nije berzanska kapitalizacija 20.11. ili potvrda najnovije privatne runde.
+Javne kapitalizacije su vendor snapshot datiran na zatvaranje 20.11, preuzet naknadno. Tadašnja dostupnost vendor objave i share-count vintage nisu nezavisno arhivirani. Za azijske valute korišćen je prethodni završeni FX dan 19.11, naveden u audit JSON-u.
+Vrednosti, osnove i datumi: market-values.csv. Isključeni i razlozi: size-exclusions.csv, zasebno od glavne finansijske tabele.
+
 ## Objavljene finansije po kompaniji
 
 Iznosi su u milijardama USD. Svaki red ima svoj TTM period; različiti fiskalni kalendari se ne sabiraju.
 Prihodi i CFO uključuju interne poslove sa drugim članicama i poslovanje koje nije AI. CFO minus cash PP&E nije grupni FCF,
 ne uključuje automatski finance lease additions, otplate lease glavnice ili sve kategorije ulaganja. Cash nije potvrđena raspoloživa likvidnost.
+*Vrednost kapitala je tržišna kapitalizacija na 20.11.2026; OpenAI je posebno označeni privatni funding proxy iz 31.03.2026. Sve vrednosti u tabeli su milijarde USD.
 
-| Kompanija | TTM od–do | Prihod | CFO | Cash PP&E | CFO−PP&E | CFO/PP&E |
-|---|---|---:|---:|---:|---:|---:|
-| NVIDIA | 2025-07-28 – 2026-07-26 | unavailable | 134.360 | unavailable | unavailable | unavailable |
-| AMD | 2025-09-28 – 2026-09-26 | 45.436 | 9.123 | 2.067 | 7.056 | 4.41x |
-| Broadcom | 2025-08-04 – 2026-08-02 | 89.104 | 40.653 | 1.250 | 39.403 | 32.52x |
-| Microsoft | 2025-10-01 – 2026-09-30 | 346.445 | 195.878 | 135.921 | 59.957 | 1.44x |
-| Amazon | 2025-10-01 – 2026-09-30 | 797.455 | 168.300 | unavailable | unavailable | unavailable |
-| Alphabet | 2025-10-01 – 2026-09-30 | 471.098 | 179.551 | 159.804 | 19.747 | 1.12x |
-| Meta Platforms | 2025-10-01 – 2026-09-30 | unavailable | 133.087 | 104.438 | 28.649 | 1.27x |
-| Oracle | 2025-09-01 – 2026-08-31 | unavailable | 46.940 | 75.660 | -28.720 | 0.62x |
-| OpenAI | ? – ? | unavailable | unavailable | unavailable | unavailable | unavailable |
-| Anthropic | 2025-10-01 – 2026-09-30 | 35.282 | 5.956 | 0.945 | 5.011 | 6.30x |
-| SpaceX / SpaceX AI | ? – ? | unavailable | unavailable | unavailable | unavailable | unavailable |
-| CoreWeave | 2025-10-01 – 2026-09-30 | 9.886 | 7.197 | 27.618 | -20.421 | 0.26x |
-| Nebius | ? – ? | unavailable | unavailable | unavailable | unavailable | unavailable |
-| Nscale | 2025-07-01 – 2026-06-30 | 0.163 | 3.057 | 3.738 | -0.681 | 0.82x |
-| Lambda | ? – ? | unavailable | unavailable | unavailable | unavailable | unavailable |
-| Fluidstack | ? – ? | unavailable | unavailable | unavailable | unavailable | unavailable |
-| TSMC | ? – ? | unavailable | unavailable | unavailable | unavailable | unavailable |
-| SK hynix | ? – ? | unavailable | unavailable | unavailable | unavailable | unavailable |
-| Micron | 2025-08-29 – 2026-09-03 | 133.188 | 89.675 | 30.712 | 58.963 | 2.92x |
-| Samsung Electronics | ? – ? | unavailable | unavailable | unavailable | unavailable | unavailable |
-| Dell Technologies | 2025-08-02 – 2026-07-31 | 151.197 | 12.152 | 3.592 | 8.560 | 3.38x |
-| Hewlett Packard Enterprise | 2025-08-01 – 2026-07-31 | 41.871 | 6.694 | unavailable | unavailable | unavailable |
-| Super Micro Computer | 2025-10-01 – 2026-09-30 | 53.991 | -6.326 | 0.171 | -6.498 | -36.93x |
-| Lenovo | ? – ? | unavailable | unavailable | unavailable | unavailable | unavailable |
-| Foxconn / Hon Hai | ? – ? | unavailable | unavailable | unavailable | unavailable | unavailable |
-| Quanta Computer / QCT | ? – ? | unavailable | unavailable | unavailable | unavailable | unavailable |
-| Wiwynn | ? – ? | unavailable | unavailable | unavailable | unavailable | unavailable |
-| Wistron | ? – ? | unavailable | unavailable | unavailable | unavailable | unavailable |
-| Fabrinet | 2025-09-27 – 2026-09-25 | 5.137 | 0.175 | 0.366 | -0.190 | 0.48x |
+| Kompanija | Vrednost kapitala* | TTM od–do | Prihod | CFO | Cash PP&E | CFO−PP&E | CFO/PP&E |
+|---|---:|---|---:|---:|---:|---:|---:|
+| NVIDIA | 3,030.000 | 2025-07-28 – 2026-07-26 | unavailable | 134.360 | unavailable | unavailable | unavailable |
+| AMD | 702.390 | 2025-09-28 – 2026-09-26 | 45.436 | 9.123 | 2.067 | 7.056 | 4.41x |
+| Broadcom | 1,450.000 | 2025-08-04 – 2026-08-02 | 89.104 | 40.653 | 1.250 | 39.403 | 32.52x |
+| Microsoft | 3,600.000 | 2025-10-01 – 2026-09-30 | 346.445 | 195.878 | 135.921 | 59.957 | 1.44x |
+| Amazon | 2,670.000 | 2025-10-01 – 2026-09-30 | 797.455 | 168.300 | unavailable | unavailable | unavailable |
+| Alphabet | 3,250.000 | 2025-10-01 – 2026-09-30 | 471.098 | 179.551 | 159.804 | 19.747 | 1.12x |
+| Meta Platforms | 1,430.000 | 2025-10-01 – 2026-09-30 | unavailable | 133.087 | 104.438 | 28.649 | 1.27x |
+| Oracle | 315.480 | 2025-09-01 – 2026-08-31 | unavailable | 46.940 | 75.660 | -28.720 | 0.62x |
+| OpenAI | 852.000 | ? – ? | unavailable | unavailable | unavailable | unavailable | unavailable |
+| Anthropic | 1,190.000 | 2025-10-01 – 2026-09-30 | 35.282 | 5.956 | 0.945 | 5.011 | 6.30x |
+| SpaceX / SpaceX AI | 1,740.000 | ? – ? | unavailable | unavailable | unavailable | unavailable | unavailable |
+| TSMC | 1,570.000 | ? – ? | unavailable | unavailable | unavailable | unavailable | unavailable |
+| SK hynix | 594.911 | ? – ? | unavailable | unavailable | unavailable | unavailable | unavailable |
+| Micron | 672.640 | 2025-08-29 – 2026-09-03 | 133.188 | 89.675 | 30.712 | 58.963 | 2.92x |
+| Samsung Electronics | 874.068 | ? – ? | unavailable | unavailable | unavailable | unavailable | unavailable |
+| Dell Technologies | 176.770 | 2025-08-02 – 2026-07-31 | 151.197 | 12.152 | 3.592 | 8.560 | 3.38x |
+| Hewlett Packard Enterprise | 54.310 | 2025-08-01 – 2026-07-31 | 41.871 | 6.694 | unavailable | unavailable | unavailable |
+| Foxconn / Hon Hai | 89.888 | ? – ? | unavailable | unavailable | unavailable | unavailable | unavailable |
 
 ## Novije i strane objave — poseban period i valuta
 
@@ -61,22 +58,15 @@ NVIDIA: najnoviji kvartal 115.844 mlrd USD; potvrđeni TTM prihod 361.808 mlrd U
 | nvidia | revenue_ttm | 2025-10-27 – 2026-10-25 | 361.808 | USD |
 | sk_hynix | revenue | 2026-07-01 – 2026-09-30 | 104,615.500 | KRW |
 | samsung_electronics | revenue | 2026-07-01 – 2026-09-30 | 195,300.000 | KRW |
-| lenovo | revenue | 2026-07-01 – 2026-09-30 | 30.200 | USD |
-| wiwynn | revenue | 2026-07-01 – 2026-09-30 | 434.618 | TWD |
 | nvidia | operating_cash_flow | 2026-07-27 – 2026-10-25 | 48.253 | USD |
 | nvidia | cash_ppe_and_intangibles | 2026-07-27 – 2026-10-25 | 4.422 | USD |
-| nebius | operating_cash_flow | 2026-01-01 – 2026-09-30 | 4.231 | USD |
-| nebius | cash_ppe_and_intangibles | 2026-01-01 – 2026-09-30 | 15.431 | USD |
-| nebius | deferred_revenue_cash_adjustment | 2026-01-01 – 2026-09-30 | 7.829 | USD |
 | tsmc | operating_cash_flow | 2026-01-01 – 2026-09-30 | 2,402.117 | TWD |
 | tsmc | cash_ppe | 2026-01-01 – 2026-09-30 | 1,289.971 | TWD |
 | foxconn | revenue | 2026-01-01 – 2026-09-30 | 7,661.062 | TWD |
 | foxconn | operating_cash_flow | 2026-01-01 – 2026-09-30 | -125.723 | TWD |
 | foxconn | reported_capital_expenditures | 2026-01-01 – 2026-09-30 | 161.726 | TWD |
-| wiwynn | related_party_purchases_from_parent | 2026-01-01 – 2026-09-30 | 127.874 | TWD |
-| wistron | revenue | 2026-01-01 – 2026-09-30 | 2,890.000 | TWD |
 
-Nebius: devetomesečni CFO 4.231 mlrd USD uključuje 7.829 mlrd USD promene deferred revenue; avansi se ne mogu tumačiti kao samostalno održiva profitabilnost.
+Primljeni avansi se ne mogu automatski tumačiti kao samostalno održiva profitabilnost.
 Izvorni URL, hash, dostupnost i napomene svakog reda su u supplemental-statements.csv.
 
 
@@ -92,13 +82,13 @@ Izvorni URL, hash, dostupnost i napomene svakog reda su u supplemental-statement
 
 ## Finansiranje i buduće obaveze
 
-Odvojeno su izvezene 8 finansijske objave i 12 ugovorne objave.
+Odvojeno su izvezene 8 finansijske objave i 6 ugovorne objave.
 One nisu sabrane: minimum, maksimum, opcija, namera, kreditni limit i prijavljeno ulaganje nisu ista osnova.
 Revidirana Azure obaveza zamenjuje staru objavu; istorijska cifra se ne dodaje ponovo.
 
 ## Šta nedostaje
 
-Za svih 29 operativnih članica nedostaje kompletan usaglašen registar međusobnih prihoda i plaćanja. Precizni razlozi su u data-gaps.csv i metric-evidence.csv.
+Za svih 18 operativnih članica nedostaje kompletan usaglašen registar međusobnih prihoda i plaćanja. Precizni razlozi su u data-gaps.csv i metric-evidence.csv.
 IPO S-1 i strani/custom taksonomski izveštaji nisu automatski tretirani kao standardni US-GAAP 10-Q/10-K. Neobjavljeni iznosi ostaju nepoznati.
 Za AI-only rezultat dodatno nedostaje pouzdana raspodela prihoda, operativnih troškova, capex-a i obrtnog kapitala na AI i ostalo poslovanje.
 95% globalne pokrivenosti nije dokazano: nema potpunog, usaglašenog imenioca. Broj kompanija ili zbir najava nisu zamena.
@@ -120,12 +110,9 @@ Njegove principe koristimo analitički; ove nezavisne kompanije nisu pravna kons
 - Alphabet: [SEC filing 0001652044-26-000084](https://www.sec.gov/Archives/edgar/data/1652044/000165204426000084/0001652044-26-000084-index.html)
 - Meta Platforms: [SEC filing 0001628280-26-066773](https://www.sec.gov/Archives/edgar/data/1326801/000162828026066773/0001628280-26-066773-index.html)
 - Oracle: [SEC filing 0001193125-26-389274](https://www.sec.gov/Archives/edgar/data/1341439/000119312526389274/0001193125-26-389274-index.html)
-- CoreWeave: [SEC filing 0001769628-26-000465](https://www.sec.gov/Archives/edgar/data/1769628/000176962826000465/0001769628-26-000465-index.html)
 - Micron: [SEC filing 0000723125-26-000023](https://www.sec.gov/Archives/edgar/data/723125/000072312526000023/0000723125-26-000023-index.html)
 - Dell Technologies: [SEC filing 0001571996-26-000046](https://www.sec.gov/Archives/edgar/data/1571996/000157199626000046/0001571996-26-000046-index.html)
 - Hewlett Packard Enterprise: [SEC filing 0001645590-26-000080](https://www.sec.gov/Archives/edgar/data/1645590/000164559026000080/0001645590-26-000080-index.html)
-- Super Micro Computer: [SEC filing 0001375365-26-000027](https://www.sec.gov/Archives/edgar/data/1375365/000137536526000027/0001375365-26-000027-index.html)
-- Fabrinet: [SEC filing 0001408710-26-000041](https://www.sec.gov/Archives/edgar/data/1408710/000140871026000041/0001408710-26-000041-index.html)
 
 ## Provereni S-1 izveštaji i radni kapital
 
@@ -146,19 +133,3 @@ Iznosi u milionima USD; odnose se na ceo issuer, nisu grupno spoljašnje poslova
 - Cash-flow closing balance 98,152m differs by 50m from balance-sheet cash 95,562m plus restricted cash 2,540m in this archived document; unresolved, no clean liquidity estimate.
 - Finance-lease principal and equipment prepayments are excluded from cash PP&E metric and must be separately reconciled.
 Izvor: [Anthropic S-1/A, accession 0001628280-26-068676](https://www.sec.gov/Archives/edgar/data/2130357/000162828026068676/anthropicpbc-sx1ax1.htm)
-### Nscale: 2026-01-01 – 2026-06-30
-Iznosi u milionima USD; odnose se na ceo issuer, nisu grupno spoljašnje poslovanje.
-- operating_cash_flow: 1686.1
-- investing_cash_flow: -3285.8
-- financing_cash_flow: 1628.4
-- fx: -2.9
-- opening_cash_including_restricted: 2067.3
-- closing_cash_including_restricted: 2093.1
-- deferred_revenue_cash_adjustment: 3811.5
-- accounts_receivable_cash_adjustment: -1505.4
-- cash_and_equivalents: 1478.4
-- restricted_cash: 614.7
-- CFO includes 3,811.5m deferred-revenue inflow and -1,505.4m receivables movement in H1 2026; positive CFO is not evidence of profitable recurring operations.
-- Bridge uses original historical consolidation perimeter; acquisitions/JV roll-up and customer prepayments affect comparability.
-- These figures are issuer totals and are never inserted as external group cash.
-Izvor: [Nscale September 2026 Form S-1](https://www.sec.gov/Archives/edgar/data/2110365/000119312526395475/ck0002110365-20260918.htm)
